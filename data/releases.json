@@ -1,6 +1,186 @@
 [
   {
     "script": "ts_bridge",
+    "version": "1.2.2",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Scripts kunnen hun versie opnieuw laten controleren zodra de vorige controle klaar is.",
+      "Daardoor werken de periodieke controle van ts_repairpoints en het consolecommando ts_nlplates_check via de centrale versie-API."
+    ],
+    "changes": [
+      "Een tweede aanvraag terwijl een controle nog loopt, wordt nog steeds geweigerd.",
+      "De gebundelde HTTP-aanvraag en de cache van vijf minuten blijven gelijk.",
+      "Exports, configschema 0.1.2 en alle overige bridgefuncties zijn ongewijzigd.",
+      "De GitHub-repository heet nu ook ts_bridge; de documentatie is daarop bijgewerkt."
+    ],
+    "files": [
+      "server/services/updates.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/INSTALLATIE.md",
+      "tests/updates_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak een back-up van config/config.lua en config/webhook_config.lua; die hoeven niet aangepast te worden.",
+      "Vervang het volledige pakket en start ts_bridge vóór de overige TroyScripts.",
+      "Controleer de serverconsole: de versiemeldingen van alle aangesloten scripts verschijnen via ts_bridge."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.2.2; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_repairpoints",
+    "version": "1.1.5",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Versiecontrole via ts_bridge en de centrale TroyScripts-versie-API in plaats van het privé GitHub-manifest; geen HTTP 404 meer.",
+      "De controle bij opstart en het bestaande interval (IntervalHours) blijven werken."
+    ],
+    "changes": [
+      "Repository en Branch in Config.UpdateCheck blijven compatibel maar worden genegeerd.",
+      "Periodieke controle vereist ts_bridge 1.2.2 of nieuwer.",
+      "Configschema blijft 1.1.1; reparaties, betalingen en peds zijn ongewijzigd."
+    ],
+    "files": [
+      "server/updates.lua",
+      "config/config.lua",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "tests/updates_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Installeer eerst ts_bridge 1.2.2.",
+      "Vervang de scriptbestanden en bewaar je eigen config en de volledige data-map.",
+      "Controleer de serverconsole: geen HTTP 404 meer bij de versiecontrole."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.1.5; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_gemertmap",
+    "version": "1.1.2",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Versiecontrole via de centrale TroyScripts-versie-API in plaats van version.txt op GitHub; geen HTTP 404 meer.",
+      "Draait ts_bridge, dan loopt de controle via de bridge; zonder bridge vraagt de kaart de site zelf op."
+    ],
+    "changes": [
+      "ts_bridge blijft optioneel; de kaart werkt standalone.",
+      "Repository en Branch in Config.UpdateCheck blijven compatibel maar worden genegeerd.",
+      "Configschema blijft 1.0.9; kaarttextures, postcodes, exports en commando's zijn ongewijzigd."
+    ],
+    "files": [
+      "server/update_check.lua",
+      "config/config.lua",
+      "fxmanifest.lua",
+      "version.txt",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/GITHUB.md",
+      "tests/maintenance_spec.lua",
+      "tests/check_package.py"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak een back-up van config/config.lua en vervang daarna het complete pakket.",
+      "Herstart de server en controleer de versiemelding in de console."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.1.2; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_nlplates",
+    "version": "1.1.3",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Versiecontrole via ts_bridge en de centrale TroyScripts-versie-API in plaats van version.json op GitHub.",
+      "Config.VersionCheck en het consolecommando ts_nlplates_check blijven werken."
+    ],
+    "changes": [
+      "Herhaald controleren via de console vereist ts_bridge 1.2.2 of nieuwer.",
+      "De configcontrole bij opstart is ongewijzigd; configversie blijft 1.0.6.",
+      "Kentekens, kentekenbewijzen, webhooks en JG/Sky-koppelingen zijn ongewijzigd."
+    ],
+    "files": [
+      "server/main.lua",
+      "config/config.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "tests/version_check_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Installeer eerst ts_bridge 1.2.2.",
+      "Vervang de scriptbestanden en behoud config/config.lua en config/webhooks.lua.",
+      "Voer ts_nlplates_check uit in de serverconsole om de versiecontrole te testen."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.1.3; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_nohelmet",
+    "version": "1.0.8",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Versiecontrole via ts_bridge en de centrale TroyScripts-versie-API in plaats van het privé GitHub-manifest."
+    ],
+    "changes": [
+      "Uitschakelen blijft mogelijk met set ts_nohelmet_version_check 0.",
+      "Gameplay en configuratie zijn ongewijzigd."
+    ],
+    "files": [
+      "server/version_check.lua",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/INSTALLATIE.md",
+      "tests/version_check_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Vervang de scriptbestanden en behoud config/config.lua.",
+      "Start ts_bridge vóór ts_nohelmet en controleer de versiemelding in de console."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.0.8; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_parkeerapp",
+    "version": "1.0.2",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Nieuw: versiecontrole bij opstart via ts_bridge en de centrale TroyScripts-versie-API."
+    ],
+    "changes": [
+      "Nieuwe optionele instelling versionCheck in config.lua; ontbreekt die, dan staat de controle aan.",
+      "Parkeren, betalen, politiecontrole en de database zijn ongewijzigd."
+    ],
+    "files": [
+      "server/update_check.lua",
+      "config.lua",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "tests/update_check_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak een databaseback-up en bewaar config.lua.",
+      "Vervang de scriptbestanden; neem eventueel de regel versionCheck = true over in je eigen config.lua.",
+      "Start ts_bridge vóór ts_parkeerapp en controleer de versiemelding in de console."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.0.2; goedgekeurd na test op de testserver op 22 november 2026."
+  },
+  {
+    "script": "ts_bridge",
     "version": "1.2.1",
     "date": "2026-11-22",
     "status": "published",

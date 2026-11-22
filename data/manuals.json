@@ -24,7 +24,8 @@
     ],
     "verify": [
       "Voer ts_bridge_check uit in de serverconsole.",
-      "Controleer ingestelde providers, societybetalingen, screenshots/webhooks en afhankelijke resources."
+      "Controleer ingestelde providers, societybetalingen, screenshots/webhooks en afhankelijke resources.",
+      "Controleer in de serverconsole dat de versiemeldingen van alle aangesloten scripts via ts_bridge verschijnen, zonder HTTP 404."
     ],
     "warnings": [
       "Echte webhook-URL's en tokens horen niet op de openbare website of in GitHub.",
@@ -51,7 +52,8 @@
     "requirements": [
       "OneSync, ESX, ox_lib, oxmysql, ox_inventory en ts_bridge.",
       "Voor betaalde kentekenbewijzen moet de ingestelde politierekening bestaan; de documentatie gebruikt society_police.",
-      "JG Dealerships, JG Advanced Garages en MrNewbVehicleKeys zijn integraties en niet automatisch voor iedere server verplicht."
+      "JG Dealerships, JG Advanced Garages en MrNewbVehicleKeys zijn integraties en niet automatisch voor iedere server verplicht.",
+      "Herhaald controleren met ts_nlplates_check vereist ts_bridge 1.2.2 of nieuwer."
     ],
     "install": [
       "Plaats ts_nlplates als volledige resource, inclusief textures/, stream/, fxmanifest.lua en config/.",
@@ -68,7 +70,8 @@
     "verify": [
       "Controleer een nieuwe auto, garage en voertuigslot met hetzelfde kenteken.",
       "Open een dashboardkastje, bekijk/toon het kentekenbewijs en controleer de uitgifte.",
-      "Controleer vervangingskosten en society_police, indien betaald uitgeven is ingeschakeld."
+      "Controleer vervangingskosten en society_police, indien betaald uitgeven is ingeschakeld.",
+      "Voer ts_nlplates_check uit in de serverconsole en controleer de versiemelding via ts_bridge."
     ],
     "warnings": [
       "De optionele offline kentekenmigratie is een afzonderlijke resource en mag niet standaard worden ge-ensured.",
@@ -137,7 +140,8 @@
     "requirements": [
       "OneSync, es_extended, ox_lib en ts_bridge. De standaard ped-modus gebruikt ox_target; marker-modus kan zonder target.",
       "De mechanic- en politierekeningen die je in de configuratie kiest moeten bestaan.",
-      "Gebruik een actueel serverartifact met server-side ped- en voertuigfuncties."
+      "Gebruik een actueel serverartifact met server-side ped- en voertuigfuncties.",
+      "Periodieke versiecontrole (IntervalHours) vereist ts_bridge 1.2.2 of nieuwer."
     ],
     "install": [
       "Plaats ts_repairpoints onder dezelfde resourcenaam en configureer config/config.lua.",
@@ -153,7 +157,8 @@
     "verify": [
       "Controleer of een punt verdwijnt wanneer een monteur in dienst is.",
       "Test prijsopgave, betaling en opbrengsten op de mechanicrekening.",
-      "Test de targetregistratie met /reparatietargetcheck wanneer een ped niet reageert."
+      "Test de targetregistratie met /reparatietargetcheck wanneer een ped niet reageert.",
+      "Controleer in de serverconsole de versiemelding via ts_bridge (geen HTTP 404)."
     ],
     "warnings": [
       "Bij ped-modus is ox_target nodig; marker-modus is een alternatief.",
@@ -329,7 +334,8 @@
     "verify": [
       "Laat de bestuurder uitstappen en controleer of de passagier niet automatisch doorschuift.",
       "Test /schuif in beide richtingen en de optie Wissel voorstoel in het radiaalmenu.",
-      "Controleer de automatische helm op een motor."
+      "Controleer de automatische helm op een motor.",
+      "Controleer in de serverconsole de versiemelding via ts_bridge (geen HTTP 404)."
     ],
     "warnings": [
       "De andere voorstoel moet vrij zijn voordat een speler kan schuiven."
@@ -363,7 +369,8 @@
     "verify": [
       "Test de minimap en ESC-kaart en het commando /postcode.",
       "Controleer /postcode uit en /gemertmapreset na een respawn.",
-      "Controleer radarzoom bij de gekozen HUD."
+      "Controleer radarzoom bij de gekozen HUD.",
+      "Controleer in de serverconsole de versiemelding van ts_gemertmap (geen HTTP 404)."
     ],
     "warnings": [
       "Deze resource werkt zelfstandig; ts_bridge is niet vereist.",
@@ -400,12 +407,14 @@
     "update": [
       "Maak een databaseback-up en bewaar config.lua en bestaande parkeersessies.",
       "Vervang de scriptbestanden en neem eigen bedragen, politiebanen, bank- en brandweerinstellingen over.",
-      "Verwijder geen sessies of openstaande betalingen tijdens de update."
+      "Verwijder geen sessies of openstaande betalingen tijdens de update.",
+      "Neem eventueel de nieuwe regel versionCheck = true over in config.lua; ontbreekt die, dan staat de versiecontrole aan."
     ],
     "verify": [
       "Test een parkeersessie van een minuut met een bankafschrijving en bijschrijving aan brandweer.",
       "Controleer politiecontrole, camerafoto, GPS en boete met een tweede speler.",
-      "Test herstarten met een actieve of nog onbetaalde parkeersessie."
+      "Test herstarten met een actieve of nog onbetaalde parkeersessie.",
+      "Controleer in de serverconsole de versiemelding via ts_bridge."
     ],
     "warnings": [
       "Het script maakt boetes binnen de eigen app; voeg niet automatisch een tweede Apex Billing-factuur toe.",

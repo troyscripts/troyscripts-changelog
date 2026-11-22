@@ -79,7 +79,8 @@
       ],
       "verify": [
         "Run ts_bridge_check in the server console.",
-        "Check the configured providers, society payments, screenshots, webhooks and dependent resources."
+        "Check the configured providers, society payments, screenshots, webhooks and dependent resources.",
+        "Check in the server console that version messages of all connected scripts appear through ts_bridge, without HTTP 404."
       ],
       "warnings": [
         "Never publish real webhook URLs or API tokens on the public site or GitHub.",
@@ -106,7 +107,8 @@
       "requirements": [
         "OneSync, ESX, ox_lib, oxmysql, ox_inventory and ts_bridge are required.",
         "For paid registration documents, the configured police society account must exist; the documentation uses society_police.",
-        "JG Dealerships, JG Advanced Garages and MrNewbVehicleKeys are optional integrations and are not required for every server."
+        "JG Dealerships, JG Advanced Garages and MrNewbVehicleKeys are optional integrations and are not required for every server.",
+        "Repeated checks with ts_nlplates_check require ts_bridge 1.2.2 or newer."
       ],
       "install": [
         "Place the full ts_nlplates resource, including textures/, stream/, fxmanifest.lua and config/.",
@@ -123,7 +125,8 @@
       "verify": [
         "Check that a newly created vehicle, garage and key system all use the same plate.",
         "Open a supported glovebox and view or show a registration document.",
-        "If paid documents are enabled, verify replacement costs and the society_police account."
+        "If paid documents are enabled, verify replacement costs and the society_police account.",
+        "Run ts_nlplates_check in the server console and check the version message through ts_bridge."
       ],
       "warnings": [
         "The optional offline license plate migration is a separate resource and must not be started by default.",
@@ -192,7 +195,8 @@
       "requirements": [
         "OneSync, es_extended, ox_lib and ts_bridge are required. The default NPC mode uses ox_target; marker mode can work without it.",
         "The configured mechanic and police society accounts must exist.",
-        "Use a recent FiveM server artifact supporting server-side NPC and vehicle operations."
+        "Use a recent FiveM server artifact supporting server-side NPC and vehicle operations.",
+        "Periodic version checks (IntervalHours) require ts_bridge 1.2.2 or newer."
       ],
       "install": [
         "Install the resource under the exact name ts_repairpoints and configure config/config.lua.",
@@ -208,7 +212,8 @@
       "verify": [
         "Check that a repair point becomes unavailable while a mechanic is on duty.",
         "Test the quoted repair price, player payment and mechanic society income.",
-        "If an NPC target fails, run /reparatietargetcheck."
+        "If an NPC target fails, run /reparatietargetcheck.",
+        "Check the version message through ts_bridge in the server console (no HTTP 404)."
       ],
       "warnings": [
         "ox_target is required for NPC mode; marker mode is an alternative.",
@@ -384,7 +389,8 @@
       "verify": [
         "Let the driver leave a vehicle and confirm the passenger does not automatically move to the driver's seat.",
         "Test /schuif both ways and the Switch front seat option in the radial menu.",
-        "Check automatic helmet behavior on motorcycles."
+        "Check automatic helmet behavior on motorcycles.",
+        "Check the version message through ts_bridge in the server console (no HTTP 404)."
       ],
       "warnings": [
         "The other front seat must be unoccupied before switching."
@@ -418,7 +424,8 @@
       "verify": [
         "Test the minimap, pause menu map and /postcode command.",
         "Check /postcode uit and /gemertmapreset after respawning.",
-        "Verify radar zoom works with your chosen HUD."
+        "Verify radar zoom works with your chosen HUD.",
+        "Check the ts_gemertmap version message in the server console (no HTTP 404)."
       ],
       "warnings": [
         "This resource runs independently; ts_bridge is not required.",
@@ -455,12 +462,14 @@
       "update": [
         "Back up the database, config.lua and existing parking sessions.",
         "Replace the script files and transfer custom prices, police jobs, banking and fire department settings.",
-        "Do not delete active sessions or unpaid charges during the update."
+        "Do not delete active sessions or unpaid charges during the update.",
+        "Optionally copy the new versionCheck = true line into config.lua; if it is missing, the version check is on."
       ],
       "verify": [
         "Test a one-minute parking session, bank debit and credit to the fire department.",
         "With another player, test police plate searches, camera evidence, GPS and parking fines.",
-        "Test restarting with an active or unpaid parking session."
+        "Test restarting with an active or unpaid parking session.",
+        "Check the version message through ts_bridge in the server console."
       ],
       "warnings": [
         "The app manages its own fines; do not automatically create a duplicate Apex Billing invoice.",

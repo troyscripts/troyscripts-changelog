@@ -1,4 +1,22 @@
 {
+  "ts_bridge@1.2.2": {
+    "summary": "Scripts can check their version again once the previous check has finished, so the periodic check of ts_repairpoints and the ts_nlplates_check console command work through the central version API. Concurrent requests are still refused; caching, exports and config schema 0.1.2 are unchanged. The GitHub repository is now also named ts_bridge."
+  },
+  "ts_repairpoints@1.1.5": {
+    "summary": "Version checking now runs through ts_bridge and the central TroyScripts version API instead of the private GitHub manifest, so HTTP 404 messages are gone. The startup check and IntervalHours keep working (periodic checks need ts_bridge 1.2.2); Repository and Branch are ignored and config schema stays 1.1.1."
+  },
+  "ts_gemertmap@1.1.2": {
+    "summary": "Version checking now uses the central TroyScripts version API instead of version.txt on GitHub. With ts_bridge running the check goes through the bridge; without it the map queries the site itself, so ts_bridge stays optional. Config schema stays 1.0.9."
+  },
+  "ts_nlplates@1.1.3": {
+    "summary": "Version checking now runs through ts_bridge and the central TroyScripts version API instead of version.json on GitHub. Config.VersionCheck and the ts_nlplates_check console command keep working (repeated console checks need ts_bridge 1.2.2). Config version stays 1.0.6."
+  },
+  "ts_nohelmet@1.0.8": {
+    "summary": "Version checking now runs through ts_bridge and the central TroyScripts version API instead of the private GitHub manifest. It can still be disabled with set ts_nohelmet_version_check 0; gameplay and configuration are unchanged."
+  },
+  "ts_parkeerapp@1.0.2": {
+    "summary": "New startup version check through ts_bridge and the central TroyScripts version API. The optional versionCheck setting in config.lua defaults to on when missing; parking, payments, police checks and the database are unchanged."
+  },
   "ts_bridge@1.2.1": {
     "summary": "Central version checking now reads the public TroyScripts API instead of private GitHub repositories. Available updates link to the customer's Cfx.re Granted Assets page. Existing exports are compatible; one shared request is cached for five minutes and config schema remains 0.1.2."
   },
