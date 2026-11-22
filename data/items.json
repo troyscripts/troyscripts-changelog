@@ -1,0 +1,29 @@
+{
+  "ts_keycard": {
+    "source": "install/items/ox_inventory_item.txt",
+    "items": [
+      "politie_sleutelkaart",
+      "ambulance_sleutelkaart",
+      "brandweer_sleutelkaart",
+      "vervalste_politiekaart",
+      "vervalste_ambulancekaart",
+      "vervalste_brandweerkaart",
+      "lege_sleutelpas",
+      "kaartchip",
+      "codeerset",
+      "monteur_sleutelkaart",
+      "taxi_sleutelkaart",
+      "sheriff_sleutelkaart",
+      "justitie_sleutelkaart",
+      "fib_sleutelkaart"
+    ],
+    "code": "-- Voeg deze entries BINNEN de bestaande return { ... } van ox_inventory/data/items.lua toe.\n['politie_sleutelkaart'] = {\n    label = 'Politie sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart van Politie Gemert.',\n    client = { image = 'politie_sleutelkaart.png', export = 'ts_keycard.useCard' }\n},\n['ambulance_sleutelkaart'] = {\n    label = 'Ambulance sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart van Ambulance Gemert.',\n    client = { image = 'ambulance_sleutelkaart.png', export = 'ts_keycard.useExtraCard' }\n},\n['brandweer_sleutelkaart'] = {\n    label = 'Brandweer sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart van Brandweer Gemert.',\n    client = { image = 'brandweer_sleutelkaart.png', export = 'ts_keycard.useExtraCard' }\n},\n['vervalste_politiekaart'] = {\n    label = 'Vervalste politiekaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Vervalste toegangskaart voor politiedeuren.',\n    client = { image = 'vervalste_politiekaart.png', export = 'ts_keycard.useExtraCard' }\n},\n['vervalste_ambulancekaart'] = {\n    label = 'Vervalste ambulancekaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Vervalste toegangskaart voor ambulancedeuren.',\n    client = { image = 'vervalste_ambulancekaart.png', export = 'ts_keycard.useExtraCard' }\n},\n['vervalste_brandweerkaart'] = {\n    label = 'Vervalste brandweerkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Vervalste toegangskaart voor brandweerdeuren.',\n    client = { image = 'vervalste_brandweerkaart.png', export = 'ts_keycard.useExtraCard' }\n},\n['lege_sleutelpas'] = { label = 'Lege sleutelpas', weight = 20, stack = true, close = true,\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useForgeryMaterial' } },\n['kaartchip'] = { label = 'Kaartchip', weight = 10, stack = true, close = true,\n    client = { image = 'kaartchip.png', export = 'ts_keycard.useForgeryMaterial' } },\n['codeerset'] = { label = 'Codeerset', weight = 100, stack = true, close = true,\n    client = { image = 'codeerset.png', export = 'ts_keycard.useForgeryMaterial' } },\n\n['monteur_sleutelkaart'] = {\n    label = 'Monteur sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart: Monteur.',\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useDepartmentCard' }\n},\n\n['taxi_sleutelkaart'] = {\n    label = 'Taxi sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart: Taxi.',\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useDepartmentCard' }\n},\n\n['sheriff_sleutelkaart'] = {\n    label = 'Sheriff sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart: Sheriff.',\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useDepartmentCard' }\n},\n\n['justitie_sleutelkaart'] = {\n    label = 'Justitie sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart: Justitie.',\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useDepartmentCard' }\n},\n\n['fib_sleutelkaart'] = {\n    label = 'FIB sleutelkaart', weight = 10, stack = false, close = true, consume = 0,\n    description = 'Persoonlijke sleutelkaart: FIB.',\n    client = { image = 'lege_sleutelpas.png', export = 'ts_keycard.useDepartmentCard' }\n},"
+  },
+  "ts_nlplates": {
+    "source": "README.md — ox_inventory",
+    "items": [
+      "kentekenbewijs"
+    ],
+    "code": "['kentekenbewijs'] = {\n    label = 'Kentekenbewijs', weight = 0, stack = false, close = true, consume = 0,\n    description = 'Gebruik om het kentekenbewijs te bekijken of te tonen.',\n    client = { export = 'ts_nlplates.useRegistration', image = 'kentekenbewijs.png' },\n},"
+  }
+}

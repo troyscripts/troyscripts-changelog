@@ -1,0 +1,459 @@
+{
+  "ts_bridge": {
+    "type": "fivem",
+    "summary": "Centrale integratie voor framework, inventory, bankieren, voertuigen, meldingen, camera en webhooks.",
+    "providers": [
+      "ox_lib"
+    ],
+    "needs": [],
+    "onesync": false,
+    "requirements": [
+      "ox_lib is verplicht. Kies bestaande ESX-, inventory-, target-, banking- en billingproviders in de bridgeconfiguratie.",
+      "De FiveM-resourcenaam is ts_bridge; de privé GitHub-repository heet ts_brigde."
+    ],
+    "install": [
+      "Plaats de volledige map als resources/[troyscripts]/ts_bridge met fxmanifest.lua direct in die map.",
+      "Stel config/config.lua in voor jouw providers, jobs, taal en diensten. Zet geheime webhookadressen alleen in config/webhook_config.lua.",
+      "Start ox_lib en je gebruikte externe providers vóór ts_bridge; daarna pas scripts die van de bridge afhankelijk zijn."
+    ],
+    "update": [
+      "Maak een back-up van config/config.lua en config/webhook_config.lua buiten de actieve resourcemap.",
+      "Stop afhankelijke scripts vóór je ts_bridge stopt. Vervang de volledige oude map, zeker bij een gewijzigde mappenstructuur.",
+      "Neem persoonlijke instellingen en webhooks over in de nieuwe configbestanden; verhoog niet alleen het configversienummer.",
+      "Start eerst de bridge en herstart daarna alle scripts die deze gebruiken."
+    ],
+    "verify": [
+      "Voer ts_bridge_check uit in de serverconsole.",
+      "Controleer ingestelde providers, societybetalingen, screenshots/webhooks en afhankelijke resources."
+    ],
+    "warnings": [
+      "Echte webhook-URL's en tokens horen niet op de openbare website of in GitHub.",
+      "Een bridge-update kan vereisen dat afhankelijke resources worden herstart."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "config/webhook_config.lua"
+    ]
+  },
+  "ts_nlplates": {
+    "type": "fivem",
+    "summary": "Nederlandse kentekens, kentekenbewijs en optionele JG-/Sky-koppelingen.",
+    "providers": [
+      "oxmysql",
+      "es_extended",
+      "ox_lib",
+      "ox_inventory"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "OneSync, ESX, ox_lib, oxmysql, ox_inventory en ts_bridge.",
+      "Voor betaalde kentekenbewijzen moet de ingestelde politierekening bestaan; de documentatie gebruikt society_police.",
+      "JG Dealerships, JG Advanced Garages en MrNewbVehicleKeys zijn integraties en niet automatisch voor iedere server verplicht."
+    ],
+    "install": [
+      "Plaats ts_nlplates als volledige resource, inclusief textures/, stream/, fxmanifest.lua en config/.",
+      "Importeer sql/install.sql voor de nieuwe registratiegegevens.",
+      "Voeg uitsluitend het ontbrekende kentekenbewijs-item toe aan ox_inventory/data/items.lua. Het eigen kentekenbewijs.png-icoon moet je zelf plaatsen.",
+      "Configureer kentekenpatroon en optionele JG-adapters volgens de meegeleverde documentatie."
+    ],
+    "update": [
+      "Maak vóór het vervangen een back-up van de resource, configs en de database.",
+      "Vervang de hele map; neem eigen waarden over in config/config.lua en webhookinstellingen in config/webhooks.lua.",
+      "Oude opgeslagen kentekens met streepjes vereisen een afzonderlijke offline migratie; alleen Config.PlateFormat aanpassen zet geen opgeslagen voertuigen om.",
+      "Controleer de bestaande JG-/Sky-koppelingen en start de hele server opnieuw wanneer items of kentekens zijn gemigreerd."
+    ],
+    "verify": [
+      "Controleer een nieuwe auto, garage en voertuigslot met hetzelfde kenteken.",
+      "Open een dashboardkastje, bekijk/toon het kentekenbewijs en controleer de uitgifte.",
+      "Controleer vervangingskosten en society_police, indien betaald uitgeven is ingeschakeld."
+    ],
+    "warnings": [
+      "De optionele offline kentekenmigratie is een afzonderlijke resource en mag niet standaard worden ge-ensured.",
+      "kentekenbewijs.png wordt niet standaard meegeleverd volgens de huidige README."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "config/webhooks.lua",
+      "database en geregistreerde kentekens"
+    ],
+    "items": [
+      "kentekenbewijs"
+    ]
+  },
+  "ts_flatbed": {
+    "type": "fivem",
+    "summary": "Rijplaten, lier, afstandsbediening en wielheffer voor ondersteunde bergingsvoertuigen.",
+    "providers": [
+      "ox_lib",
+      "ox_target"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "OneSync, ox_lib, ox_target en ts_bridge.",
+      "Een passende geïnstalleerde voertuigresource; standaard worden energyrampamec en energyguinchotop (uit energy_vehtopgear) ondersteund.",
+      "Voor beroepsbeperkingen moet het betreffende framework via de bridge beschikbaar zijn."
+    ],
+    "install": [
+      "Plaats de volledige resourcemap ts_flatbed op de server.",
+      "Laat de afzonderlijke voertuigresource staan en start die vóór ts_flatbed. Pas Config.Models aan bij andere spawnnamen.",
+      "Gebruik de bestaande ox_lib-, ox_target- en ts_bridge-instellingen. Er zijn geen SQL-tabellen of inventory-items nodig."
+    ],
+    "update": [
+      "Maak een back-up van config.lua en calibration.json.",
+      "Vervang de scriptbestanden; neem de eigen modellen, rechten en instellingen in de nieuwste config.lua over.",
+      "Behoud calibration.json: daarin staan eerder opgeslagen voertuigafstellingen."
+    ],
+    "verify": [
+      "Test rijplaten, lier laden/lossen en remmen op vlak terrein.",
+      "Controleer een tweede auto aan de lepel; pas indien nodig voertuigafstellingen aan met /flatbedmeten en /flatbedafstellen."
+    ],
+    "warnings": [
+      "De voertuigresource zelf wordt niet met ts_flatbed meegeleverd.",
+      "Gebruik geen oud configbestand zonder te controleren welke nieuwe velden zijn toegevoegd."
+    ],
+    "preserve": [
+      "config.lua",
+      "calibration.json"
+    ]
+  },
+  "ts_repairpoints": {
+    "type": "fivem",
+    "summary": "Reparatiepunten met monteur-ped of marker, schadeprijzen en societybetaling.",
+    "providers": [
+      "es_extended",
+      "ox_lib",
+      "ox_target"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "OneSync, es_extended, ox_lib en ts_bridge. De standaard ped-modus gebruikt ox_target; marker-modus kan zonder target.",
+      "De mechanic- en politierekeningen die je in de configuratie kiest moeten bestaan.",
+      "Gebruik een actueel serverartifact met server-side ped- en voertuigfuncties."
+    ],
+    "install": [
+      "Plaats ts_repairpoints onder dezelfde resourcenaam en configureer config/config.lua.",
+      "Kies ped (ox_target) of marker (E) en stel mechanics, dienstcontrole en societyrekeningen in.",
+      "Gebruik /reparatiepunt plaatsen of configureer vaste punten. De nieuwe installatie heeft geen actieve voorbeeldpunten.",
+      "Er is geen SQL-installatie voor de huidige resource."
+    ],
+    "update": [
+      "Bewaar de volledige data-map, in het bijzonder data/points.json en data/compensation.json als die bestaan.",
+      "Neem je eigen vaste locaties, jobnamen, society en dienstinstellingen over in de nieuwe config.",
+      "Vervang de scriptbestanden zonder bestaande reparatie- of schulddossiers weg te gooien."
+    ],
+    "verify": [
+      "Controleer of een punt verdwijnt wanneer een monteur in dienst is.",
+      "Test prijsopgave, betaling en opbrengsten op de mechanicrekening.",
+      "Test de targetregistratie met /reparatietargetcheck wanneer een ped niet reageert."
+    ],
+    "warnings": [
+      "Bij ped-modus is ox_target nodig; marker-modus is een alternatief.",
+      "Controleer de bestaande bank-/societyintegratie vóór je betalingen test."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "config/server.lua indien gewijzigd",
+      "data/points.json",
+      "data/compensation.json",
+      "data/repairs.json indien aanwezig"
+    ]
+  },
+  "ts_keycard": {
+    "type": "fivem",
+    "summary": "Sleutelkaarten, vervalsing en optionele 0r_idcard-werkpassen per beroep.",
+    "providers": [
+      "es_extended",
+      "ox_lib",
+      "ox_inventory",
+      "ox_target"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "OneSync, ESX, ox_lib, ox_inventory, ox_target en ts_bridge.",
+      "De ingestelde jobnamen en de bijbehorende societyrekeningen moeten bestaan.",
+      "0r_idcard is optioneel voor de werkpassen; zonder deze integratie blijven gewone sleutelkaarten werken."
+    ],
+    "install": [
+      "Plaats ts_keycard onder precies die resourcenaam, na ts_bridge.",
+      "Neem ontbrekende entries over uit install/items/ox_inventory_item.txt binnen de bestaande return { ... } van ox_inventory/data/items.lua.",
+      "Kopieer de bijbehorende afbeeldingsbestanden uit install/images/ naar ox_inventory/web/images/.",
+      "Stel de afdelingen, betalingen, locaties en optionele 0r_idcard-koppeling in; plaats de loketten met /kaartpunt."
+    ],
+    "update": [
+      "Bewaar config/config.lua en config/server.lua en alle eigen webhookadressen.",
+      "Vervang de oude volledige resourcemap om oude Lua-bestanden en paden niet achter te laten.",
+      "Neem nieuwe Config.Departments en andere vereiste velden over; wijzig niet uitsluitend Config.Version.",
+      "Behoud opgeslagen locaties en kaartgegevens; start inventory en bridge vóór ts_keycard."
+    ],
+    "verify": [
+      "Vraag per werkelijk geïnstalleerde job een kaart aan; controleer prijs en society.",
+      "Test vervalsingen, deurtoegang, gestolen kaarten en de intrekkingsblokkade.",
+      "Test optioneel werkpasuitgifte met en zonder 0r_idcard."
+    ],
+    "warnings": [
+      "De itemdefinities worden gecombineerd voor ox_inventory; voeg reeds bestaande items niet dubbel toe.",
+      "Bij installatie met 0r_idcard hoort de eigen job-ped mogelijk te worden uitgeschakeld volgens de idcard-config."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "config/server.lua",
+      "opgeslagen keycardlocaties en gegevens"
+    ],
+    "items": [
+      "politie_sleutelkaart",
+      "ambulance_sleutelkaart",
+      "brandweer_sleutelkaart",
+      "vervalste_politiekaart",
+      "vervalste_ambulancekaart",
+      "vervalste_brandweerkaart",
+      "lege_sleutelpas",
+      "kaartchip",
+      "codeerset",
+      "monteur_sleutelkaart",
+      "taxi_sleutelkaart",
+      "sheriff_sleutelkaart",
+      "justitie_sleutelkaart",
+      "fib_sleutelkaart"
+    ]
+  },
+  "ts_hostage": {
+    "type": "fivem",
+    "summary": "Gijzelen te voet of in voertuigen, politiemeldingen, camera- en screenshotintegratie.",
+    "providers": [
+      "ox_lib",
+      "es_extended"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "OneSync, ox_lib en ts_bridge. ESX is gebruikt voor de beschreven politie-integratie.",
+      "ox_target is alleen nodig voor targetbediening; screenshot-basic is optioneel voor Discord-foto's."
+    ],
+    "install": [
+      "Plaats ts_hostage als volledige map naast de andere TroyScripts-resources.",
+      "Gebruik config/config.lua voor algemene opties en config/server_config.lua voor geheime serverinstellingen.",
+      "Start ts_bridge vóór ts_hostage. Voeg ox_target of screenshot-basic alleen toe als je de betreffende functies gebruikt."
+    ],
+    "update": [
+      "Wacht tot er geen actieve gijzelingen zijn, stop ts_hostage en maak een volledige back-up.",
+      "Vervang de oude resourcemap en gebruik het nieuwe fxmanifest.lua.",
+      "Neem oude config.lua-waarden over in config/config.lua en server_config.lua-waarden in config/server_config.lua.",
+      "Herstart ts_hostage na een bridgeherstart."
+    ],
+    "verify": [
+      "Test handen omhoog, gijzelen, loslaten en wapenstatus met twee spelers.",
+      "Controleer cameraherstel, radialmenu, politiemeldingen en optionele foto's."
+    ],
+    "warnings": [
+      "Geheime webhookadressen horen alleen in serverbestanden.",
+      "Bij Electron Resource Protection moeten relevante resources/screenshot-basic op de whitelist wanneer gebruikt."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "config/server_config.lua",
+      "locales/ bij eigen vertalingen"
+    ]
+  },
+  "ts_antipunch": {
+    "type": "fivem",
+    "summary": "Schiet-/melee-beperkingen en centraal camerabeheer via de bridge.",
+    "providers": [
+      "ox_lib"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": false,
+    "requirements": [
+      "ts_bridge met compatibele camera- en combat-API; ox_lib via ts_bridge.",
+      "Geen eigen ESX-, inventory-, ox_target- of SQL-installatie vereist."
+    ],
+    "install": [
+      "Installeer de volledige map ts_antipunch, inclusief config/ en shared/.",
+      "Start ox_lib en ts_bridge vóór ts_antipunch. Als je ts_hostage ook gebruikt, start antipunch eerst."
+    ],
+    "update": [
+      "Maak een back-up van config/config.lua en eventueel eigen vertalingen.",
+      "Stop ts_antipunch en vervang de hele oude map; oude rootbestanden mogen niet blijven liggen.",
+      "Neem je aangepaste waarden en de bestaande MeleeCancelMode-instelling over in de nieuwe config."
+    ],
+    "verify": [
+      "Controleer melee en schieten zonder te richten, herladen en camerawisselingen.",
+      "Test samen met ts_hostage of het camerabeheer na vrijlaten netjes terugkomt."
+    ],
+    "warnings": [
+      "Huidige documentatie bevat oudere, elkaar tegensprekende configversie-instructies; neem de daadwerkelijke velden uit het nieuwste pakket over en verhoog geen schema blind."
+    ],
+    "preserve": [
+      "config/config.lua",
+      "locales/nl.lua indien aangepast"
+    ]
+  },
+  "ts_nohelmet": {
+    "type": "fivem",
+    "summary": "Geen automatische motorhelm, voorkom automatisch doorschuiven en gebruik /schuif.",
+    "providers": [
+      "ox_lib"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": false,
+    "requirements": [
+      "ox_lib en ts_bridge (voor de radiaal- en stoelwisselfuncties).",
+      "Geen eigen ESX-, SQL- of inventory-items vereist."
+    ],
+    "install": [
+      "Plaats de map ts_nohelmet in je resources-map en controleer fxmanifest.lua.",
+      "Zorg dat ox_lib en ts_bridge eerder starten.",
+      "Stel helmblokkering, automatische stoelwissel en radiaalmenu in via config/config.lua."
+    ],
+    "update": [
+      "Bewaar je persoonlijke config/config.lua en verwijder achtergebleven oude bestanden uit de voormalige resource.",
+      "Controleer of nieuwe configopties nodig zijn; herstart de resource na wijzigingen."
+    ],
+    "verify": [
+      "Laat de bestuurder uitstappen en controleer of de passagier niet automatisch doorschuift.",
+      "Test /schuif in beide richtingen en de optie Wissel voorstoel in het radiaalmenu.",
+      "Controleer de automatische helm op een motor."
+    ],
+    "warnings": [
+      "De andere voorstoel moet vrij zijn voordat een speler kan schuiven."
+    ],
+    "preserve": [
+      "config/config.lua"
+    ]
+  },
+  "ts_gemertmap": {
+    "type": "fivem",
+    "summary": "Nederlandse satellietkaart, postcodes, navigatie en configureerbare radarzoom.",
+    "providers": [
+      "ox_lib"
+    ],
+    "needs": [],
+    "onesync": false,
+    "requirements": [
+      "FiveM-kaartstreaming (.ytd/.ydd) en ox_lib.",
+      "Geen verplichte ESX-, SQL-, ts_bridge- of inventory-dependency."
+    ],
+    "install": [
+      "Plaats de volledige map ts_gemertmap inclusief stream/ en data/ en laat ox_lib eerst starten.",
+      "Controleer of er niet twee resources dezelfde minimap*.ytd/minimap.gfx-assets streamen.",
+      "Neem eigen gebiedsnamen, postcodepunten en radarinstellingen op in config/config.lua."
+    ],
+    "update": [
+      "Maak een back-up van je kaartinstellingen en de volledige oude resource.",
+      "Verwijder de oude map na de back-up en plaats het complete pakket; neem instellingen over in config/config.lua.",
+      "Herstart de hele server om alle kaarttextures en de minimap te vernieuwen."
+    ],
+    "verify": [
+      "Test de minimap en ESC-kaart en het commando /postcode.",
+      "Controleer /postcode uit en /gemertmapreset na een respawn.",
+      "Controleer radarzoom bij de gekozen HUD."
+    ],
+    "warnings": [
+      "Deze resource werkt zelfstandig; ts_bridge is niet vereist.",
+      "Conflict met andere minimap-streamers kan de kaartweergave verstoren."
+    ],
+    "preserve": [
+      "config/config.lua"
+    ]
+  },
+  "ts_parkeerapp": {
+    "type": "fivem",
+    "summary": "Parkeersessies, betaalverzoeken, politiecontrole en boetefoto's in Sky Phone.",
+    "providers": [
+      "oxmysql",
+      "ox_lib",
+      "es_extended",
+      "sky_phone"
+    ],
+    "needs": [
+      "ts_bridge"
+    ],
+    "onesync": true,
+    "requirements": [
+      "Sky Phone (getest voor versie 1.6.1), OneSync, oxmysql, ox_lib, ESX en ts_bridge.",
+      "Custom/externe apps moeten in de actieve Sky Phone-instellingen zijn toegestaan.",
+      "Bankprovider, brandweerrekening en eventuele boeterekening moeten in de bridge bestaan. FiveManage wordt via Sky Phone geconfigureerd."
+    ],
+    "install": [
+      "Plaats ts_parkeerapp als eigen resource en importeer sql/install.sql in dezelfde MariaDB-database als ESX/Sky Phone.",
+      "Test de bestaande camerafoto- en galerij-upload in Sky Phone voordat je de parkeerapp gebruikt.",
+      "Configureer brandweerrekening, politiebanen, tarieven en boetebetalingen in config.lua.",
+      "Start de parkeerapp nadat oxmysql, ox_lib, ts_bridge en sky_phone actief zijn."
+    ],
+    "update": [
+      "Maak een databaseback-up en bewaar config.lua en bestaande parkeersessies.",
+      "Vervang de scriptbestanden en neem eigen bedragen, politiebanen, bank- en brandweerinstellingen over.",
+      "Verwijder geen sessies of openstaande betalingen tijdens de update."
+    ],
+    "verify": [
+      "Test een parkeersessie van een minuut met een bankafschrijving en bijschrijving aan brandweer.",
+      "Controleer politiecontrole, camerafoto, GPS en boete met een tweede speler.",
+      "Test herstarten met een actieve of nog onbetaalde parkeersessie."
+    ],
+    "warnings": [
+      "Het script maakt boetes binnen de eigen app; voeg niet automatisch een tweede Apex Billing-factuur toe.",
+      "Sky Phone beheert de bestaande media-upload; plaats geen geheime FiveManage-sleutel op deze site."
+    ],
+    "preserve": [
+      "config.lua",
+      "MariaDB-parkeertabellen en openstaande betalingen"
+    ]
+  },
+  "tgc_bot": {
+    "type": "bot",
+    "summary": "Discord-bot voor tickets, economie, meldingen, moderatie, radio en centrale hub.",
+    "providers": [],
+    "needs": [],
+    "onesync": false,
+    "requirements": [
+      "Node.js 24.x op bestaande bot-hosting, Discord-applicatie en eigen token.",
+      "Volledige botbestanden met package.json en package-lock.json.",
+      "Blijvende opslag voor SQLite-database, logs en back-ups; Node.js 22 wordt niet ondersteund."
+    ],
+    "install": [
+      "Maak in het Discord Developer Portal een eigen applicatie, zet benodigde Gateway Intents aan en geef de bot passende rollen en rechten.",
+      "Plaats de volledige botmap op de bestaande Node.js-hosting. index.js en package.json moeten in dezelfde hoofdmap staan.",
+      "Maak een eigen .env met TOKEN, CLIENT_ID, GUILD_ID en OWNER_IDS; bewaar die buiten GitHub.",
+      "Voer npm ci --no-audit --no-fund uit en start de bot met npm start.",
+      "Gebruik de installatiemodus en het /help-systeem om de Discord-serverinstellingen te controleren."
+    ],
+    "update": [
+      "Stop de hoofd-hub en aangesloten bots. Bewaar de database, .env, uploads en eigen instellingen.",
+      "Neem de volledige release over inclusief package.json en package-lock.json; upload geen lokale node_modules van Windows naar Linux.",
+      "Voer npm ci uit. Start eerst de hub en daarna aangesloten bots.",
+      "Controleer de radio na updates en documenteer eventuele environmentwijzigingen."
+    ],
+    "verify": [
+      "Controleer console, gatewayverbinding en slashcommando's.",
+      "Test tickets, meldingen en hubcommunicatie met de beschikbare testserver.",
+      "Test de radio wanneer FFmpeg of voice-dependencies zijn bijgewerkt."
+    ],
+    "warnings": [
+      "Dit is een afzonderlijke Discord-bot, geen FiveM-resource: voeg geen ensure-regel aan server.cfg toe.",
+      "Upload nooit TOKEN, .env, databasebestanden of andere privégegevens naar de openbare changelogsite."
+    ],
+    "preserve": [
+      ".env",
+      "SQLite-database",
+      "uploads/logs/back-ups",
+      "eigen hubgegevens"
+    ]
+  }
+}

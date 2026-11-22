@@ -79,3 +79,13 @@ Versies overgenomen uit de huidige manifests van de GitHub-repositories van **tr
 De website toont ook **Troy's Game Community Bot** onder de categorie **Discord-bot**, met actuele versie **3.8.4** uit package.json van de bestaande botrepo en de historische 3.x-wijzigingen uit docs/CHANGELOG.md. De bronrepository kan privé blijven. Alleen changelogteksten worden openbaar gemaakt, geen botcode, API-sleutels, database of .env. Als een releasedatum ontbreekt in de bron, toont de site 'Releasedatum niet vermeld'.
 
 De bot draait op de bestaande hosting. GitHub Pages start of beheert de bot niet. Het toevoegen van de bot als nieuw catalogusitem verstuurt geen Discord-aankondiging; bij latere nieuwe gepubliceerde versies werkt de bestaande automatische release-aankondiging.
+
+## Interactieve installatiehulp en navigatie
+
+- Alle 11 projecten hebben een uitklapbaar linkermenu: Introductie, Changelog, Installatie en Installatieplan.
+- Bezoekers kunnen via `/installatie/` hun eigen FiveM-resources selecteren en kiezen tussen een eerste installatie of bijwerken.
+- De geselecteerde resources bepalen een voorbeeldvolgorde in server.cfg, benodigde providers, OneSync-waarschuwingen, behoud van eigen data en controles per resource.
+- Items voor ts_keycard en ts_nlplates komen uit de gecontroleerde bronbestanden; voeg alleen ontbrekende items toe en installeer zelf de bijbehorende afbeeldingen.
+- ts_bridge wordt als dependency toegevoegd waar nodig; ts_gemertmap heeft deze dependency niet. De Discord-bot wordt nooit in server.cfg gezet.
+- De installatiebron staat onder `data/manuals.json` en `data/items.json`. Bij toekomstige updates moeten concrete installatieverschillen hier worden aangepast.
+- **Belangrijk:** dit genereert een aanbevolen startvolgorde, geen configuratie op maat van onbekende externe assets. Controleer elk fragment en de instructies voor jouw daadwerkelijke server. Verander nooit blind schema- of versievelden.
