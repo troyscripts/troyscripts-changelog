@@ -184,5 +184,8 @@
   },
   "ts_flatbed@1.0.4": {
     "summary": "Removed the server-specific ElectronAC line from fxmanifest.lua, so the script also starts on servers without ElectronAC. escrow_ignore now points to the actual config.lua, so the config stays editable in the Cfx version."
+  },
+  "ts_nlplates_migrate@1.0.3": {
+    "summary": "config.lua is now editable in the Cfx version, so you can check BlockedResources before migrating. The README now states to remove the tool after use and never add it to server.cfg. Migration logic is unchanged."
   }
 }

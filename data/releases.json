@@ -1,5 +1,28 @@
 [
   {
+    "script": "ts_nlplates_migrate",
+    "version": "1.0.3",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "config.lua is in de Cfx-versie nu aan te passen, zodat je BlockedResources kunt controleren voordat je migreert."
+    ],
+    "changes": [
+      "escrow_ignore wijst naar config.lua in de hoofdmap; het oude pad config/config.lua bestond niet.",
+      "README bijgewerkt: verwijder de tool na gebruik en zet hem nooit in server.cfg.",
+      "Migratielogica en commando's ongewijzigd."
+    ],
+    "files": [
+      "fxmanifest.lua",
+      "README.md"
+    ],
+    "instructions": [
+      "Heb je de migratie al uitgevoerd, dan hoef je niets te doen.",
+      "Moet je nog migreren, gebruik dan 1.0.3 en volg de stappen op deze pagina. Verwijder de tool daarna van je server."
+    ],
+    "sourceNote": "Gebaseerd op README.md en WIJZIGINGEN.txt van ts_nlplates_migrate v1.0.3."
+  },
+  {
     "script": "ts_flatbed",
     "version": "1.0.4",
     "date": "2026-11-22",
