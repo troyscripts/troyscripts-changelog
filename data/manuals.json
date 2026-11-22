@@ -9,7 +9,7 @@
     "onesync": false,
     "requirements": [
       "ox_lib is verplicht. Kies bestaande ESX-, inventory-, target-, banking- en billingproviders in de bridgeconfiguratie.",
-      "De FiveM-resourcenaam is ts_bridge; de privé GitHub-repository heet ts_brigde."
+      "De FiveM-resourcenaam en de privé GitHub-repository heten allebei ts_bridge."
     ],
     "install": [
       "Plaats de volledige map als resources/[troyscripts]/ts_bridge met fxmanifest.lua direct in die map.",

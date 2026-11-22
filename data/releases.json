@@ -33,7 +33,7 @@
       "Herstart de server met externe providers vóór ts_bridge en de overige TroyScripts daarna.",
       "Controleer de serverconsole: de checker gebruikt het centrale versiepunt, en bij nieuwe updates wijst de console naar de Cfx.re-assets."
     ],
-    "sourceNote": "Gebaseerd op de officiële changelog van ts_brigde v1.2.1; bevestigd getest op de testserver en door de maker gepubliceerd op Cfx.re op 22 november 2026."
+    "sourceNote": "Gebaseerd op de officiële changelog van ts_bridge v1.2.1; bevestigd getest op de testserver en door de maker gepubliceerd op Cfx.re op 22 november 2026."
   },
   {
     "script": "ts_bridge",
@@ -52,7 +52,7 @@
     "instructions": [
       "Controleer de providerinstellingen en neem eigen configuratie over volgens de installatiehandleiding."
     ],
-    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_brigde. Voor versie 1.2.0 is nog geen afzonderlijke changelog geïmporteerd."
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_bridge. Voor versie 1.2.0 is nog geen afzonderlijke changelog geïmporteerd."
   },
   {
     "script": "ts_nlplates",

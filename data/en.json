@@ -64,7 +64,7 @@
       "onesync": false,
       "requirements": [
         "ox_lib is required. Select your current ESX, inventory, target, banking and billing providers in the bridge configuration.",
-        "The FiveM resource must be named ts_bridge, although the GitHub repository is named ts_brigde."
+        "The FiveM resource and the private GitHub repository are both named ts_bridge."
       ],
       "install": [
         "Place the complete resource in resources/[troyscripts]/ts_bridge, with fxmanifest.lua directly inside that folder.",
