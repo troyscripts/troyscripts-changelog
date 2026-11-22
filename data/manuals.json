@@ -83,39 +83,6 @@
       "kentekenbewijs"
     ]
   },
-  "ts_nlplates_migrate": {
-    "type": "fivem",
-    "summary": "Eenmalige onderhoudstool die oude ts_nlplates-kentekens met streepjes offline omzet naar de huidige Nederlandse notatie.",
-    "providers": [
-      "oxmysql"
-    ],
-    "needs": [],
-    "onesync": false,
-    "requirements": [
-      "oxmysql is vereist; ts_bridge en ESX zijn niet nodig.",
-      "Maak vooraf een volledige databaseback-up en test eerst op een databasekopie."
-    ],
-    "install": [
-      "Plaats ts_nlplates_migrate als eigen resource; start hem alleen voor de migratie.",
-      "Stop ts_nlplates, ox_inventory, garages, sleutelscripts, es_extended en andere schrijvende resources en zorg dat er geen spelers online zijn.",
-      "Voer in de serverconsole eerst 'ts_nlplates_spaties controle' uit en daarna pas 'ts_nlplates_spaties uitvoeren'."
-    ],
-    "update": [
-      "Vervang de scriptbestanden en neem eigen tabellen en geblokkeerde resources uit config.lua over.",
-      "Configversie blijft 1.0.0; ontbreekt Config.VersionCheck in je eigen config, dan staat de versiecontrole aan."
-    ],
-    "verify": [
-      "Controleer de uitvoer van de controlemodus voordat je de migratie uitvoert.",
-      "Controleer na de migratie een aantal voertuigen, kentekenbewijzen en sleutels in de database en in-game."
-    ],
-    "warnings": [
-      "Niet gebruiken op een draaiende server met spelers; de tool weigert dan te starten.",
-      "Verwijder of stop de resource na een geslaagde migratie."
-    ],
-    "preserve": [
-      "config.lua"
-    ]
-  },
   "ts_flatbed": {
     "type": "fivem",
     "summary": "Rijplaten, lier, afstandsbediening en wielheffer voor ondersteunde bergingsvoertuigen.",

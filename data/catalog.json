@@ -16,14 +16,6 @@
     "description": "Nederlandse kentekens en kentekenbewijzen voor FiveM."
   },
   {
-    "id": "ts_nlplates_migrate",
-    "name": "Kentekenmigratie",
-    "icon": "🔁",
-    "category": "Voertuigen",
-    "initialVersion": "1.0.2",
-    "description": "Eenmalige offline omzetting van oude ts_nlplates-kentekens met streepjes."
-  },
-  {
     "id": "ts_flatbed",
     "name": "Flatbed",
     "icon": "🚛",
