@@ -8,6 +8,10 @@
       "Dutch License Plates",
       "Dutch-style license plates and registration documents for FiveM."
     ],
+    "ts_nlplates_migrate": [
+      "Plate Migration",
+      "One-time offline conversion of old ts_nlplates plates with dashes."
+    ],
     "ts_flatbed": [
       "Flatbed",
       "Ramps, winch and vehicle transport using a flatbed truck."
@@ -136,6 +140,39 @@
       ],
       "items": [
         "kentekenbewijs"
+      ]
+    },
+    "ts_nlplates_migrate": {
+      "type": "fivem",
+      "summary": "One-time maintenance tool that converts old ts_nlplates plates with dashes offline to the current Dutch format.",
+      "providers": [
+        "oxmysql"
+      ],
+      "needs": [],
+      "onesync": false,
+      "requirements": [
+        "oxmysql is required; ts_bridge and ESX are not needed.",
+        "Make a full database backup first and test on a database copy."
+      ],
+      "install": [
+        "Install ts_nlplates_migrate as its own resource; only start it for the migration.",
+        "Stop ts_nlplates, ox_inventory, garages, key scripts, es_extended and other writing resources, and make sure no players are online.",
+        "In the server console run 'ts_nlplates_spaties controle' first and only then 'ts_nlplates_spaties uitvoeren'."
+      ],
+      "update": [
+        "Replace the script files and transfer custom tables and blocked resources from config.lua.",
+        "Config version stays 1.0.0; if Config.VersionCheck is missing from your config, the version check is on."
+      ],
+      "verify": [
+        "Review the dry-run output before running the migration.",
+        "After the migration, check several vehicles, registration documents and keys in the database and in-game."
+      ],
+      "warnings": [
+        "Do not use on a running server with players; the tool refuses to start then.",
+        "Remove or stop the resource after a successful migration."
+      ],
+      "preserve": [
+        "config.lua"
       ]
     },
     "ts_flatbed": {
