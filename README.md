@@ -73,3 +73,9 @@ De website wordt dan lokaal getoond op `http://localhost:4173/` (gebruik `SITE_U
 ## Feitelijke bron
 
 Versies overgenomen uit de huidige manifests van de GitHub-repositories van **troyscripts** op 22 november 2026. De bestaande historische entries zijn gebaseerd op beschikbare `docs/CHANGELOG.md` of README's. Bij metadata-only versieverhogingen tonen we **geen fictieve release notes**. Voor `ts_parkeerapp` ontbreekt in de geraadpleegde repo nog een afzonderlijk changelogbestand.
+
+## Troy's Game Community Bot
+
+De website toont ook **Troy's Game Community Bot** onder de categorie **Discord-bot**, met actuele versie **3.8.4** uit package.json van de bestaande botrepo en de historische 3.x-wijzigingen uit docs/CHANGELOG.md. De bronrepository kan privé blijven. Alleen changelogteksten worden openbaar gemaakt, geen botcode, API-sleutels, database of .env. Als een releasedatum ontbreekt in de bron, toont de site 'Releasedatum niet vermeld'.
+
+De bot draait op de bestaande hosting. GitHub Pages start of beheert de bot niet. Het toevoegen van de bot als nieuw catalogusitem verstuurt geen Discord-aankondiging; bij latere nieuwe gepubliceerde versies werkt de bestaande automatische release-aankondiging.

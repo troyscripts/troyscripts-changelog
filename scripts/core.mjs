@@ -1,4 +1,4 @@
-export const GROUP_ORDER = ['Basis scripts', 'Voertuigen', 'Hulpdiensten & toegang', 'Gameplay', 'Overige scripts'];
+export const GROUP_ORDER = ['Basis scripts', 'Voertuigen', 'Hulpdiensten & toegang', 'Gameplay', 'Overige scripts', 'Discord-bot'];
 const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:[-.]([A-Za-z0-9.-]+))?$/;
 export function versionParts(version) {
   const m = SEMVER.exec(String(version));
@@ -45,7 +45,7 @@ export function validateData(catalog,releases){
     try{versionParts(r.version)}catch(e){errors.push(`${where}: ${e.message}`)}
     const id=releaseId(r);if(ids.has(id))errors.push(`Dubbele release ${id}`);ids.add(id);
     if(!['published','draft'].includes(r.status))errors.push(`${where}.status moet published of draft zijn`);
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(r.date||'')||Number.isNaN(Date.parse(`${r.date}T00:00:00Z`)))errors.push(`${where} ongeldige datum`);
+    if(r.date!==null && (!/^\d{4}-\d{2}-\d{2}$/.test(r.date||'')||Number.isNaN(Date.parse(`${r.date}T00:00:00Z`))))errors.push(`${where} ongeldige datum`);
     for(const field of ['highlights','changes','files','instructions'])if(!Array.isArray(r[field])||r[field].some(v=>typeof v!=='string')) errors.push(`${where}.${field} moet een lijst met teksten zijn`);
     if(r.sourceNote!==undefined && typeof r.sourceNote!=='string')errors.push(`${where}.sourceNote moet tekst zijn`);
     if(r.status==='published' && (!r.highlights?.length&&!r.changes?.length))errors.push(`${where} gepubliceerd zonder wijzigingen`);

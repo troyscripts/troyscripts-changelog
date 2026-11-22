@@ -16,3 +16,14 @@ test('Een ongeldige release met lege changelog wordt geweigerd',()=>assert.throw
 test('Eerste publicatie met zero hash heeft geen voorganger',()=>assert.equal(githubSnapshot('0'.repeat(40),'data/catalog.json'),null));
 test('Discord payload bevat toegestane URLs maar geen role pings',()=>{const p=createPayload(script,release('1.1.1'),[script],[release('1.1.1')],'https://troyscripts.github.io/troyscripts-changelog/');assert.equal(p.allowed_mentions.parse.length,0);assert.match(p.embeds[0].url,/scripts\/ts_test\/\#v1\.1\.1/);assert.equal(p.embeds[1].fields.length,1)});
 test('Discord HTTP error wordt doorgegeven',async()=>assert.rejects(()=>sendWebhook('https://discord.com/api/webhooks/123/token',{},{fetcher:async()=>({status:400,text:async()=>'{"message":"bad"}'})}),/HTTP 400/));
+
+test('Historische botchangelogs in een nieuwe categorie sturen geen aankondiging',()=>{
+  const bot={...script,id:'tgc_bot',name:'Troy Game Community Bot',category:'Discord-bot',initialVersion:'3.8.4'};
+  const history=[{...release('3.8.4'),script:'tgc_bot',date:null}];
+  assert.deepEqual(getNewUpdates([script],[],[script,bot],history),[]);
+  assert.doesNotThrow(()=>validateData([script,bot],history));
+});
+test('Nieuwe botversie na de eerste import geeft een update',()=>{
+  const bot={...script,id:'tgc_bot',name:'Troy Game Community Bot',category:'Discord-bot',initialVersion:'3.8.4'};
+  assert.deepEqual(getNewUpdates([bot],[],[bot],[{...release('3.8.5'),script:'tgc_bot'}]).map(x=>x.version),['3.8.5']);
+});

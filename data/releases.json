@@ -174,5 +174,822 @@
       "Gebruik /reparatietargetcheck als een targetoptie niet verschijnt."
     ],
     "sourceNote": "Overgenomen uit docs/CHANGELOG.md van ts_repairpoints. Huidige manifestversie is 1.1.4."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.8.4",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Als de meegeleverde FFmpeg stopt voordat de eerste audio binnenkomt, probeert de bot de zender automatisch opnieuw met de FFmpeg van de hostingcontainer.",
+      "Discord meldt bij welke stap de radio vastloopt. De hostingconsole toont welke FFmpeg is gebruikt en, indien beschikbaar, de fouttekst, afsluitcode of het signaal."
+    ],
+    "changes": [],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.8.3",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Troy kan in zijn eigen Discord met /scriptupdate kanaal een aankondigingskanaal instellen en met /scriptupdate plaatsen een scriptversie met korte changelog publiceren.",
+      "Bij /scriptupdate plaatsen kun je een UTF-8-changelog als .md of .txt uploaden. De bot leest de gekozen versie of de eerste gepubliceerde versiekop en plaatst maximaal 1000 tekens uit die sectie."
+    ],
+    "changes": [
+      "De knop Bekijk je eigen Cfx-assets opent de persoonlijke assetlijst van de lezer. De bot onthoudt aangekondigde versies om dubbele berichten te voorkomen.",
+      "Bij /notify toevoegen kunnen de Twitch-live-instellingen direct worden meegegeven."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.8.2",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Dependencies bijgewerkt, inclusief better-sqlite3 13.2.0 zonder de verouderde prebuild-install. Chalk-imports aangepast aan versie 6.",
+      "FFmpeg-installatie expliciet toegestaan via allowScripts voor ffmpeg-static 5.3.0."
+    ],
+    "changes": [
+      "TikTok is verwijderd uit platformkeuzes, API-aanvragen, autorisatie, appinstellingen en handleidingen.",
+      "Bestaande TikTok-abonnementen, wachtrijen, hubbronnen en brongegevens worden bij initialisatie verwijderd; YouTube en Twitch blijven behouden.",
+      "Het oude tokenbestand, koppelscript en de oude handleiding worden bij de start van notify verwijderd.",
+      "Oude TikTok-aanvragen worden geweigerd met een duidelijke afwijzing van het beleid dat onze Discord-integratie uitsluit.",
+      "Zie UPDATE-3.8.2.md voor de updatevolgorde en resterende handmatige opschoning."
+    ],
+    "files": [],
+    "instructions": [
+      "Werk de hoofd-hub vóór de aangesloten bots bij en bewaar database, .env en eigen instellingen.",
+      "Controleer de migratie- en opschooninstructies in docs/UPDATE-3.8.2.md van de bot."
+    ],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.8.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "De centrale hub gebruikt de hostingvariabele SERVER_PORT vóór BROADCAST_PORT; de gekozen poort en bron worden bij het starten gelogd.",
+      "HTTP keep-alive ingesteld op 65 seconden, header-timeout op 66 seconden en totale request-timeout op 70 seconden."
+    ],
+    "changes": [
+      "UND_ERR_SOCKET, ECONNRESET en HTTP 502/503 krijgen één herhaalpoging na 250–500 ms, met dezelfde versleutelde aanvraag en aanvraag-ID.",
+      "De hub deelt het resultaat van gelijktijdige of herhaalde identieke aanvragen; claims worden niet opnieuw uitgevoerd. Antwoorden worden begrensd in het geheugen bewaard. Bij een ontbrekend antwoord na een herstart blijft de persistente noncecontrole dubbele uitvoering blokkeren.",
+      "Diagnose toont het aantal pogingen en of de hub een antwoord hergebruikt. Tests toegevoegd voor verloren antwoorden na reservering, gelijktijdige aanvragen en herstel na herstart."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.8.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Twitch–Discord-koppelingen centraal opgeslagen op de notify-hub en automatisch overgenomen door andere servers die dezelfde creator volgen. Lokaal uitschakelen blijft mogelijk.",
+      "/notify live: koppel een Twitch-creator aan een Discord-lid en maak automatisch de rol 🟣 Live (#9146FF), apart zichtbaar in de ledenlijst."
+    ],
+    "changes": [
+      "De rol volgt bevestigde Twitch-statussen; meerdere accounts van hetzelfde lid houden de rol actief zolang één account live is.",
+      "Optioneel (standaard aan) de eigen live-melding verwijderen wanneer de stream stopt. Twitch-video’s zelf worden niet verwijderd.",
+      "Instellingen, roltoekenningen en bericht-ID’s blijven behouden na een herstart; mislukte Discordacties worden opnieuw geprobeerd.",
+      "Werkt met zelfstandige Twitch-controles en bestaande centrale notify-hub. Platformfouten gelden niet als offline-status."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.7.2",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Na een geslaagde YouTube-API-fallback wordt per kanaal één uur de API gebruikt; daarna wordt RSS opnieuw geprobeerd.",
+      "Bij een API-fout wordt RSS meteen weer geprobeerd, zonder dezelfde API-aanvraag in die controle dubbel uit te voeren."
+    ],
+    "changes": [
+      "RSS 404/5xx zonder ingestelde API-sleutel geeft een concrete melding met verwijzing naar de handleiding; kanaalkoppelingen blijven behouden.",
+      "Documentatie verduidelijkt dat de API-sleutel bij centrale notify op de hoofd-hub hoort."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.7.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Alle projectdocumentatie behalve README.md naar docs/ verplaatst.",
+      "/help document zoekt automatisch in alle documentatie; overzicht geeft de volledige lijst. Zonder keuze blijft de NL/EN-handleiding beschikbaar."
+    ],
+    "changes": [
+      "Nieuwe documenten en submappen automatisch meegenomen; bestandspaden buiten docs en symbolische links worden geweigerd.",
+      "Changelogmelding bij opstarten, versiecontrole, exportbestandlijst en relatieve documentatielinks aangepast.",
+      "Geen wijziging aan bestaande botinstellingen, databases of hubkoppelingen."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.7.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Centrale notify-creators en gedeelde platformcontroles via de bestaande hub-URL, bot-ID-lijst en BROADCAST_SECRET; geen tweede sleutel of poort.",
+      "Iedere server kan creators toevoegen. Genormaliseerde links/handles hergebruiken dezelfde bron; YouTube-handles en UC-ID’s worden na platformherkenning gekoppeld."
+    ],
+    "changes": [
+      "Eigen Discordkanalen, pingrollen, berichtteksten en voortgang blijven lokaal per server. Verwijderen beëindigt alleen de eigen koppeling.",
+      "Hub haalt platformgegevens op; ontvangende bots gebruiken de gedeelde, gepagineerde resultaten. Tokens en API-sleutels blijven op de hub.",
+      "Persistente afleverreserveringen voorkomen dubbele meldingen per platform/video-of-stream/doelkanaal, ook bij twee bots in dezelfde server.",
+      "Onzekere verzendingen worden apart zichtbaar in /notify lijst en niet blind herhaald; volgende meldingen gaan door. Definitief geweigerde verzendingen kunnen opnieuw worden geprobeerd.",
+      "Bij hubuitval geen ongecoördineerde lokale fallback. Bots zonder hubkoppeling blijven zelfstandig werken.",
+      "Nieuwe regressietests voor aliases, gedeelde controles, versleuteld transport, rechten, kanaalisolatie, herstarts, timeouts en behouden serverinstellingen."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.6.2",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Ticketarchief-opstartscan slaat verwijderde kanalen (Unknown Channel/10003 of null) over met één informatieve samenvatting. Berichten, versies, bijlagen en ticketregistraties blijven behouden.",
+      "Ontbrekende rechten en andere scanproblemen blijven waarschuwingen, nu met servernaam en kanaal-ID."
+    ],
+    "changes": [
+      "Openbare notify-startinstellingen zijn leeg: geen persoonlijke Troy-kanalen meer voor andere botinstallaties. Bestaande creatorinstellingen in de database blijven intact.",
+      "Eigen notify-presets kunnen optioneel een guildId bevatten; bots buiten die server slaan ze over. Echte kanaalproblemen vermelden het betreffende kanaal-ID."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.6.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "/ban ondersteunt nu een los discord-id, ook voor gebruikers die niet in de server zitten.",
+      "Kies precies één doel: de bestaande gebruikerskeuze of een Discord-ID. De reden blijft verplicht."
+    ],
+    "changes": [
+      "ID-validatie, bescherming tegen zelfban/botban/serverownerban en behoud van rolcontroles voor aanwezige leden.",
+      "Alleen Discord-fout Unknown Member wordt als afwezig lid behandeld; overige ophaalfouten blokkeren de actie.",
+      "Banbevestiging en eventuele DM pas na een succesvolle Discord-ban; foutmeldingen bij ongeldig account of ontbrekende botrechten.",
+      "Bevat alle wijzigingen van 3.6.0, inclusief de installatiemodus."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.6.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "/gebruikersnaam: servergebonden botnaam, embedfooter en AI-identiteit; start of hervat de installatie.",
+      "Alle Discord-configuratievelden afzonderlijk doorlopen, behouden, wijzigen of overslaan; voortgang blijft in SQLite bewaard."
+    ],
+    "changes": [
+      "Direct naar een instelling springen en overgeslagen instellingen hervatten, ook na een herstart.",
+      "Aanvullende stappen voor profielen, panelen, overheid, meldingen, agenda en hostinginstellingen.",
+      "Servereigenaar en ingestelde Owner-/Developer-rol gecontroleerd bij elk command, elke knop en elk formulier.",
+      "Verouderde schermen en gelijktijdige wijzigingen geblokkeerd; bestaande instellingen blijven behouden."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.5.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Gespreksweergave met namen, tijdstippen in Europe/Amsterdam en opgemaakte embeds in plaats van ruwe JSON.",
+      "Bekende gebruikers-/rolmentions worden als namen getoond; technische IDs staan in uitklapbare berichtgegevens."
+    ],
+    "changes": [
+      "Laatst bewaarde inhoud direct zichtbaar; eerdere versies onder uitklapbare wijzigingsgeschiedenis.",
+      "Verwijderde berichten en bijlagen blijven duidelijk gemarkeerd en downloadbaar.",
+      "Verschillende embedveldvolgorde en Discordmetadata veroorzaken geen dubbele zichtbare wijzigingen meer, ook bij bestaande archieven. Echte wijzigingen en terugwijzigingen blijven behouden."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.5.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Staff kan het eigen supportticket claimen/beheren en via /ticket-add gebruiker: iemand uitnodigen.",
+      "Expliciet uitgenodigde personen kunnen meepraten, ook als zij zelf staff zijn; de uitnodiging blijft opgeslagen. Hogere claims/minimumrang en bescherming tegen verwijderen van hogere staff blijven gelden."
+    ],
+    "changes": [
+      "Bestaande hoofd- en overheidstickets worden via hun kanaal-ID gevolgd, onafhankelijk van hun Discord-categorie. Staffthreads blijven afzonderlijk gekoppeld.",
+      "Berichten, ontvangen versies, verwijdermeldingen en kopieën van bijlagen worden in SQLite bewaard.",
+      "Bij opstarten wordt zichtbare geschiedenis van nog geregistreerde tickets ingelezen; reeds verdwenen inhoud kan niet worden hersteld.",
+      "Transcript toont VERWIJDERD BERICHT, GEWIJZIGD BERICHT en VERWIJDERDE BIJLAGE, met bewaarde versies en ontvangst-/wijzigingstijden.",
+      "Bijlagen worden in het HTML-transcript ingebed als downloadbare bestanden; verlopen Discord-links zijn voor opgeslagen kopieën niet nodig.",
+      "Mislukte bijlageopslag en overschreden exportlimieten blokkeren automatisch verwijderen. Hoofdtickets gebruiken ook de nieuwe sluit-en-verwijderactie uit 3.4.3."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.4.3",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Sluiten-knop en /ticket-close vragen bevestiging, bewaren transcripten en verwijderen daarna direct het ticketkanaal.",
+      "Gewoon transcript verplicht naar Tickets.LogChannel; aanwezig staffoverleg afzonderlijk naar Tickets.ThreadLogChannel."
+    ],
+    "changes": [
+      "Een geslaagde DM of lokale kopie alleen is niet voldoende om te verwijderen; mislukte logaflevering behoudt het ticket.",
+      "Oude Verwijderen-knoppen blijven werken via dezelfde bevestiging. Nieuwe tickets hebben één sluitknop.",
+      "Eerder gesloten tickets kunnen eveneens worden geëxporteerd en verwijderd. Staffrechten en controle van de claimeigenaar blijven gelden."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.4.2",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Sluiten met bevestiging stuurt het HTML-transcript naar het bestaande Tickets.LogChannel en verwijdert daarna direct het ticketkanaal.",
+      "Geen tweede logkanaal of staffthread vereist. Behandelrechten blijven op de afdelingsrollen/personen gebaseerd."
+    ],
+    "changes": [
+      "Ontbrekend logkanaal, onvoldoende rechten of mislukte export/upload/verwijdering behouden het kanaal; opnieuw proberen maakt een actueel transcript.",
+      "Ook eerder gesloten overheidsticketarchieven kunnen via de sluitknop worden afgehandeld."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.4.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Rolmentions in aangepaste afdelingsnamen worden omgezet naar echte rolnamen; ontbrekende rollen vallen terug op de afdelingsnaam.",
+      "Elke keuze toont een korte uitleg over het doel van het ticket. Per afdeling aanpasbaar met omschrijving."
+    ],
+    "changes": [
+      "Paneelcommando's werken het meest recente eigen paneel voor die dienst binnen de laatste 100 kanaalberichten bij.",
+      "Ticketwelkomstberichten en instelschermen tonen dezelfde leesbare namen en uitleg."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.4.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Ondersteuning voor Node 22 beëindigd; package en lockfile vereisen Node 24.x.",
+      ".npmrc met engine-strict voorkomt installatie op een ongeschikte Node-versie."
+    ],
+    "changes": [
+      "GitHub Actions controleert voortaan alleen Node 24.",
+      "Installatie-, publicatie-, Nederlandse en Engelse handleidingen bijgewerkt; verouderde lokale documentlinks hersteld.",
+      "Alle overheidspanelen uit 3.3.1 blijven inbegrepen."
+    ],
+    "files": [],
+    "instructions": [
+      "Gebruik Node.js 24.x en voer na de update npm ci uit. Bewaar .env, database en eigen instellingen."
+    ],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.3.1",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Eigen ticketpaneel via /overheidscoordinator voor de vanuit Gemert aangewezen coördinator.",
+      "Eigen behandelrollen, verantwoordelijken en ontvangstcategorie; geen stafflidmaatschap nodig."
+    ],
+    "changes": [
+      "Zelfde claim-, transcript- en sluitfuncties als de andere overheidspanelen.",
+      "Gescheiden van politie-, ambulance-, pechhulp- en brandweertickets."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.3.0",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Afzonderlijk systeem voor politie, ambulance, pechhulp en brandweer.",
+      "Instelbare rollen, verantwoordelijken, namen en categorieën per afdeling en server."
+    ],
+    "changes": [
+      "Head Admin of hoger plaatst panelen; behandelen vereist uitsluitend afdelingsrechten.",
+      "Privékanalen, claimen, begrensde HTML-transcripten en sluiten met bevestiging.",
+      "Instellingen en tickets blijven bewaard in SQLite. Bestaande tickets houden hun oorspronkelijke toegangslijst."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.2.4",
+    "date": "2026-11-04",
+    "status": "published",
+    "highlights": [
+      "Ongebruikte directe dependency glob verwijderd.",
+      "nodemon vervangen door node --watch index.js voor npm run dev; hierdoor vervalt ook de dependency op minimatch."
+    ],
+    "changes": [
+      "De bestaande Node-eis (>=22.12.0) blijft geldig. Watch-modus herstart bij wijzigingen in geladen modules; na het toevoegen van een nieuw bestand zo nodig handmatig herstarten.",
+      "better-sqlite3 behouden. De onderhoudswaarschuwing van diens prebuild-install is hiermee niet verholpen.",
+      "Bedrijvenverkoopfix behouden; botversie verhoogd naar 3.2.4."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.2.3",
+    "date": "2026-10-29",
+    "status": "published",
+    "highlights": [
+      "Per-server berichtlogfilters via /config: alle bots/webhooks, specifieke afzenders, gebruikersmentions en rolmentions. Nieuwe regels worden vóór opslag gefilterd; nieuwe wachtrijregels worden ook vóór aflevering opnieuw gecontroleerd. Moderatie en honeypot blijven actief.",
+      "Vastgezette berichten ondersteunen numerieke timestamps, Date, ISO-tekst en ontbrekende/ongeldige waarden."
+    ],
+    "changes": [
+      "YouTube: optionele officiële Data API v3-fallback via YOUTUBE_API_KEY bij RSS-fouten. Kanaalidentiteit en publicatiedatum worden gecontroleerd; fouten worden nooit als een lege geslaagde feed opgeslagen.",
+      "Notify-waarschuwingen maximaal eenmaal per uur per koppeling, ook bij kort herstel. Herstelmelding pas na drie opeenvolgende geslaagde controles.",
+      "Reconnectdiagnose herkent Discord-reconnectverzoeken en ontbrekende heartbeat-antwoorden zonder ruwe debugdata te loggen. Hersteltijd, shard-netwerkfoutcodes en maximale eventloopvertraging worden geregistreerd.",
+      "Versie, installatie- en beheerhandleidingen bijgewerkt. Geen nieuwe dependencies; bestaande serverinstellingen blijven behouden."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.2.2",
+    "date": "2026-10-27",
+    "status": "published",
+    "highlights": [
+      "Optionele centrale botbericht-koppeling voor meerdere installaties van dezelfde GitHub-code. Centrale identiteit vast op bot 1486317240319082597; publiceren blijft uitsluitend voor gebruiker 709486570293559356 via deze bot.",
+      "Bestaande SQLite-database bewaart berichten, geregistreerde bestemmingen, centrale reserveringen en lokale ontvangstbewijzen. Ontvangers halen wachtende berichten na een storing op. Eén reservering per melding en Discord-server, ook bij overlappende bots."
+    ],
+    "changes": [
+      "Ontvangende bots kunnen via de netwerkinterface geen meldingen publiceren. Verzoeken en antwoorden zijn versleuteld/geauthenticeerd met AES-256-GCM, met bot-ID-controle, tijdvenster, replaycontrole en begrensde verzoeken.",
+      "Bij een onzekere verzending wordt niet automatisch opnieuw verstuurd om dubbele berichten te vermijden. Definitieve fouten en onzekere uitkomsten worden met servernaam/ID gelogd.",
+      "Koppeling start en stopt met de bot. Netwerkstoringen blokkeren de gewone opstartcontrole niet; serveraantallen blijven per bot. Geen nieuwe dependencies.",
+      "Volledige .env.example met aparte uitleg voor centraal/ontvangers en complete installatie-, back-up- en herstelhandleiding. README en Nederlandse/Engelse handleidingen bijgewerkt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.2.1",
+    "date": "2026-10-27",
+    "status": "published",
+    "highlights": [
+      "Nieuw /botbericht bericht:..., uitsluitend voor vaste boteigenaar 709486570293559356; stuurt naar het ingestelde Logging.Channel van iedere server.",
+      "Serverinstellingen worden per bestemming gelezen. Geen kanaal: overslaan; onbereikbaar kanaal of onvoldoende rechten: fout registreren en doorgaan. Privé resultaat met aantallen, consolelogs met servernamen en ID's."
+    ],
+    "changes": [
+      "Letterlijke berichttekst, maximaal 2000 tekens, zonder pings; gelijktijdige broadcasts geblokkeerd.",
+      "/say vereist Admin of hoger via ingestelde rollen, Discord Administrator of bestaande eigenaar/developer-toegang. Manage Messages alleen is niet langer voldoende.",
+      "README en Nederlandse/Engelse handleiding bijgewerkt. Commands opnieuw registreren met npm run deploy."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.2.0",
+    "date": "2026-10-25",
+    "status": "published",
+    "highlights": [
+      "Discordlogs tonen beschikbare gebruikers-, kanaal- en rolnamen met ID's als extra informatie; namen worden bij de gebeurtenis vastgelegd.",
+      "Leesbare voicevelden en Ja/Nee, herkenbare gebruikers/kanalen in interactielogs, berichtlinks en beschikbare embedtekst."
+    ],
+    "changes": [
+      "Audituitvoerders en doelen worden met beschikbare namen weergegeven; onbekende/verwijderde entiteiten krijgen een expliciete fallback. Geen extra pings of API-ophaalverzoeken.",
+      "Radio wacht op echte FFmpeg-audio én afspeelstatus voordat een succesvolle start wordt gemeld. Geen audio, voortijdig stoppen en fouten worden zonder succesmelding opgeruimd.",
+      "Werkende Veronica-stream en alle bestaande zenderinstellingen behouden. Geen nieuwe dependencies, configvelden of commands.",
+      "Nederlandse en Engelse gebruikershandleidingen en geraakte beheerhandleidingen bijgewerkt. Oude logs worden niet achteraf aangepast."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.9",
+    "date": "2026-10-25",
+    "status": "published",
+    "highlights": [
+      "Documentatie vóór publicatie bijgewerkt: Nederlandse en Engelse gebruikershandleiding, radio, notify, Twitch, installatie, GitHub, logs, softmoderatie en controle-uitleg. Verouderde versiekoppen en ontbrekende updateverwijzingen gecorrigeerd. Geen codewijziging of extra versieophoging.",
+      "Lockbestand hersteld voor schone installatie met npm 10 / Node.js 22 en npm 11 / Node.js 24."
+    ],
+    "changes": [
+      "Radio behoudt bij zenderwissels in hetzelfde kanaal de bestaande spraakverbinding; oude sessiecallbacks kunnen de nieuwe sessie niet stoppen.",
+      "Verwachte FFmpeg-afsluitmeldingen van gestopte sessies worden onderdrukt; actieve streamfouten blijven zichtbaar.",
+      "Notify-logs bevatten servernaam, server-ID en creator. Afwisselende HTTP 404/5xx-fouten worden maximaal eens per uur per creator gemeld.",
+      "YouTube probeert na HTTP 404/5xx ook de feed via de alternatieve YouTube-host; kanaalcontrole blijft verplicht. Opgeloste kanaal-ID's blijven bewaard als het feedverzoek mislukt.",
+      "YouTube-fouten tonen het aangevraagde feedpad en kanaal-ID; Twitch onderscheidt ontbrekende accounts van ongeldige API-antwoorden.",
+      "Bestaande configuratie, database, accountkoppelingen en zenderinstellingen blijven behouden. Externe 404's en onbereikbare radiostreams vereisen zo nodig apart herstel."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.8",
+    "date": "2026-10-24",
+    "status": "published",
+    "highlights": [
+      "Radio Veronica-homepagelinks worden bij instellen én afspelen omgezet naar de directe MP3-stream, inclusief links met Nederland.fm-tracking.",
+      "Radio Veronica als twaalfde standaardzender; bestaande eigen zenderinstellingen blijven behouden."
+    ],
+    "changes": [
+      "FFmpeg staat HTTP-proxyverbindingen toe. Dit lost de lokaal gereproduceerde protocol-whitelistfout op.",
+      "Console toont zendernaam, FFmpeg-exitcode en begrensde foutdetails; stream-URL's worden afgeschermd."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.7",
+    "date": "2026-10-24",
+    "status": "published",
+    "highlights": [
+      "Internetradio: openbaar callchat-paneel met zenderdropdown, volume- en stopknoppen.",
+      "/leave stopt de audio en laat de bot het spraakkanaal verlaten."
+    ],
+    "changes": [
+      "Elf vooraf ingestelde zenders; maximaal 25 zenders per server, beheer via /radio instellen en /config.",
+      "Eén radioverbinding per server; bediening vanuit het actieve kanaal, beheerder kan overal stoppen.",
+      "Automatisch stoppen bij leeg kanaal, verwijdering, verbreken van verbinding en afsluiten.",
+      "Nederlandse, Engelse en tweetalige berichten; consolelogs met servernaam en ID.",
+      "Voice met DAVE, Opus en FFmpeg; minimaal Node.js 22.12.0 (Node 24 aanbevolen)."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.6",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "21 instelbare logcategorieën, centrale fallback, schakelaars per categorie en aparte instellingen per server.",
+      "SQLite-verzendwachtrij met herstartbehoud, vijf verzendpogingen, bewaartermijn en limieten. /logs status, test en opnieuw toegevoegd."
+    ],
+    "changes": [
+      "Logs voor berichten, wijzigingen, verwijderingen, reacties, leden, rollen, kanalen, threads, voice, bans, uitnodigingen, serverinstellingen, expressies, evenementen, integraties, AutoMod, auditacties, interacties, polls, typen en optionele presence.",
+      "18+-controle via Groq voor tekst en ondersteunde afbeeldingsbijlagen: duidelijke overtredingen verwijderen en één geregistreerde warn geven. Staff kan die afkeuren en intrekken. API-fouten en twijfel geven geen automatische straf.",
+      "Staffuitzonderingen blijven behouden. Video/GIF en niet-ondersteunde bijlagen gaan naar handmatige beoordeling; geen garantie dat alle 18+-inhoud wordt herkend.",
+      "Nieuwe log-/moderatie-instellingen worden met bestaande serverconfiguraties samengevoegd; geen instellingenreset. Zie LOGGING-HANDLEIDING.md en UPDATE-3.1.6.txt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.5",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Privéoverleg wordt pas aangemaakt bij Staffoverleg. Tickets zonder staffthread kunnen sluiten zonder staffthread-logkanaal.",
+      "Een verwijderde staffthread blokkeert sluiten niet meer: de ontbrekende archivering wordt lokaal en in het aparte stafflog vastgelegd voordat het ticketgesprek wordt geëxporteerd."
+    ],
+    "changes": [
+      "Ontbrekende logkanalen en onvoldoende toegang blijven sluiten blokkeren en noemen nu het betrokken kanaal-ID en de Discord-foutcode.",
+      "Kanaalgegevens worden opnieuw opgehaald om verouderde cacheverwijzingen te vermijden.",
+      "Een al verwijderd ticketkanaal geldt na succesvolle transcriptopslag als verwijderd.",
+      "Technische sluitfouten vermelden de verwerkingsstap. Geen instellingen of databaseschema gewijzigd."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.4",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "GitHub Actions voert bij iedere push en pull request een schone npm ci-installatie en alle controles uit op Node.js 22 en 24.",
+      "Eén opdracht voor alle regressietests, met aparte processen en een tijdslimiet per testbestand."
+    ],
+    "changes": [
+      "Controle op versienummers in package.json, package-lock.json, configuratie, README en changelog.",
+      "Opstartonderdelen offline getest: tijdelijke SQLite-database en geldige, unieke slashcommands zonder Discord-login.",
+      "Verouderde testfixtures bijgewerkt voor vertaling, notify-instellingen en het huidige aantal commands.",
+      "Geen gewijzigde botinstellingen, databaseschema of spelregels. Zie UPDATE-3.1.4.txt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.2",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Knoppen en formulieren: maximaal één actie tegelijk per gebruiker per server, met twee seconden wachttijd. Afgewezen herhaalklikken vullen het logkanaal niet.",
+      "Sluiten, verwijderen en exporteren van tickets controleren opnieuw de stafftoegang en rang van de behandelaar. Lagere staff kan een ticket van hogere staff niet afhandelen. Bestaande Owner-, Developer-, Administrator- en vaste botowner-toegang blijven behouden."
+    ],
+    "changes": [
+      "Transcriptverwerking: één export tegelijk voor de bot, maximaal 5000 berichten en 8 MB berichtgegevens per kanaal; HTML maximaal 8 MB. Geen ingebedde afbeeldingsdownloads. Bij overschrijding blijft het ticket behouden: geen stilzwijgend afgekapt archief. Een beheerder moet grote tickets volledig apart archiveren.",
+      "Transcriptbibliotheek blijft op de werkende 3.2.0; onderliggende Undici vastgezet op 6.29.1 en overige getroffen dependencies bijgewerkt.",
+      "Stop de bot, maak een back-up, vervang de updatebestanden, voer npm ci uit en herstart. Geen configuratiewijziging of commandoregistratie nodig. Zie UPDATE-3.1.2.txt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.3",
+    "date": null,
+    "status": "published",
+    "highlights": [
+      "Softmoderatie van nieuwe en bewerkte tekstberichten in alle toegankelijke kanalen, tickets en threads, zonder kanaaluitzonderingen.",
+      "Ingestelde staffrollen, beheerrollen en owners zijn uitgezonderd."
+    ],
+    "changes": [
+      "Eerste duidelijke overtreding: vriendelijke waarschuwing. Herhaling binnen standaard 24 uur: standaard 24 uur time-out.",
+      "Staffmelding met berichttekst, reden, directe berichtlink en knoppen Goedkeuren, Afkeuren en Eindtijd aanpassen.",
+      "Eindtijd instelbaar als DD-MM-JJJJ UU:MM in Nederlandse tijd; controle op zomer-/wintertijd en Discord-limiet.",
+      "Afgekeurde overtredingen tellen niet meer mee. Alleen een nog overeenkomende bot-time-out wordt opgeheven.",
+      "AI-beoordeling via bestaande Groq-verbinding; twijfelgevallen gaan zonder straf naar staff. Lokale controles op spam en overmatig taggen.",
+      "Instellingen per server via /config, duurzame moderatiezaken in de database. Zie SOFTMODERATIE.md voor activering."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.1",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Ticketclaims en toegangsacties gebruiken gepagineerde REST-ledenlijsten in plaats van gateway-opcode 8, met gedeelde gelijktijdige aanvragen.",
+      "Ontbrekend of conflicterend ThreadLogChannel geeft een bruikbare privémelding zonder herhaalde foutstack."
+    ],
+    "changes": [
+      "Exportfouten behouden het ticket; sluiten/verwijderen bevestigt de interactie vóór het wachten op andere ticketacties.",
+      "Tests, README en beide handleidingen bijgewerkt. Configuratie ongewijzigd."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.1.0",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Ticketclaim past kanaalrechten toe: andere staff kan meelezen en in de privéthread overleggen.",
+      "Hogere staff kan claims overnemen; lagere staff verliest ticket- en threadtoegang. Gelijke/hogere staff is beschermd tegen verwijderen."
+    ],
+    "changes": [
+      "/ticket-add en /ticket-remove ondersteunen een gebruiker of rol met hiërarchiecontrole.",
+      "Nieuwe Tickets.ThreadLogChannel voor afzonderlijke privéthread-transcripten. Geen staffoverleg in de DM naar de ticketmaker; mislukte archivering blokkeert sluiten/verwijderen.",
+      "Bestaande claims kunnen door de behandelaar opnieuw worden toegepast. Database-migratie bewaart bestaande tickets.",
+      "README, beide handleidingen, vertalingen en tickettests bijgewerkt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.9",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Bestaande Honeypot.CrossServerBan-deelname uitgebreid naar time-outs van zeven dagen.",
+      "Eigen time-outlog en ophefknop per server; opheffen blijft uitsluitend lokaal."
+    ],
+    "changes": [
+      "Bestaande time-outs worden behouden. Rechten, rolpositie, ledencontrole en bescherming tegen dubbele uitvoering blijven gelden.",
+      "Kanaalwaarschuwing, README en beide handleidingen bijgewerkt. Geen nieuwe configuratievelden.",
+      "Tests uitgebreid met serveroverstijgende time-outs, lokale verwijdering en behoud van bestaande straffen."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.8",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Optionele serveroverstijgende honeypot-bans via Honeypot.CrossServerBan, standaard uit per server.",
+      "Alleen deelnemende servers met de gebruiker als huidig lid worden meegenomen; elke geslaagde ban verwijdert zeven dagen berichten."
+    ],
+    "changes": [
+      "Eigen logs en ophefknop per server: unban werkt uitsluitend lokaal. Time-outs blijven lokaal.",
+      "Database-uitbreiding bewaart de bronserver en het bronbericht; bestaande knoppen blijven geldig.",
+      "README, beide handleidingen, kanaalwaarschuwing en tests bijgewerkt."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.7",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Nieuwe honeypot-bans verwijderen ook alle berichten van de gebruiker uit de afgelopen zeven dagen in de hele server, inclusief afbeeldingen en bijlagen.",
+      "Time-outs en bestaande bans blijven ongewijzigd; unban herstelt verwijderde berichten niet."
+    ],
+    "changes": [
+      "README en Nederlandse/Engelse handleidingen bijgewerkt. Configuratie ongewijzigd.",
+      "Honeypot-test controleert dat de ban 604800 seconden berichtgeschiedenis verwijdert."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.6",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Honeypot-kanaal per server via /config: direct bannen of zeven dagen time-out bij nieuwe berichten, ook bij afbeeldingen/bijlagen en in threads.",
+      "Logmelding met blijvende ophefknop, actuele rechtencontrole en bescherming tegen het opheffen van later gewijzigde straffen."
+    ],
+    "changes": [
+      "Standaard uitgeschakeld; nieuw onderdeel Honeypot met Enabled, Channel, Action, LogChannel en Mention. Bestaande configuratie blijft behouden.",
+      "Automatische tweetalige kanaalwaarschuwing met instelbare mention (geverifieerde rol, eigen rol, everyone, here of geen); bijwerken zonder dubbele berichten of herhaalde pings.",
+      "README en Nederlandse/Engelse handleidingen bijgewerkt; tests voor configuratie, sancties, logging, waarschuwingen en knopbeveiliging toegevoegd."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.5",
+    "date": "2026-10-21",
+    "status": "published",
+    "highlights": [
+      "Makelaar: vijf keukenupgrades (ieder ×2 XP) en vijf woningverbeteringen (ieder ×2 verdiend inkomen).",
+      "Iedere upgrade verhoogt de actuele woningwaarde met 25%; verkoop 75% en vervanging 15% van deze waarde."
+    ],
+    "changes": [
+      "Alleen koopwoningen; upgrades blijven bij resets behouden en worden bij verhuizing/verkoop verwijderd.",
+      "Prijspercentage en upgradenamen instelbaar in config/housingUpgrades.js.",
+      "Automatische databasemigratie, afzonderlijke XP/inkomenberekening, Nederlandse en Engelse meldingen.",
+      "README en Nederlandse/Engelse handleiding bijgewerkt met upgradeprijzen, commando’s, bonussen en verkoopregels."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.4",
+    "date": "2026-10-20",
+    "status": "published",
+    "highlights": [
+      "Tijdelijke HTTP 500-antwoorden op GET-verzoeken krijgen nu één extra poging, net als 502/503/504.",
+      "YouTube RSS: ook bij HTTP 404 één extra poging; aanhoudende fouten blijven zichtbaar en worden niet als lege feed verwerkt."
+    ],
+    "changes": [
+      "Verjaardagen: een timeout van de volledige ledenlijst blokkeert het uitdelen van rollen niet meer; jarigen worden dan afzonderlijk opgehaald.",
+      "De volledige ledencontrole wordt bij een fout opnieuw geprobeerd; bestaande berichtmarkeringen voorkomen dubbele felicitaties.",
+      "Configuratie, configversie en database-inhoud ongewijzigd."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.3",
+    "date": "2026-10-18",
+    "status": "published",
+    "highlights": [
+      "Bedrijvenmakelaar met automatisch uurinkomen, stadium 1–5, beveiliging, eigen bedrijfsrollen en weekverzekering.",
+      "Gezamenlijke heists met aanmeldknoppen, uitrusting, beveiligingsafhankelijke buit tot €5.000 en eerlijke verdeling."
+    ],
+    "changes": [
+      "Koopwoningen los verkopen voor 75% van de oorspronkelijke aanschafprijs; woningrol en bonus verdwijnen.",
+      "Bankleningen tot €500.000 met eenmalig 30% rente, gedeeltelijk aflossen en automatische incasso na twee kalendermaanden.",
+      "Nieuwe bezittingen, upgrades en contracten blijven behouden bij bestaande resetcommando’s.",
+      "Transacties en opgeslagen ontvangstbewijzen voorkomen dubbele betalingen."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.2",
+    "date": "2026-10-16",
+    "status": "published",
+    "highlights": [
+      "Makelaar met koop/huur voor starterwoning (€15.000 / €500 per dag), luxe woning (€75.000 / €2.000) en luxe villa (€250.000 / €7.500).",
+      "Automatische woningrollen in brons, zilver en goud; herstel bij tijdelijke Discord-fouten of verwijderde rollen."
+    ],
+    "changes": [
+      "Woningbonus +50% / +100% / +200% op verdiende XP en inkomen, boven op VIP/verjaardag.",
+      "Atomaire verhuizing met 15% verkoopvergoeding voor de vorige koopwoning en verwijdering van de oude rol.",
+      "Doorlopende bankhuur per 24 uur met eenmalige inhaalbetalingen na downtime; huur opzegbaar.",
+      "Supermarkt met zeven betaalbare producten, blijvende voorraad en eten/drinken.",
+      "Woningen, huurcontracten en voorraad beschermd tegen bestaande globale en persoonlijke resets.",
+      "Nederlandse en Engelse teksten, handleidingen en gerichte integratietests toegevoegd.",
+      "Configuratie en configversie ongewijzigd; geen nieuwe dependencies."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.1",
+    "date": "2026-10-13",
+    "status": "published",
+    "highlights": [
+      "/reset-economy bevestigen:Ja: reset positieve saldi en economy-cooldowns in de huidige server op nul en annuleer gewone rekeningen. Store-aankopen, ongebruikte én verstuurde verplichte rekeningen (inclusief rente en betaaldatum), VIP en XP blijven behouden. Ook /reset-voortgang bewaart verplichte rekeningen. Alleen owner-toegang; lopende VIP-leveringen blokkeren de reset.",
+      "Store: koop voor €5.000 één verplichte rekening. Verstuur met /rekening sturen verplicht:Ja, voor €1 t/m €7.000. Geen weigering of annulering door spelers."
+    ],
+    "changes": [
+      "Rente: elke volle 24 uur +10% over het actuele bedrag, dagelijks afgerond op hele spel-euro’s. Eerder betalen stopt rente. Na 7 dagen automatische bankoverschrijving inclusief maximaal 7 rentestappen, ook als de ontvanger daardoor negatief staat. Achterstallige betalingen worden na een herstart verwerkt.",
+      "Negatieve banksaldi blijven bij serverbrede resets behouden en worden door stortingen afgelost. Een persoonlijke /economy-reset gebruiker:@lid wist wél de bestaande bankschuld, maar behoudt aankopen en openstaande verplichte rekeningen. Store-aankopen en rekeningen zijn servergebonden; aankoopbevestigingen kunnen niet dubbel afschrijven.",
+      "/language bevestigt privé vóór databaseopslag en gebruikt daarna editReply.",
+      "English: added economy-only reset preserving purchases and XP, €5,000 compulsory invoice credits (up to €7,000 principal), daily compound interest and automatic settlement after seven days, persistent bank debt, and early acknowledgement for /language."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
+  },
+  {
+    "script": "tgc_bot",
+    "version": "3.0.0",
+    "date": "2026-10-13",
+    "status": "published",
+    "highlights": [
+      "Bot.Language: nl, en of both per server; standaard both behouden.",
+      "Logging.Language: Discord-logs standaard nl, optioneel en/both."
+    ],
+    "changes": [
+      "Gebruikers, rollen en everyone/here worden eenmaal per bericht vermeld; herhalingen tonen gewone tekst.",
+      "Privéantwoorden zonder persoonlijke taalkeuze volgen Engels bij een Engelse server.",
+      "AI-chat volgt de openbare servertaal. Versie verhoogd naar 3.0.0."
+    ],
+    "files": [],
+    "instructions": [],
+    "sourceNote": "Bron: docs/CHANGELOG.md van de botrepository. Bij ontbrekende datums wordt geen releasedatum aangenomen."
   }
 ]

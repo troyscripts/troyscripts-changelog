@@ -78,5 +78,13 @@
     "category": "Overige scripts",
     "initialVersion": "1.0.1",
     "description": "Parkeren en parkeercontrole voor Gemert RP."
+  },
+  {
+    "id": "tgc_bot",
+    "name": "Troy's Game Community Bot",
+    "icon": "🤖",
+    "category": "Discord-bot",
+    "initialVersion": "3.8.4",
+    "description": "Discord-bot voor tickets, moderatie, economie, Twitch- en YouTube-meldingen en de centrale hub."
   }
 ]

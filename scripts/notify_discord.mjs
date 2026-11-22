@@ -23,7 +23,7 @@ export function createPayload(script,release,catalog,releases,site){
     username:'TroyScripts Updates',
     allowed_mentions:{parse:[]},
     embeds:[
-      {title:`${script.icon} Nieuwe update: ${script.id} v${release.version}`,description:`${bullets}\n\n📖 [Bekijk de volledige changelog en update-instructies](${changelog})`.slice(0,4096),url:changelog,color:0x38cbd9,timestamp:`${release.date}T12:00:00Z`,footer:{text:'TroyScripts · Nieuw gepubliceerde release'}},
+      {title:`${script.icon} Nieuwe update: ${script.name} v${release.version}`,description:`${bullets}\n\n📖 [Bekijk de volledige changelog en update-instructies](${changelog})`.slice(0,4096),url:changelog,color:0x38cbd9,...(release.date?{timestamp:`${release.date}T12:00:00Z`}:{}),footer:{text:'TroyScripts · Nieuw gepubliceerde release'}},
       {title:'TroyScripts Updates',description:'Actuele versies en changelogs van alle TroyScripts-resources.',color:0x7667e8,fields,footer:{text:'TroyScripts · Compleet updateoverzicht'}}
     ]
   };
