@@ -3,7 +3,7 @@
     "script": "ts_antipunch",
     "version": "1.8.6",
     "date": "2026-11-22",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Server-specifieke ElectronAC-regel uit fxmanifest.lua verwijderd; het script start nu ook op servers zonder ElectronAC.",
       "De Nederlandse teksten in locales/nl.lua zijn ook in de Cfx-versie aan te passen."
