@@ -89,3 +89,7 @@ De bot draait op de bestaande hosting. GitHub Pages start of beheert de bot niet
 - ts_bridge wordt als dependency toegevoegd waar nodig; ts_gemertmap heeft deze dependency niet. De Discord-bot wordt nooit in server.cfg gezet.
 - De installatiebron staat onder `data/manuals.json` en `data/items.json`. Bij toekomstige updates moeten concrete installatieverschillen hier worden aangepast.
 - **Belangrijk:** dit genereert een aanbevolen startvolgorde, geen configuratie op maat van onbekende externe assets. Controleer elk fragment en de instructies voor jouw daadwerkelijke server. Verander nooit blind schema- of versievelden.
+
+## Electron AntiCheat-handleiding
+
+Een afzonderlijke pagina onder `/anticheat/` toont de resource-whitelistinstructies voor screenshot-webhooks met Electron `resourceProtection`. De brongegevens staan in `data/anticheat.json` en komen uit de bestaande TroyScripts-documentatie. Een navigatielink staat in het menu en bij alle FiveM-scriptinstallaties. Ook opgenomen in de sitemap. Dit is documentatie en geen nieuwe scriptrelease; er hoort dus geen automatische nieuwe-versiemelding in Discord bij.

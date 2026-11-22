@@ -4,4 +4,5 @@
   const toggle=document.querySelector('[data-sidebar-toggle]');
   const sidebar=document.getElementById('sidebar');
   if(toggle&&sidebar){toggle.addEventListener('click',()=>{let open=sidebar.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'✕   Scriptmenu sluiten':'☰   Scriptmenu openen';});}
+  document.querySelectorAll('[data-copy-text]').forEach(button=>button.addEventListener('click',async()=>{const original=button.textContent;try{await navigator.clipboard.writeText(button.dataset.copyText);button.textContent='Gekopieerd!'}catch{button.textContent='Kopiëren mislukt'}setTimeout(()=>button.textContent=original,1600)}));
 })();

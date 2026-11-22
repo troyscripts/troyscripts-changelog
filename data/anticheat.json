@@ -1,0 +1,79 @@
+{
+  "title": "Electron AntiCheat — resource-whitelist & webhookfoto's",
+  "updated": "2026-11-06",
+  "scope": "Voor TroyScripts-resources die screenshots naar Discord-webhooks sturen wanneer Electron AntiCheat met resourceProtection wordt gebruikt.",
+  "intro": "Electron AntiCheat is geen verplichte dependency van TroyScripts. Gebruik je geen Electron, dan zijn deze whitelist-stappen niet nodig. Wanneer een script screenshots via ts_bridge verstuurt, moeten de betrokken resources apart op de resource-whitelist staan.",
+  "table": [
+    {
+      "name": "Het betreffende script",
+      "condition": "Voor iedere geïnstalleerde resource waarvan je de screenshotfunctie gebruikt; gebruik de exacte resourcenaam."
+    },
+    {
+      "name": "screenshot-basic",
+      "condition": "Wanneer de screenshotfunctie screenshot-basic gebruikt."
+    },
+    {
+      "name": "ts_bridge",
+      "condition": "Wanneer de screenshot via ts_bridge wordt verwerkt."
+    }
+  ],
+  "steps": [
+    "Open het Electron AntiCheat-dashboard en selecteer de juiste FiveM-server.",
+    "Open de instellingen en ga naar Resources → Resource based protections.",
+    "Zoek resourceProtection en klik op het tandwiel bij die instelling.",
+    "Voeg de betrokken resources afzonderlijk toe aan de resource-whitelist. Gebruik exact de namen van de resource-mappen, inclusief streepjes en underscores.",
+    "Sla de wijzigingen op en pas ze toe. Volg zo nodig de herstart- of herlaadinstructie van jouw Electron-versie.",
+    "Verbind opnieuw met de FiveM-server en test de screenshotfunctie."
+  ],
+  "example": {
+    "lead": "Voor ts_hostage waarbij screenshots via ts_bridge en screenshot-basic worden verwerkt:",
+    "resources": [
+      "ts_hostage",
+      "ts_bridge",
+      "screenshot-basic"
+    ],
+    "caution": "Gebruik geen verzamelmap zoals [troyscripts] en geen algemene ts_*-invoer. Whitelist de benodigde resources afzonderlijk. Alleen screenshot-basic whitelisten is niet voldoende wanneer Electron ook de aanroepende resource of bridge blokkeert."
+  },
+  "checks": [
+    "Het betrokken script, screenshot-basic en — als die wordt gebruikt — ts_bridge zijn gestart.",
+    "De screenshotfunctie is ingeschakeld en de juiste Discord-webhook is ingesteld.",
+    "Er is een in-game actie uitgevoerd die volgens het script een screenshot verstuurt.",
+    "Het bericht verschijnt met afbeelding in het ingestelde Discord-kanaal.",
+    "Bij een fout zijn Electron-detectielogs, FiveM-serverconsole en de F8-console van de speler gecontroleerd."
+  ],
+  "troubleshooting": [
+    {
+      "title": "Wel tekst, geen afbeelding",
+      "answer": "Controleer of alle betrokken resources op de whitelist staan. Een tekstbericht kan een fallback zijn en bewijst niet dat de screenshot gelukt is."
+    },
+    {
+      "title": "Electron meldt antiIllegalTrigger",
+      "answer": "Bij een eerdere test werd het event ts_bridge:screenshot:result gedetecteerd. Controleer vooral de whitelist van ts_bridge onder resourceProtection en of de wijziging is toegepast. Blijft het event geblokkeerd, neem dan met die specifieke detectie contact op met Electron-support. Schakel antiIllegalTrigger niet volledig uit.",
+      "code": "ts_bridge:screenshot:result"
+    },
+    {
+      "title": "Geen Electron-detectie, maar nog steeds geen afbeelding",
+      "answer": "Controleer de screenshot- en uploadfouten in de logs. Een ongeldige Discord-webhook, fout bij de upload of een verbindingsprobleem kan ook de oorzaak zijn; de whitelist lost die fouten niet automatisch op."
+    },
+    {
+      "title": "Is een speler- of admin-whitelist genoeg?",
+      "answer": "Nee. Een speler- of admin-whitelist vervangt de resource-whitelist niet. Voor deze procedure hoeft er ook geen Electron-export aan het script te worden toegevoegd."
+    }
+  ],
+  "notes": [
+    "Deze handleiding beschrijft resource-whitelisting voor screenshotintegraties, niet een algemene uitzondering voor elke beveiligingscontrole.",
+    "Menunamen en de locatie van het tandwiel kunnen verschillen per Electron-versie of taal. Zoek bij afwijkende benamingen naar resourceProtection en de resource-whitelist.",
+    "De bestaande TroyScripts-handleidingen vermelden dat de webhookafbeeldingen bij Gemert RP na de whitelistaanpassingen weer werkten; dit is geen garantie voor elke Electron-versie of serverconfiguratie."
+  ],
+  "sources": [
+    {
+      "label": "Electron — Script Errors",
+      "url": "https://docs.electron-services.com/troubleshooting/script-errors"
+    },
+    {
+      "label": "Electron — Configuration Tips",
+      "url": "https://docs.electron-services.com/advanced/tips-best-configuration"
+    }
+  ],
+  "sourceNote": "Gebaseerd op de bestaande TroyScripts-documentatie in ts_bridge/docs/electron-anticheat.md en vergelijkbare handleidingen in ts_hostage, ts_keycard, ts_nlplates en ts_repairpoints; daar voor het laatst gecontroleerd op 6 november 2026."
+}

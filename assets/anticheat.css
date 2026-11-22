@@ -1,0 +1,41 @@
+
+/* Electron AntiCheat-handleiding */
+.side-special.ac-nav{border-color:#3b426b;background:#201d38;color:#c0b0ff}
+.ac-head{margin:43px 0 22px;background:linear-gradient(125deg,#14253c,#11172b);border:1px solid #2c5367;border-radius:16px;padding:30px}
+.ac-head h1{font-size:clamp(30px,4vw,44px);line-height:1.15;letter-spacing:-1px;margin:10px 0}
+.ac-head p{color:#acc3da;max-width:720px}
+.ac-head .ac-subtitle{color:#52dfeb;font-weight:800;font-size:18px}
+.ac-toc,.ac-source-links,.ac-bottom{display:flex;gap:10px;flex-wrap:wrap}
+.ac-toc{margin:20px 0 30px}
+.ac-toc a,.ac-source-links a{font-size:12px;padding:9px 12px;border:1px solid #35536d;background:#12223a;border-radius:8px;color:#a9e1ec}
+.ac-toc a:hover,.ac-source-links a:hover{border-color:var(--cyan);color:var(--cyan)}
+.ac-panel{padding:26px 28px;margin:18px 0;border:1px solid #293e59;border-radius:14px;background:#0e1a2c;scroll-margin-top:100px}
+.ac-panel h2{font-size:23px;letter-spacing:-.4px;margin:6px 0 15px}
+.ac-panel h3{font-size:15px;margin:24px 0 13px}
+.ac-panel p,.ac-list{font-size:14px;line-height:1.8;color:#bdcfe4}
+.ac-list{padding-left:23px}
+.ac-list li{padding:5px 0}
+.ac-list li::marker{color:#42d6e4}
+.ac-note{padding:13px;background:#132d44;border:1px solid #305971;border-radius:9px}
+.ac-table-wrap{overflow-x:auto}
+.ac-table{border-collapse:collapse;width:100%;min-width:420px;font-size:13px}
+.ac-table td,.ac-table th{text-align:left;vertical-align:top;padding:12px 13px;border-bottom:1px solid #304157}
+.ac-table th{color:var(--cyan);background:#14243b}
+.ac-table td{color:#bed0e2}
+.ac-codebox{background:#091222;border:1px solid #2d4c69;border-radius:10px;overflow:hidden;margin:16px 0}
+.ac-codebar{display:flex;align-items:center;justify-content:space-between;gap:9px;background:#162840;border-bottom:1px solid #344b66;padding:10px 14px;color:#bfd5e8;font-size:12px}
+.ac-copy{background:#45d8e4;border:0;border-radius:7px;color:#061e2b;font-size:12px;font-weight:800;padding:8px 12px}
+.ac-codebox pre{margin:0;padding:18px;overflow:auto;color:#d6edff;font-size:13px;line-height:1.7}
+.ac-checks{display:grid;gap:8px}
+.ac-checks label{display:flex;align-items:flex-start;gap:11px;background:#112039;border:1px solid #2c405c;padding:12px;border-radius:9px;font-size:13px;cursor:pointer}
+.ac-checks input{margin-top:3px;accent-color:#39d8e4}
+.ac-checks label:has(input:checked){background:#103034}
+.ac-faq details{border:1px solid #2a4865;background:#111e33;border-radius:10px;margin:9px 0}
+.ac-faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 17px;font-weight:750;font-size:14px}
+.ac-faq summary::-webkit-details-marker{display:none}
+.ac-faq summary span{font-size:19px;color:#80bfd4}
+.ac-faq details[open] summary{color:var(--cyan)}
+.ac-faq details>div{padding:0 17px 14px;border-top:1px solid #304861}
+.ac-source-note{font-size:11px!important;color:#8ea2ba!important;margin-top:21px}
+.ac-bottom{margin:22px 0 65px}
+@media(max-width:790px){.ac-head,.ac-panel{padding:20px 16px}}
