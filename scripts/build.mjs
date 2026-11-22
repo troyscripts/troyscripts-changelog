@@ -57,7 +57,7 @@ const versions=Object.fromEntries(catalog.map(s=>[s.id,{version:latestVersion(s,
 write('api/versions.json',JSON.stringify({generatedAt:new Date().toISOString(),scripts:versions},null,2)+'\n');
 write('api/releases.json',JSON.stringify({scripts:catalog.map(s=>({id:s.id,name:s.name,category:s.category,icon:s.icon,version:latestVersion(s,releases),url:pathFor(s)})),releases:allHistory.map(r=>({...r,url:`${pathFor(catalog.find(s=>s.id===r.script))}#v${r.version}`}))},null,2)+'\n');
 write('installatie/index.html',layout({title:'Interactieve installatiehulp',description:'Selecteer jouw TroyScripts-resources en maak een installatie- of updateplan met startvolgorde en inventory-items.',body:`<div class="breadcrumb"><a href="${h(site)}">Home</a><span>/</span><span>Installatiehulp</span></div><div id="installer" data-url="${h(absolute(site,'api/installer.json'))}"><p class="muted">Installatiegegevens laden...</p></div>`,canonical:absolute(site,'installatie/')}));
-write('api/installer.json',JSON.stringify({catalog,manuals,items},null,2)+'\\n');
+write('api/installer.json',JSON.stringify({catalog,manuals,items},null,2)+'\n');
 write('robots.txt','User-agent: *\nAllow: /\nSitemap: '+absolute(site,'sitemap.xml')+'\n');
 write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[site,absolute(site,'installatie/'),...catalog.map(pathFor)].map(url=>`<url><loc>${h(url)}</loc></url>`).join('')+'</urlset>');
 console.log(`Gereed: ${catalog.length} pagina’s, ${allHistory.length} changelogs → dist/ (${site})`);
