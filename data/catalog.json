@@ -4,7 +4,7 @@
     "name": "TS Bridge",
     "icon": "🧩",
     "category": "Basis scripts",
-    "initialVersion": "1.2.0",
+    "initialVersion": "1.2.1",
     "description": "Centrale koppelingen, providers, meldingen en ondersteuning voor TroyScripts."
   },
   {

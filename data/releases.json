@@ -1,6 +1,42 @@
 [
   {
     "script": "ts_bridge",
+    "version": "1.2.1",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Centrale versiecontrole via de publieke TroyScripts-versie-API; geen HTTP 404 meer door privé GitHub-repositories.",
+      "De console verwijst bij een beschikbare update voortaan naar de eigen Cfx.re Granted Assets-pagina."
+    ],
+    "changes": [
+      "ts_keycard, ts_antipunch en andere aangesloten scripts blijven hun bestaande CheckForUpdates-aanroep gebruiken.",
+      "Gelijktijdige controles gebruiken één gedeelde HTTP-aanvraag met een cache van vijf minuten.",
+      "De changelogs worden via de TroyScripts Discord-aankondigingen gedeeld; de console toont geen aparte changeloglink.",
+      "Het configuratieschema blijft 0.1.2. Bestaande gameplay-, banking- en webhookfuncties blijven ongewijzigd."
+    ],
+    "files": [
+      "server/services/updates.lua",
+      "server/services/update_check.lua",
+      "locales/nl.lua",
+      "locales/en.lua",
+      "config/config.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/INSTALLATIE.md"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak vooraf een back-up van ts_bridge en je eigen config/config.lua en config/webhook_config.lua.",
+      "Vervang het volledige Cfx.re-pakket; neem eigen providerinstellingen en webhookadressen over. Het configuratieschema blijft 0.1.2.",
+      "Herstart de server met externe providers vóór ts_bridge en de overige TroyScripts daarna.",
+      "Controleer de serverconsole: de checker gebruikt het centrale versiepunt, en bij nieuwe updates wijst de console naar de Cfx.re-assets."
+    ],
+    "sourceNote": "Gebaseerd op de officiële changelog van ts_brigde v1.2.1; bevestigd getest op de testserver en door de maker gepubliceerd op Cfx.re op 22 november 2026."
+  },
+  {
+    "script": "ts_bridge",
     "version": "1.1.9",
     "date": "2026-11-15",
     "status": "published",
