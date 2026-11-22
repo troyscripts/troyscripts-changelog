@@ -178,5 +178,8 @@
   },
   "tgc_bot@3.0.0": {
     "summary": "Introduced Dutch, English and bilingual server languages, localized logs and improved mentions."
+  },
+  "ts_antipunch@1.8.6": {
+    "summary": "Removed the server-specific ElectronAC line from fxmanifest.lua, so the script also starts on servers without ElectronAC. The Dutch texts in locales/nl.lua can now be edited in the Cfx version too."
   }
 }
