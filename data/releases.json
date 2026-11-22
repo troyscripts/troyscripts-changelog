@@ -1,5 +1,27 @@
 [
   {
+    "script": "ts_flatbed",
+    "version": "1.0.4",
+    "date": "2026-11-22",
+    "status": "published",
+    "highlights": [
+      "Server-specifieke ElectronAC-regel uit fxmanifest.lua verwijderd; het script start nu ook op servers zonder ElectronAC.",
+      "escrow_ignore wijst naar het echte configbestand config.lua, zodat de config in de Cfx-versie aan te passen blijft."
+    ],
+    "changes": [
+      "Niet-bestaande paden config/config.lua en config/webhook_config.lua uit escrow_ignore verwijderd.",
+      "Gameplay en configversie (1.1.2) ongewijzigd."
+    ],
+    "files": [
+      "fxmanifest.lua"
+    ],
+    "instructions": [
+      "Vervang fxmanifest.lua. Je config.lua en calibration.json kun je houden.",
+      "Gebruik je ElectronAC, dan voegt die de anticheatregel op je eigen server zelf weer toe."
+    ],
+    "sourceNote": "Gebaseerd op README.md van ts_flatbed v1.0.4; getest op de testserver."
+  },
+  {
     "script": "ts_antipunch",
     "version": "1.8.6",
     "date": "2026-11-22",

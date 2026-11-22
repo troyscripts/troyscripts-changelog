@@ -181,5 +181,8 @@
   },
   "ts_antipunch@1.8.6": {
     "summary": "Removed the server-specific ElectronAC line from fxmanifest.lua, so the script also starts on servers without ElectronAC. The Dutch texts in locales/nl.lua can now be edited in the Cfx version too."
+  },
+  "ts_flatbed@1.0.4": {
+    "summary": "Removed the server-specific ElectronAC line from fxmanifest.lua, so the script also starts on servers without ElectronAC. escrow_ignore now points to the actual config.lua, so the config stays editable in the Cfx version."
   }
 }
