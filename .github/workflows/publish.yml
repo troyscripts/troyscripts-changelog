@@ -1,0 +1,88 @@
+name: Publiceer TroyScripts changelogs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'data/**'
+      - 'scripts/**'
+      - 'package.json'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository inclusief releasegeschiedenis ophalen
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Node.js instellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Versies en releasegegevens controleren
+        run: |
+          npm run validate
+          npm test
+
+      - name: Website en publieke versie-API opbouwen
+        run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+
+      - name: GitHub Pages instellen
+        uses: actions/configure-pages@v5
+
+      - name: Websitebestanden klaarzetten
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Website publiceren
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  discord:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Repository inclusief releasegeschiedenis ophalen
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Node.js instellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Alleen nieuwe inhoudelijke releases aankondigen
+        env:
+          DISCORD_UPDATES_WEBHOOK: ${{ secrets.DISCORD_UPDATES_WEBHOOK }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: node scripts/notify_discord.mjs --before "$BEFORE_SHA"
