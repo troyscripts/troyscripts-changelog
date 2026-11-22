@@ -16,3 +16,10 @@ test('Keycarditems en kentekenbewijs uit bronmateriaal aanwezig',()=>{
  assert.ok(items.ts_keycard.code.includes('politie_sleutelkaart'));
  assert.ok(items.ts_nlplates.code.includes('kentekenbewijs'));
 });
+
+test('Kentekenmigratie is een tool en komt nooit in server.cfg',()=>{
+  assert.equal(manuals.ts_nlplates_migrate.type,'tool');
+  const src=readFileSync(new URL('../assets/installer.js',import.meta.url),'utf8');
+  assert.match(src,/manual\(id\)\?\.type !== 'tool'/);
+  assert.match(src,/filter\(s=>manual\(s\.id\)\?\.type!=='tool'\)/);
+});

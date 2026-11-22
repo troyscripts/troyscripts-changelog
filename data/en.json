@@ -8,6 +8,10 @@
       "Dutch License Plates",
       "Dutch-style license plates and registration documents for FiveM."
     ],
+    "ts_nlplates_migrate": [
+      "License Plate Migration",
+      "One-time tool that converts old license plates with hyphens (A-123-BC) to spaces (A 123 BC). Remove after use."
+    ],
     "ts_flatbed": [
       "Flatbed",
       "Ramps, winch and vehicle transport using a flatbed truck."
@@ -139,6 +143,49 @@
       ],
       "items": [
         "kentekenbewijs"
+      ]
+    },
+    "ts_nlplates_migrate": {
+      "type": "tool",
+      "summary": "One-time maintenance tool that converts old ts_nlplates license plates with hyphens (A-123-BC) in the database to spaces (A 123 BC). It does not replace ts_nlplates and is not meant to run permanently.",
+      "providers": [
+        "oxmysql"
+      ],
+      "needs": [],
+      "onesync": false,
+      "requirements": [
+        "Only needed if your database still contains license plates with hyphens from an older ts_nlplates version.",
+        "oxmysql must be running. ESX, ts_bridge and other scripts are not needed and must be stopped during the migration.",
+        "A full database backup and a maintenance window without players.",
+        "The affected database tables must use InnoDB."
+      ],
+      "install": [
+        "Make a full database backup and put the server in maintenance. Block new connections through your hosting; kicking players alone is not enough.",
+        "Let all players leave and stop ESX, inventory, garages, dealerships, keys and every other resource that writes vehicle data. Keep only oxmysql running.",
+        "Place the folder as ts_nlplates_migrate on your server, but do not add it to server.cfg.",
+        "Check in config.lua that your own resources that write vehicle data are listed in BlockedResources.",
+        "Start the tool manually in the server console: start ts_nlplates_migrate.",
+        "Run ts_nlplates_spaties controle. This only reads. Resolve any collisions or invalid data first and check again.",
+        "Then run ts_nlplates_spaties uitvoeren.",
+        "Check the result, remove the ts_nlplates_migrate folder from your server and restart the full server."
+      ],
+      "update": [
+        "You only need this tool once. If your database has already been converted, there is nothing to update.",
+        "If you do need to migrate again, follow the installation steps with a new backup."
+      ],
+      "verify": [
+        "Check a few vehicles in owned_vehicles: plates use spaces, for example A 123 BC.",
+        "Test a garage, the glovebox and the registration document in-game.",
+        "Make sure ts_nlplates_migrate is no longer on your server and not in server.cfg."
+      ],
+      "warnings": [
+        "Never add this tool to server.cfg and never let it start automatically.",
+        "Remove the tool from your server after use.",
+        "Test on a copy of your database first. KVP, hashes, encrypted data and external storage are not fully converted; check your own integrations separately.",
+        "The commands only work in the server console, not for players."
+      ],
+      "preserve": [
+        "database backup from before the migration"
       ]
     },
     "ts_flatbed": {

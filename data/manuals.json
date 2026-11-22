@@ -86,6 +86,49 @@
       "kentekenbewijs"
     ]
   },
+  "ts_nlplates_migrate": {
+    "type": "tool",
+    "summary": "Eenmalige onderhoudstool die oude ts_nlplates-kentekens met streepjes (A-123-BC) in de database omzet naar spaties (A 123 BC). Het is geen vervanging voor ts_nlplates en is niet bedoeld om permanent te draaien.",
+    "providers": [
+      "oxmysql"
+    ],
+    "needs": [],
+    "onesync": false,
+    "requirements": [
+      "Alleen nodig als je database nog kentekens met streepjes bevat uit een oudere ts_nlplates-versie.",
+      "oxmysql moet draaien. ESX, ts_bridge en andere scripts zijn niet nodig en moeten tijdens de migratie juist uit staan.",
+      "Een volledige databaseback-up en een onderhoudsmoment zonder spelers.",
+      "De betrokken databasetabellen moeten InnoDB gebruiken."
+    ],
+    "install": [
+      "Maak een volledige databaseback-up en zet de server in onderhoud. Blokkeer nieuwe verbindingen via je hosting; alleen spelers kicken is niet genoeg.",
+      "Laat alle spelers vertrekken en stop ESX, inventory, garages, dealerships, sleutels en alle andere resources die voertuiggegevens schrijven. Laat alleen oxmysql draaien.",
+      "Plaats de map als ts_nlplates_migrate op je server, maar zet hem niet in server.cfg.",
+      "Controleer in config.lua of je eigen resources die voertuiggegevens schrijven in BlockedResources staan.",
+      "Start de tool handmatig in de serverconsole: start ts_nlplates_migrate.",
+      "Voer ts_nlplates_spaties controle uit. Dit leest alleen. Los eventuele botsingen of ongeldige gegevens eerst op en controleer opnieuw.",
+      "Voer daarna ts_nlplates_spaties uitvoeren uit.",
+      "Controleer het resultaat, verwijder de map ts_nlplates_migrate van je server en herstart de volledige server."
+    ],
+    "update": [
+      "Deze tool heb je maar één keer nodig. Is je database al omgezet, dan hoef je niets bij te werken.",
+      "Moet je toch opnieuw migreren, volg dan de installatiestappen met een nieuwe back-up."
+    ],
+    "verify": [
+      "Controleer een paar voertuigen in owned_vehicles: de kentekens staan met spaties, bijvoorbeeld A 123 BC.",
+      "Test in-game een garage, het dashboardkastje en het kentekenbewijs.",
+      "Controleer dat ts_nlplates_migrate niet meer op je server staat en niet in server.cfg voorkomt."
+    ],
+    "warnings": [
+      "Zet deze tool nooit in server.cfg en laat hem nooit automatisch starten.",
+      "Verwijder de tool na gebruik van je server.",
+      "Test eerst op een kopie van je database. KVP, hashes, versleutelde gegevens en externe opslag worden niet volledig omgezet; controleer eigen koppelingen apart.",
+      "De commando's werken alleen in de serverconsole, niet voor spelers."
+    ],
+    "preserve": [
+      "databaseback-up van vóór de migratie"
+    ]
+  },
   "ts_flatbed": {
     "type": "fivem",
     "summary": "Rijplaten, lier, afstandsbediening en wielheffer voor ondersteunde bergingsvoertuigen.",

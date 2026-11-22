@@ -18,11 +18,11 @@
     let onesync = false;
     for (const id of full) {
       const m = manual(id);
-      if (!m || m.type !== 'fivem') continue;
+      if (!m || (m.type !== 'fivem' && m.type !== 'tool')) continue;
       for (const p of m.providers || []) providerSet.add(p);
       if (m.onesync) onesync = true;
     }
-    const resources = [...new Set([...providerSet,...full].filter(id => id !== 'tgc_bot'))].sort((a,b)=> {
+    const resources = [...new Set([...providerSet,...full].filter(id => id !== 'tgc_bot' && manual(id)?.type !== 'tool'))].sort((a,b)=> {
       const x=preferenceOrder.indexOf(a),y=preferenceOrder.indexOf(b);
       return (x < 0 ? 999 : x) - (y < 0 ? 999 : y);
     });
@@ -75,7 +75,7 @@
       render();
     }));
     root.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;render()}));
-    root.querySelectorAll('[data-select]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.select==='all') ids.forEach(s=>state.selected.add(s.id));else state.selected.clear();render()}));
+    root.querySelectorAll('[data-select]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.select==='all') ids.filter(s=>manual(s.id)?.type!=='tool').forEach(s=>state.selected.add(s.id));else state.selected.clear();render()}));
     root.querySelectorAll('.copy-install').forEach(b=>b.addEventListener('click',async()=>{
       const original=b.textContent;
       try { await navigator.clipboard.writeText(b.getAttribute('data-copy'));b.textContent='Gekopieerd!'; }

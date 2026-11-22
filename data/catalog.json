@@ -16,6 +16,14 @@
     "description": "Nederlandse kentekens en kentekenbewijzen voor FiveM."
   },
   {
+    "id": "ts_nlplates_migrate",
+    "name": "Kentekenmigratie",
+    "icon": "🔄",
+    "category": "Voertuigen",
+    "initialVersion": "1.0.2",
+    "description": "Eenmalige tool die oude kentekens met streepjes (A-123-BC) omzet naar spaties (A 123 BC). Na gebruik verwijderen."
+  },
+  {
     "id": "ts_flatbed",
     "name": "Flatbed",
     "icon": "🚛",
