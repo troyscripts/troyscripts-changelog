@@ -1,0 +1,37 @@
+name: Publiceer TroyScripts-overzicht in Discord
+
+# De eerste toevoeging van dit workflowbestand publiceert het bestaande overzicht één keer.
+# Daarna kun je het overzicht opnieuw publiceren via Actions > Run workflow.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/discord-overzicht.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: troyscripts-discord-overzicht
+  cancel-in-progress: false
+
+jobs:
+  overzicht:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository ophalen
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Node.js installeren
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Publiceer het volledige actuele script- en botoverzicht
+        env:
+          DISCORD_UPDATES_WEBHOOK: ${{ secrets.DISCORD_UPDATES_WEBHOOK }}
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: node scripts/publish_discord_overview.mjs
