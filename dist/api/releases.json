@@ -1,0 +1,271 @@
+{
+  "scripts": [
+    {
+      "id": "ts_bridge",
+      "name": "TS Bridge",
+      "category": "Basis scripts",
+      "icon": "🧩",
+      "version": "1.2.0",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_bridge/"
+    },
+    {
+      "id": "ts_nlplates",
+      "name": "Nederlandse kentekens",
+      "category": "Voertuigen",
+      "icon": "🚘",
+      "version": "1.1.2",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_nlplates/"
+    },
+    {
+      "id": "ts_flatbed",
+      "name": "Flatbed",
+      "category": "Voertuigen",
+      "icon": "🚛",
+      "version": "1.0.3",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_flatbed/"
+    },
+    {
+      "id": "ts_repairpoints",
+      "name": "Repair Points",
+      "category": "Voertuigen",
+      "icon": "🔧",
+      "version": "1.1.4",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_repairpoints/"
+    },
+    {
+      "id": "ts_keycard",
+      "name": "Keycard",
+      "category": "Hulpdiensten & toegang",
+      "icon": "🪪",
+      "version": "1.3.6",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_keycard/"
+    },
+    {
+      "id": "ts_hostage",
+      "name": "Hostage",
+      "category": "Gameplay",
+      "icon": "🤝",
+      "version": "1.2.4",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_hostage/"
+    },
+    {
+      "id": "ts_antipunch",
+      "name": "AntiPunch",
+      "category": "Gameplay",
+      "icon": "🛡️",
+      "version": "1.8.5",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_antipunch/"
+    },
+    {
+      "id": "ts_nohelmet",
+      "name": "No Helmet",
+      "category": "Gameplay",
+      "icon": "🪖",
+      "version": "1.0.7",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_nohelmet/"
+    },
+    {
+      "id": "ts_gemertmap",
+      "name": "Gemert Map",
+      "category": "Overige scripts",
+      "icon": "🗺️",
+      "version": "1.1.1",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_gemertmap/"
+    },
+    {
+      "id": "ts_parkeerapp",
+      "name": "Parkeerapp",
+      "category": "Overige scripts",
+      "icon": "🅿️",
+      "version": "1.0.1",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_parkeerapp/"
+    }
+  ],
+  "releases": [
+    {
+      "script": "ts_keycard",
+      "version": "1.3.5",
+      "date": "2026-11-17",
+      "status": "published",
+      "highlights": [
+        "Gestolen originele kaarten zijn 600 seconden beschermd tegen globale intrekking.",
+        "Servercontrole houdt de resterende wachttijd per kaart bij, ook na een herstart."
+      ],
+      "changes": [
+        "Command /kaartinnemen als alias toegevoegd.",
+        "Inventory-installatiefragment verplaatst; configuratieschema blijft 1.2.1."
+      ],
+      "files": [
+        "install/items/ox_inventory_item.txt"
+      ],
+      "instructions": [
+        "Bewaar je eigen configuratiewaarden; controleer de installatiehandleiding voor het juiste itemfragment."
+      ],
+      "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_keycard. De huidige manifestversie is 1.3.6.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_keycard/#v1.3.5"
+    },
+    {
+      "script": "ts_bridge",
+      "version": "1.1.9",
+      "date": "2026-11-15",
+      "status": "published",
+      "highlights": [
+        "Korte providerkeuzes voor dealer, garage, sleutels, banking en billing.",
+        "Standaardresourcenamen worden vóór validatie en adapters automatisch ingevuld."
+      ],
+      "changes": [
+        "Oude providerconfiguraties en expliciete resource-overrides blijven ondersteund.",
+        "Configschema 0.1.2; zie de migratiehandleiding in de bridge-repository."
+      ],
+      "files": [],
+      "instructions": [
+        "Controleer de providerinstellingen en neem eigen configuratie over volgens de installatiehandleiding."
+      ],
+      "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_brigde. Voor versie 1.2.0 is nog geen afzonderlijke changelog geïmporteerd.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_bridge/#v1.1.9"
+    },
+    {
+      "script": "ts_antipunch",
+      "version": "1.8.4",
+      "date": "2026-11-07",
+      "status": "published",
+      "highlights": [
+        "Per melee-episode wordt nog maximaal één annuleringsactie uitgevoerd.",
+        "Instelbare MeleeCancelMode: secondary of immediate."
+      ],
+      "changes": [
+        "Normale melee-blokkeringen en camerabeheer blijven behouden.",
+        "Configschema naar 1.8.3; Lua-regressietest uitgebreid."
+      ],
+      "files": [],
+      "instructions": [
+        "Neem de nieuwe MeleeCancelMode-instelling over; wijzig niet alleen het configversienummer."
+      ],
+      "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_antipunch. De huidige manifestversie is 1.8.5.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_antipunch/#v1.8.4"
+    },
+    {
+      "script": "ts_nlplates",
+      "version": "1.1.0",
+      "date": "2026-11-07",
+      "status": "published",
+      "highlights": [
+        "Code onderverdeeld in client/, server/, shared/ en config/.",
+        "Discord-webhookplaceholder veilig gemaakt in de standaardconfig."
+      ],
+      "changes": [
+        "Manifestentries en documentatielinks aangepast; bestaande exports en events behouden.",
+        "Verkeerde verwachte configversie in de checker hersteld."
+      ],
+      "files": [],
+      "instructions": [
+        "Neem je eigen waarden over in config/config.lua en config/webhooks.lua."
+      ],
+      "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_nlplates. De huidige manifestversie is 1.1.2.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_nlplates/#v1.1.0"
+    },
+    {
+      "script": "ts_gemertmap",
+      "version": "1.1.0",
+      "date": "2026-11-07",
+      "status": "published",
+      "highlights": [
+        "Radarzoom wordt automatisch toegepast bij starten, respawnen en /gemertmapreset.",
+        "Instelbare compatibiliteitsmodus voor HUD's die de radarzoom overschrijven."
+      ],
+      "changes": [
+        "De standaardperiodieke radarloop vervalt met ZoomRefreshMs = 0.",
+        "Updatechecker en regressietest verbeterd; kaarttextures en postcodegegevens blijven behouden."
+      ],
+      "files": [],
+      "instructions": [
+        "Controleer de ZoomRefreshMs-instelling in je eigen configuratie.",
+        "Bij een aangepaste HUD kan de periodieke compatibiliteitsmodus nodig zijn."
+      ],
+      "sourceNote": "Overgenomen uit docs/CHANGELOG.md van ts_gemertmap. Huidige manifestversie is 1.1.1.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_gemertmap/#v1.1.0"
+    },
+    {
+      "script": "ts_hostage",
+      "version": "1.2.3",
+      "date": "2026-11-06",
+      "status": "published",
+      "highlights": [
+        "Client-, server-, shared- en configuratiebestanden logischer ingedeeld.",
+        "Documentatie, Electron AntiCheat-instructies en migratieuitleg opgeschoond."
+      ],
+      "changes": [
+        "Manifestpaden bijgewerkt met behoud van laadvolgorde en server-only webhookconfig.",
+        "Configschema 1.1.9 en gameplay behouden."
+      ],
+      "files": [],
+      "instructions": [
+        "Verwijder oude, verplaatste bestanden volgens de migratiehandleiding.",
+        "Neem je eigen configuratie mee; sla geheimen niet in de openbare repository op."
+      ],
+      "sourceNote": "Overgenomen uit docs/CHANGELOG.md van ts_hostage. Huidige manifestversie is 1.2.4.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_hostage/#v1.2.3"
+    },
+    {
+      "script": "ts_repairpoints",
+      "version": "1.1.3",
+      "date": "2026-11-05",
+      "status": "published",
+      "highlights": [
+        "Targetregistratie van de reparatieped wordt bij vroeg laden opnieuw geprobeerd.",
+        "Registratie herstelt na in- en uitstreamen en na herstart van ox_target."
+      ],
+      "changes": [
+        "Er verschijnen duidelijke meldingen wanneer repareren niet beschikbaar is.",
+        "Command /reparatietargetcheck toegevoegd voor diagnose; configschema blijft 1.1.1."
+      ],
+      "files": [],
+      "instructions": [
+        "Behoud de eigen configuratie en alle opgeslagen reparatiegegevens.",
+        "Gebruik /reparatietargetcheck als een targetoptie niet verschijnt."
+      ],
+      "sourceNote": "Overgenomen uit docs/CHANGELOG.md van ts_repairpoints. Huidige manifestversie is 1.1.4.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_repairpoints/#v1.1.3"
+    },
+    {
+      "script": "ts_nohelmet",
+      "version": "1.0.6",
+      "date": "2026-11-05",
+      "status": "published",
+      "highlights": [
+        "Versiecontrole leest het publieke fxmanifest.lua in plaats van een GitHub Release."
+      ],
+      "changes": [
+        "Manifest wordt begrensd als tekst verwerkt en gecontroleerd op één geldige version-regel.",
+        "Gameplay en configuratie niet gewijzigd."
+      ],
+      "files": [],
+      "instructions": [
+        "Controleer of ts_bridge volgens de installatiehandleiding wordt gestart."
+      ],
+      "sourceNote": "Overgenomen uit docs/CHANGELOG.md van ts_nohelmet. Huidige manifestversie is 1.0.7.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_nohelmet/#v1.0.6"
+    },
+    {
+      "script": "ts_flatbed",
+      "version": "1.0.2",
+      "date": "2026-10-31",
+      "status": "published",
+      "highlights": [
+        "Ondersteuning voor energyguinchotop toegevoegd naast energyrampamec.",
+        "Afstellingen kunnen per voertuigmodel bewaard worden."
+      ],
+      "changes": [
+        "De bestaande rijplaten- en lierbediening blijven beschikbaar.",
+        "Configversie blijft 1.1.2."
+      ],
+      "files": [],
+      "instructions": [
+        "Maak een back-up, neem eigen instellingen over in de nieuwe config.lua en behoud calibration.json.",
+        "Controleer de nieuwe voertuigafstellingen in-game."
+      ],
+      "sourceNote": "Gebaseerd op README.md van ts_flatbed. De huidige manifestversie is 1.0.3.",
+      "url": "https://troyscripts.github.io/troyscripts-changelog/scripts/ts_flatbed/#v1.0.2"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ts_bridge",
+    "name": "TS Bridge",
+    "icon": "🧩",
+    "category": "Basis scripts",
+    "initialVersion": "1.2.0",
+    "description": "Centrale koppelingen, providers, meldingen en ondersteuning voor TroyScripts."
+  },
+  {
+    "id": "ts_nlplates",
+    "name": "Nederlandse kentekens",
+    "icon": "🚘",
+    "category": "Voertuigen",
+    "initialVersion": "1.1.2",
+    "description": "Nederlandse kentekens en kentekenbewijzen voor FiveM."
+  },
+  {
+    "id": "ts_flatbed",
+    "name": "Flatbed",
+    "icon": "🚛",
+    "category": "Voertuigen",
+    "initialVersion": "1.0.3",
+    "description": "Rijplaten, lier en voertuigtransport met een flatbed."
+  },
+  {
+    "id": "ts_repairpoints",
+    "name": "Repair Points",
+    "icon": "🔧",
+    "category": "Voertuigen",
+    "initialVersion": "1.1.4",
+    "description": "Reparatiepunten met ESX-dienstcontrole."
+  },
+  {
+    "id": "ts_keycard",
+    "name": "Keycard",
+    "icon": "🪪",
+    "category": "Hulpdiensten & toegang",
+    "initialVersion": "1.3.6",
+    "description": "Sleutelkaarten en optionele werkpassen voor verschillende beroepen."
+  },
+  {
+    "id": "ts_hostage",
+    "name": "Hostage",
+    "icon": "🤝",
+    "category": "Gameplay",
+    "initialVersion": "1.2.4",
+    "description": "Gijzelingsacties met bediening en koppelingen voor FiveM."
+  },
+  {
+    "id": "ts_antipunch",
+    "name": "AntiPunch",
+    "icon": "🛡️",
+    "category": "Gameplay",
+    "initialVersion": "1.8.5",
+    "description": "Combat- en cameracontrole met bridge-integratie."
+  },
+  {
+    "id": "ts_nohelmet",
+    "name": "No Helmet",
+    "icon": "🪖",
+    "category": "Gameplay",
+    "initialVersion": "1.0.7",
+    "description": "Beheert automatisch helmgebruik en stoelwisselen."
+  },
+  {
+    "id": "ts_gemertmap",
+    "name": "Gemert Map",
+    "icon": "🗺️",
+    "category": "Overige scripts",
+    "initialVersion": "1.1.1",
+    "description": "Satellietkaart en Nederlandse gebiedsaanduidingen voor Gemert RP."
+  },
+  {
+    "id": "ts_parkeerapp",
+    "name": "Parkeerapp",
+    "icon": "🅿️",
+    "category": "Overige scripts",
+    "initialVersion": "1.0.1",
+    "description": "Parkeren en parkeercontrole voor Gemert RP."
+  }
+]
