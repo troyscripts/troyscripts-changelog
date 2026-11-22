@@ -1,0 +1,10 @@
+
+/* Language dropdown — both Dutch and English pages */
+.language-picker{margin-left:auto;display:inline-flex;align-items:center;gap:8px;border:1px solid #35536e;background:#14263c;border-radius:9px;padding:7px 10px;flex:none;font-size:13px;color:#cde2f6}
+.language-picker select{color:#eaf8ff;background:#14263c;border:none;outline:none;font-size:12px;font-weight:750;cursor:pointer;min-width:98px}
+.language-picker select option{background:#14263c;color:#edf5ff}
+.language-picker:focus-within{outline:2px solid #42dce5;outline-offset:2px}
+.topbar .top-pill{margin-left:0}
+@media(max-width:1000px){.topbar-inner{gap:15px}.top-links{gap:12px}.topbar .top-pill{display:none}}
+@media(max-width:790px){.topbar-inner{height:70px}.brand{font-size:19px}.brand-mark{width:37px;height:37px}.language-picker{margin-left:auto;padding:6px 8px}}
+@media(max-width:390px){.language-picker select{min-width:76px}.brand{font-size:17px}.brand small{font-size:7px}}

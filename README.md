@@ -93,3 +93,11 @@ De bot draait op de bestaande hosting. GitHub Pages start of beheert de bot niet
 ## Electron AntiCheat-handleiding
 
 Een afzonderlijke pagina onder `/anticheat/` toont de resource-whitelistinstructies voor screenshot-webhooks met Electron `resourceProtection`. De brongegevens staan in `data/anticheat.json` en komen uit de bestaande TroyScripts-documentatie. Een navigatielink staat in het menu en bij alle FiveM-scriptinstallaties. Ook opgenomen in de sitemap. Dit is documentatie en geen nieuwe scriptrelease; er hoort dus geen automatische nieuwe-versiemelding in Discord bij.
+
+## English language support
+
+The header includes a Dutch / English language selector. Dutch remains at `/`, while English pages are generated under `/en/`. Switching languages retains the current script, changelog fragment and installation query parameters.
+
+English installation guidance and project descriptions are stored in `data/en.json`. All historic releases have source-grounded English summaries in `data/releases_en.json`; versions and file paths continue to use the original central data files. The Electron whitelist guide uses `data/anticheat_en.json`.
+
+Run `npm run build` to generate both languages. The public `api/versions.json` remains unchanged for the FiveM update checker, and translation-only edits do not trigger a release Discord announcement.

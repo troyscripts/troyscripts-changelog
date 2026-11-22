@@ -1,0 +1,77 @@
+{
+  "scope": "For TroyScripts resources sending Discord webhook screenshots while Electron AntiCheat resourceProtection is enabled.",
+  "intro": "Electron AntiCheat is optional and is not a required TroyScripts dependency. If you do not use Electron, these whitelist steps do not apply. If a script captures screenshots via ts_bridge, whitelist each resource involved in that screenshot chain.",
+  "table": [
+    {
+      "name": "The relevant script",
+      "condition": "Each installed resource that uses the screenshot feature; use its exact resource folder name."
+    },
+    {
+      "name": "screenshot-basic",
+      "condition": "When the screenshot feature uses screenshot-basic."
+    },
+    {
+      "name": "ts_bridge",
+      "condition": "When screenshots are processed via ts_bridge."
+    }
+  ],
+  "steps": [
+    "Open the Electron AntiCheat dashboard and select your FiveM server.",
+    "Open Settings and navigate to Resources → Resource based protections.",
+    "Find resourceProtection and open its settings using the gear icon.",
+    "Add each required resource separately to the resource whitelist. Use exact resource names, including dashes and underscores.",
+    "Save and apply the changes. Follow any restart or reload instructions for your Electron version.",
+    "Reconnect to your FiveM server and test the screenshot feature."
+  ],
+  "example": {
+    "lead": "For ts_hostage sending screenshots through ts_bridge and screenshot-basic:",
+    "resources": [
+      "ts_hostage",
+      "ts_bridge",
+      "screenshot-basic"
+    ],
+    "caution": "Do not enter a folder group such as [troyscripts] or a wildcard like ts_*. Add each relevant resource separately. Whitelisting only screenshot-basic is not sufficient if Electron blocks the calling resource or ts_bridge."
+  },
+  "checks": [
+    "The affected resource, screenshot-basic and — when used — ts_bridge are running.",
+    "Screenshot capture is enabled in the script configuration and the correct Discord webhook is configured.",
+    "Perform an in-game action known to generate a screenshot.",
+    "Confirm that the Discord message includes the image in the expected channel.",
+    "If it fails, inspect Electron detection logs, the FiveM server console and the player's F8 console."
+  ],
+  "troubleshooting": [
+    {
+      "title": "Text arrives, but no screenshot",
+      "answer": "Check that every resource involved is whitelisted. A text-only message may be a fallback; it does not confirm that screenshot capture worked."
+    },
+    {
+      "title": "Electron reports antiIllegalTrigger",
+      "answer": "The event ts_bridge:screenshot:result was detected in an earlier test. Verify ts_bridge is on the resourceProtection whitelist and that changes were applied. If it remains blocked, ask Electron support to inspect the specific detection. Do not disable antiIllegalTrigger globally.",
+      "code": "ts_bridge:screenshot:result"
+    },
+    {
+      "title": "No Electron detection, but the image is still missing",
+      "answer": "Inspect the screenshot and upload errors. An invalid webhook, media upload error or network failure may be unrelated to whitelisting."
+    },
+    {
+      "title": "Is a player or admin whitelist sufficient?",
+      "answer": "No. This procedure requires the resource whitelist, not a player or administrator exception. No additional Electron export is needed in the script."
+    }
+  ],
+  "notes": [
+    "This guide concerns whitelisting the screenshot integration resources, not disabling other anti-cheat protections.",
+    "Menu names and the gear icon may differ between Electron versions or languages. Look for resourceProtection and the resource whitelist.",
+    "Previous TroyScripts documentation notes that webhook screenshots worked again after whitelist adjustments on Gemert RP. This does not guarantee identical results on every server."
+  ],
+  "sourceNote": "Based on existing TroyScripts guidance (ts_bridge, ts_hostage, ts_keycard, ts_nlplates and ts_repairpoints), last checked November 6, 2026.",
+  "sources": [
+    {
+      "label": "Electron — Script Errors",
+      "url": "https://docs.electron-services.com/troubleshooting/script-errors"
+    },
+    {
+      "label": "Electron — Configuration Tips",
+      "url": "https://docs.electron-services.com/advanced/tips-best-configuration"
+    }
+  ]
+}

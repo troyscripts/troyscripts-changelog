@@ -1,0 +1,164 @@
+{
+  "ts_bridge@1.2.1": {
+    "summary": "Central version checking now reads the public TroyScripts API instead of private GitHub repositories. Available updates link to the customer's Cfx.re Granted Assets page. Existing exports are compatible; one shared request is cached for five minutes and config schema remains 0.1.2."
+  },
+  "ts_bridge@1.1.9": {
+    "summary": "Simplified provider names for dealerships, garages, vehicle keys, banking and billing. Default resource names are resolved automatically, while existing overrides and configuration schema 0.1.2 remain compatible."
+  },
+  "ts_nlplates@1.1.0": {
+    "summary": "Reorganized the code into client, server, shared and config folders. Improved default webhook placeholders, manifest paths, documentation and config checks."
+  },
+  "ts_keycard@1.3.5": {
+    "summary": "Stolen original cards cannot be globally revoked for 600 seconds, including after restarts. Added the /kaartinnemen command alias and relocated the inventory installation snippet."
+  },
+  "ts_antipunch@1.8.4": {
+    "summary": "Limited melee cancellation to one action per episode. Added MeleeCancelMode (secondary or immediate) while retaining existing combat restrictions and camera behavior."
+  },
+  "ts_flatbed@1.0.2": {
+    "summary": "Added support for energyguinchotop alongside energyrampamec. Model-specific vehicle calibrations can be saved without changing the ramps and winch workflow."
+  },
+  "ts_gemertmap@1.1.0": {
+    "summary": "Radar zoom is restored after startup, respawn and /gemertmapreset. Added configurable HUD compatibility without changing map textures and postal code data."
+  },
+  "ts_nohelmet@1.0.6": {
+    "summary": "The version checker now reads public fxmanifest.lua metadata instead of a GitHub release. Gameplay and configuration are unchanged."
+  },
+  "ts_hostage@1.2.3": {
+    "summary": "Reorganized client, server, shared and configuration files. Updated manifest paths and Electron AntiCheat documentation, retaining gameplay and config schema 1.1.9."
+  },
+  "ts_repairpoints@1.1.3": {
+    "summary": "Repair NPC target registration now retries and recovers after ox_target restarts and streaming changes. Added /reparatietargetcheck and clearer diagnostics."
+  },
+  "tgc_bot@3.8.4": {
+    "summary": "Radio retries the hosting container's FFmpeg if bundled FFmpeg exits before audio arrives, with improved failure diagnostics."
+  },
+  "tgc_bot@3.8.3": {
+    "summary": "Added /scriptupdate commands to configure a channel and announce script versions from UTF-8 Markdown or text changelogs, with duplicate prevention and Cfx.re asset links. Improved Twitch notification setup."
+  },
+  "tgc_bot@3.8.2": {
+    "summary": "Updated dependencies and FFmpeg installation behavior. Removed the former TikTok integration and related stored data; YouTube and Twitch remain supported."
+  },
+  "tgc_bot@3.8.1": {
+    "summary": "The central hub now prefers SERVER_PORT and improves HTTP keep-alive, timeout handling, retries, request deduplication and diagnostics."
+  },
+  "tgc_bot@3.8.0": {
+    "summary": "Centralized Twitch-to-Discord creator mappings and automatic purple Live roles; optionally remove live announcements when a stream ends."
+  },
+  "tgc_bot@3.7.2": {
+    "summary": "YouTube's API fallback is reused for one hour after a successful request, with improved RSS retry behavior and errors."
+  },
+  "tgc_bot@3.7.1": {
+    "summary": "Moved documentation to docs/ and expanded /help document discovery, retaining Dutch and English guides and existing configuration."
+  },
+  "tgc_bot@3.7.0": {
+    "summary": "Centralized creators and notification platform checks through the shared hub while keeping each server's Discord channels and roles independent."
+  },
+  "tgc_bot@3.6.2": {
+    "summary": "Ticket archive startup scans ignore deleted channels without losing retained history. Improved missing-permission warnings and default notification setup."
+  },
+  "tgc_bot@3.6.1": {
+    "summary": "The /ban command now supports a Discord ID even for users outside the server, with stronger permissions and validation."
+  },
+  "tgc_bot@3.6.0": {
+    "summary": "Added /gebruikersnaam and a resumable installation workflow for server-specific bot identity and configuration, restricted to authorized users."
+  },
+  "tgc_bot@3.5.1": {
+    "summary": "Ticket archives now display formatted messages, readable names, timestamps, edits, deleted messages and saved attachments."
+  },
+  "tgc_bot@3.5.0": {
+    "summary": "Staff can handle their own tickets and invite participants. Ticket messages, edits, deletions and attachments are preserved in SQLite."
+  },
+  "tgc_bot@3.4.3": {
+    "summary": "Ticket closure now requires confirmation, saves main and staff transcripts, then removes the channel only after successful logging."
+  },
+  "tgc_bot@3.4.2": {
+    "summary": "Government ticket closure exports HTML transcripts to the configured log channel before deletion, with safe retry behavior."
+  },
+  "tgc_bot@3.4.1": {
+    "summary": "Department role mentions and panel descriptions now display readable names and consistent ticket explanations."
+  },
+  "tgc_bot@3.4.0": {
+    "summary": "Stopped supporting Node.js 22, requiring Node.js 24.x and updated install, workflow and bilingual documentation."
+  },
+  "tgc_bot@3.3.1": {
+    "summary": "Added a coordinator-specific government ticket panel with separate roles and categories using existing claim and transcript tools."
+  },
+  "tgc_bot@3.3.0": {
+    "summary": "Introduced dedicated government ticket panels with configurable department roles and responsibilities for police, ambulance, roadside assistance and fire service."
+  },
+  "tgc_bot@3.2.4": {
+    "summary": "Removed an unused dependency and replaced nodemon with Node's watch mode; retained existing better-sqlite3 behavior."
+  },
+  "tgc_bot@3.2.3": {
+    "summary": "Added message log filters, safer timestamp handling, YouTube API fallback and improved reconnect diagnostics."
+  },
+  "tgc_bot@3.2.2": {
+    "summary": "Added a central cross-installation bot-message hub with authenticated messages and deduplicated delivery reservations."
+  },
+  "tgc_bot@3.2.1": {
+    "summary": "Added owner-only /botbericht broadcasts and strengthened /say authorization and delivery logging."
+  },
+  "tgc_bot@3.2.0": {
+    "summary": "Improved readable Discord audit logs and ensured that radio playback reports success only after actual FFmpeg audio arrives."
+  },
+  "tgc_bot@3.1.9": {
+    "summary": "Updated Dutch and English guides, corrected npm lockfile installation and improved radio switching and notifications."
+  },
+  "tgc_bot@3.1.8": {
+    "summary": "Added Radio Veronica with direct stream resolution and improved FFmpeg proxy support and error messages."
+  },
+  "tgc_bot@3.1.7": {
+    "summary": "Introduced an internet radio panel with station dropdown, volume controls and automatic disconnection when appropriate."
+  },
+  "tgc_bot@3.1.6": {
+    "summary": "Added configurable Discord log categories and durable queues, plus optional AI-assisted adult-content moderation with staff review."
+  },
+  "tgc_bot@3.1.5": {
+    "summary": "Improved ticket closure when staff discussion threads are missing or not required, while preserving export safety."
+  },
+  "tgc_bot@3.1.4": {
+    "summary": "Introduced automated CI checks and tests for version consistency, slash commands and SQLite startup."
+  },
+  "tgc_bot@3.1.2": {
+    "summary": "Hardened interactive ticket actions, permissions and transcript size limits to prevent duplicate or incomplete processing."
+  },
+  "tgc_bot@3.1.3": {
+    "summary": "Added configurable soft moderation for messages with staff exceptions, warnings, timed moderation and staff review."
+  },
+  "tgc_bot@3.1.1": {
+    "summary": "Ticket claims use paginated member lookups and improved thread-log errors; failed exports preserve ticket channels."
+  },
+  "tgc_bot@3.1.0": {
+    "summary": "Enhanced ticket claim access management, takeover controls, /ticket-add, /ticket-remove and separate staff discussion logs."
+  },
+  "tgc_bot@3.0.9": {
+    "summary": "Expanded optional cross-server honeypot protection to timeouts while retaining server-specific logs and reversal actions."
+  },
+  "tgc_bot@3.0.8": {
+    "summary": "Introduced optional cross-server honeypot bans for participating servers with independent local logs and unban actions."
+  },
+  "tgc_bot@3.0.7": {
+    "summary": "Honeypot bans can now delete seven days of message history. Unbanning does not restore deleted messages."
+  },
+  "tgc_bot@3.0.6": {
+    "summary": "Added configurable honeypot channels with bans or timeouts, persistent logging and bilingual warnings."
+  },
+  "tgc_bot@3.0.5": {
+    "summary": "Introduced kitchen and home improvements that boost XP or earnings, with property valuation and persistence rules."
+  },
+  "tgc_bot@3.0.4": {
+    "summary": "Improved HTTP 500 and YouTube RSS retries and made birthday role recovery more resilient."
+  },
+  "tgc_bot@3.0.3": {
+    "summary": "Introduced business ownership, automated income, security upgrades, cooperative heists and bank loans."
+  },
+  "tgc_bot@3.0.2": {
+    "summary": "Introduced housing purchase and rental, housing roles, XP/income bonuses and recurring rent collection."
+  },
+  "tgc_bot@3.0.1": {
+    "summary": "Added economy reset controls and compulsory invoices with interest, debt handling and protected purchases."
+  },
+  "tgc_bot@3.0.0": {
+    "summary": "Introduced Dutch, English and bilingual server languages, localized logs and improved mentions."
+  }
+}
