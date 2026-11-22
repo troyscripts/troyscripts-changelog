@@ -1,0 +1,1552 @@
+{
+  "general": {
+    "title": "Webhooks & rechten",
+    "lead": "Hoe je Discord-webhooks maakt en invult, waar ze horen, en hoe je met ACE-rechten bepaalt wie beheercommando's mag gebruiken.",
+    "create": [
+      "Open in Discord het kanaal waar de logs moeten komen en klik op het tandwiel (Kanaal bewerken).",
+      "Ga naar Integraties → Webhooks → Nieuwe webhook. Geef hem een naam, bijvoorbeeld 'TroyScripts gijzelingen'.",
+      "Klik op 'Webhook-URL kopiëren'. Die ziet eruit als https://discord.com/api/webhooks/ID/TOKEN.",
+      "Plak de URL tussen de aanhalingstekens in het juiste configbestand, bijvoorbeeld start = 'https://discord.com/api/webhooks/...'.",
+      "Herstart het script en voer de actie één keer uit om te testen."
+    ],
+    "where": [
+      "Centraal: ts_bridge/config/webhook_config.lua. Hier kun je alle scripts op één plek instellen. Een ingevulde centrale route heeft altijd voorrang.",
+      "Per script: het serverconfigbestand van het script zelf (bijvoorbeeld ts_hostage/config/server_config.lua). Dit wordt alleen gebruikt als de centrale route leeg is ('').",
+      "Gebruik één van beide; dezelfde URL mag bij meerdere gebeurtenissen."
+    ],
+    "safety": [
+      "Een webhook-URL is een wachtwoord: wie hem heeft, kan berichten in je kanaal plaatsen.",
+      "Zet URL's alleen in bestanden die alleen op de server worden geladen (webhook_config.lua, server.lua, server_config.lua, webhooks.lua). Nooit in config.lua, want dat bestand gaat ook naar spelers.",
+      "Deel ingevulde configbestanden niet op Discord of GitHub. Is een URL uitgelekt? Verwijder de webhook in Discord en maak een nieuwe.",
+      "Alleen discord.com-URL's van de vorm /api/webhooks/ID/TOKEN worden geaccepteerd; geen andere sites of extra parameters."
+    ],
+    "photos": "Foto's in webhooks gebruiken screenshot-basic. Start die vóór de scripts en stel bij Electron AntiCheat de whitelist in. De limieten (wachttijd, grootte, wachtrij) staan in ts_bridge/config/config.lua.",
+    "ace_intro": "ACE is het rechtensysteem van FiveM. Je zet de regels in server.cfg. Een speler krijgt een recht via een groep (principal).",
+    "ace_lines": [
+      [
+        "add_ace group.admin ts_flatbed.admin allow",
+        "Geef de groep admin het recht ts_flatbed.admin."
+      ],
+      [
+        "add_principal identifier.license:JOUW_LICENSE group.admin",
+        "Zet een speler in de groep admin. Vervang JOUW_LICENSE door de license van de speler (te zien in txAdmin)."
+      ],
+      [
+        "add_principal identifier.discord:JOUW_DISCORD_ID group.admin",
+        "Hetzelfde met een Discord-ID in plaats van een license."
+      ]
+    ],
+    "ace_notes": [
+      "Zet de regels na de ensure-regels in server.cfg en herstart de server.",
+      "Veel scripts accepteren ook ESX-groepen of een minimale jobrang; ACE is dan een extra manier om het recht te geven. Per script staat hieronder wat er nodig is."
+    ],
+    "table_head": [
+      "Script",
+      "ACE-regel",
+      "Wat mag je ermee?"
+    ]
+  },
+  "scripts": {
+    "ts_bridge": {
+      "intro": "TS Bridge is de centrale koppeling tussen de TroyScripts-resources en jouw framework, bank, inventory, target, garages en Discord. Stel de bridge als eerste in: de andere scripts lezen hun meldingen, betalingen, rechten en webhooks via de bridge.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Alle algemene instellingen. Dit bestand gaat ook naar spelers: zet hier nooit webhook-URL's of sleutels in."
+        },
+        {
+          "path": "config/webhook_config.lua",
+          "side": "server",
+          "text": "Alle webhook-URL's: de centrale routes voor andere scripts en de eigen auditlogs van de bridge."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Algemeen, meldingen en toetsen",
+          "options": [
+            {
+              "key": "TSBridgeConfig.Version",
+              "default": "'0.1.2'",
+              "text": "Configschema. Niet zelf veranderen; alleen bijwerken nadat je de nieuwe velden van een update hebt overgenomen."
+            },
+            {
+              "key": "TSBridgeConfig.Locale",
+              "default": "'nl'",
+              "text": "Taal van de bridge: 'nl' of 'en'. Ontbrekende teksten vallen terug op Nederlands."
+            },
+            {
+              "key": "TSBridgeConfig.NotificationTitle",
+              "default": "'Troy Scripts'",
+              "text": "Standaardtitel boven meldingen. Mag niet leeg zijn; een script kan per melding een eigen titel geven."
+            },
+            {
+              "key": "TSBridgeConfig.NotificationDuration",
+              "default": "5000",
+              "text": "Hoe lang een melding zichtbaar is, in milliseconden (1–300000). 5000 = 5 seconden."
+            },
+            {
+              "key": "TSBridgeConfig.WaypointKey",
+              "default": "'G'",
+              "text": "Toets om de locatie van een melding (bijvoorbeeld een gijzeling) als waypoint te zetten. FiveM-toetsnaam, zoals 'G' of 'F6'."
+            },
+            {
+              "key": "TSBridgeConfig.AlertDismissKey",
+              "default": "'BACK'",
+              "text": "Toets om je eigen melding weg te klikken. 'BACK' = Backspace. Spelers kunnen beide toetsen zelf aanpassen in hun FiveM-instellingen."
+            },
+            {
+              "key": "TSBridgeConfig.AlertBlip",
+              "default": "true",
+              "text": "true = tijdelijke blip op de kaart bij een melding. Er wordt geen automatische route gezet."
+            },
+            {
+              "key": "TSBridgeConfig.DeadStateKeys",
+              "default": "{ 'dead', 'isDead', 'laststand' }",
+              "text": "Statebag-sleutels die betekenen dat een speler dood of in laststand is. Pas aan als jouw ambulance-script andere namen gebruikt; {} = geen extra controle."
+            }
+          ]
+        },
+        {
+          "title": "Locatie in meldingen",
+          "options": [
+            {
+              "key": "AlertLocation.MapResource",
+              "default": "'ts_gemertmap'",
+              "text": "Resource die gebiedsnamen en postcodes levert. Ontbreekt die, dan gebruikt de bridge de gewone GTA-locatie."
+            },
+            {
+              "key": "AlertLocation.ShowArea",
+              "default": "true",
+              "text": "Gebiedsnaam tonen in de melding."
+            },
+            {
+              "key": "AlertLocation.ShowPostcode",
+              "default": "true",
+              "text": "Dichtstbijzijnde postcode tonen, als de kaartresource die levert."
+            },
+            {
+              "key": "AlertLocation.ShowStreet",
+              "default": "true",
+              "text": "GTA-straat of kruising toevoegen."
+            },
+            {
+              "key": "AlertLocation.MaxPostcodeDistance",
+              "default": "1500.0",
+              "text": "Maximale afstand in meters tot een postcode. 0 = geen limiet."
+            }
+          ]
+        },
+        {
+          "title": "Resources en koppelingen",
+          "options": [
+            {
+              "key": "TSBridgeConfig.InventoryResource",
+              "default": "'ox_inventory'",
+              "text": "Naam van je inventory. Moet ox_inventory-compatibel zijn."
+            },
+            {
+              "key": "TSBridgeConfig.TargetResource",
+              "default": "'ox_target'",
+              "text": "Naam van je target-resource. Alleen ox_target-compatibel; qb-target wordt niet ondersteund."
+            },
+            {
+              "key": "Radial.Enabled",
+              "default": "true",
+              "text": "Bridge-opties tonen in het ox_lib-radiaalmenu. Commando's blijven ook bij false werken. Herstart de server na wijzigen."
+            },
+            {
+              "key": "JobCards.Enabled",
+              "default": "true",
+              "text": "Optionele werkpassen via 0r_idcard. Bij false melden de loketten dat werkpassen niet beschikbaar zijn; sleutelkaarten blijven werken."
+            },
+            {
+              "key": "JobCards.Resource",
+              "default": "'0r_idcard'",
+              "text": "Exacte naam van de werkpasresource (met het cijfer nul)."
+            },
+            {
+              "key": "JobCards.KeycardResource",
+              "default": "'ts_keycard'",
+              "text": "Resource die de gedeelde loketten beheert."
+            }
+          ]
+        },
+        {
+          "title": "Voertuigen, garage en sleutels",
+          "options": [
+            {
+              "key": "Vehicles.Enabled",
+              "default": "true",
+              "text": "Voertuigmodule aan of uit. Nodig voor ts_nlplates en de JG-koppelingen."
+            },
+            {
+              "key": "Vehicles.Ownership",
+              "default": "'esx'",
+              "text": "Eigenaarschap via de ESX-tabellen owned_vehicles, users en jobs. Vereist Server.Framework = 'esx'."
+            },
+            {
+              "key": "Vehicles.DatabaseResource",
+              "default": "'oxmysql'",
+              "text": "Database-resource voor de voertuigmodule."
+            },
+            {
+              "key": "Vehicles.Dealer / Vehicles.Garage",
+              "default": "'jg'",
+              "text": "JG Dealerships en JG Advanced Garages. Jobgarages vereisen de TSGetJobGarages-export."
+            },
+            {
+              "key": "Vehicles.Keys",
+              "default": "'mrnewb'",
+              "text": "'mrnewb' = sleutels via MrNewbVehicleKeys; 'none' = geen sleutelkoppeling."
+            },
+            {
+              "key": "Vehicles.SkyFakePlates",
+              "default": "{ Enabled = true, StateKey = 'sky_fakePlate' }",
+              "text": "Bij valse Sky-kentekens het echte kenteken gebruiken voor de registratie."
+            },
+            {
+              "key": "Vehicles.PlatesResource",
+              "default": "'ts_nlplates'",
+              "text": "Resource die nieuwe kentekens genereert voor de dealer."
+            }
+          ]
+        },
+        {
+          "title": "Framework, bank en facturen",
+          "options": [
+            {
+              "key": "Server.Framework",
+              "default": "'esx'",
+              "text": "'esx' of 'standalone'. Standalone heeft geen ESX-spelers, jobs of geld."
+            },
+            {
+              "key": "Server.ESXResource",
+              "default": "'es_extended'",
+              "text": "Naam van je ESX-resource."
+            },
+            {
+              "key": "Server.Banking",
+              "default": "'apex'",
+              "text": "'apex' = Apex Banking, 'esx' = ESX-bankrekening, 'okok' = okokBanking. Contant geld gaat altijd via ESX."
+            },
+            {
+              "key": "Server.Billing",
+              "default": "'apex'",
+              "text": "'apex' = Apex Billing, 'none' = geen facturen, 'custom' = eigen resource die RegisterBillingProvider aanroept, 'okok' = alleen met een eigen adapter."
+            },
+            {
+              "key": "Server.SocietyResource",
+              "default": "'apex_banking'",
+              "text": "Waar bedrijfsgeld staat: 'apex_banking' of 'esx_addonaccount'."
+            },
+            {
+              "key": "Server.SocietyAccounts",
+              "default": "police = { 'society_police', ... }",
+              "text": "Koppelt een korte naam (alias) aan de echte rekeningnaam. Andere scripts gebruiken de alias, bijvoorbeeld 'police'. Voeg eigen aliassen toe als alias = { 'rekeningnaam' }."
+            },
+            {
+              "key": "Server.UpdateCheck.Enabled",
+              "default": "true",
+              "text": "Versiecontrole via de TroyScripts-site. Meldt alleen; installeert nooit iets automatisch."
+            }
+          ]
+        },
+        {
+          "title": "Screenshots en logging",
+          "options": [
+            {
+              "key": "Server.ScreenshotResource",
+              "default": "'screenshot-basic'",
+              "text": "Resource voor foto's in webhooks."
+            },
+            {
+              "key": "Server.Screenshots",
+              "default": "true",
+              "text": "false = geen foto's; de webhooktekst wordt wel verstuurd."
+            },
+            {
+              "key": "Server.ScreenshotTimeoutMs",
+              "default": "45000",
+              "text": "Maximale wachttijd op een foto in milliseconden."
+            },
+            {
+              "key": "Server.MaxImageBytes",
+              "default": "4 * 1024 * 1024",
+              "text": "Maximale fotogrootte (standaard 4 MiB, maximaal 25 MiB)."
+            },
+            {
+              "key": "Server.MaxQueue",
+              "default": "32",
+              "text": "Maximaal aantal webhooks en foto's in de wachtrij, voor alle scripts samen."
+            },
+            {
+              "key": "TSBridgeConfig.Audit.Enabled",
+              "default": "true",
+              "text": "Hoofdschakelaar voor de eigen auditlogs van de bridge (betalingen, facturen, fouten). Webhooks van andere scripts blijven werken."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "De bridge verstuurt alle Discord-webhooks van de TroyScripts. In config/webhook_config.lua vul je per script en per gebeurtenis een URL in. Een centrale route heeft voorrang; laat je hem leeg (''), dan mag het script zijn eigen URL uit zijn eigen serverconfig gebruiken.",
+        "routes": [
+          {
+            "key": "TSBridgeServer.Webhooks.ts_hostage.start",
+            "text": "Start van een gijzeling."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_hostage.actions",
+            "text": "Loslaten, omleggen of afbreken."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_nlplates.registration",
+            "text": "Nieuw én vervangend kentekenbewijs. Dit is de route die ts_nlplates gebruikt."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_nlplates.created / .replacement",
+            "text": "Worden door de huidige ts_nlplates niet gebruikt; vul registration in."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.murder",
+            "text": "Reparateur gedood, met foto als die beschikbaar is."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.placed",
+            "text": "Reparatiepunt geplaatst."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.removed",
+            "text": "Reparatiepunt verwijderd."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_keycard = { issue, revoke, transfer, point }",
+            "text": "Optioneel: voeg deze regel zelf toe om de sleutelkaartlogs centraal te regelen."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.payments",
+            "text": "Geslaagde persoonlijke betalingen via de bridge."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.societies",
+            "text": "Geslaagde transacties met bedrijfsrekeningen."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.invoices",
+            "text": "Aangemaakte facturen (niet: betaalde facturen)."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.errors",
+            "text": "Mislukte geldacties, facturen en saldo-opvragingen."
+          }
+        ],
+        "example": "TSBridgeServer.Webhooks = {\n    ts_hostage = {\n        start = 'https://discord.com/api/webhooks/ID/TOKEN',\n        actions = 'https://discord.com/api/webhooks/ID/TOKEN'\n    }\n}"
+      },
+      "aces": null
+    },
+    "ts_nlplates": {
+      "intro": "Hier stel je het kentekenformaat, het kentekenbewijs, het kentekenloket en de taxiplaten in. Webhooks staan in een apart bestand dat alleen op de server wordt geladen.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Kentekens, kentekenbewijs, loket, bedrijfsnamen en taxi's."
+        },
+        {
+          "path": "config/webhooks.lua",
+          "side": "server",
+          "text": "Webhook-instellingen voor uitgifte en vervanging van kentekenbewijzen."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Kentekens",
+          "options": [
+            {
+              "key": "Config.Version",
+              "default": "'1.0.6'",
+              "text": "Configschema. Alleen bijwerken na het overnemen van nieuwe velden."
+            },
+            {
+              "key": "Config.VersionCheck",
+              "default": "true",
+              "text": "Versiecontrole bij het starten. Handmatig in de console: ts_nlplates_check."
+            },
+            {
+              "key": "Config.PlateFormat",
+              "default": "'A 111 AA'",
+              "text": "Patroon voor nieuwe kentekens: A = letter, 1 = cijfer, maximaal 8 tekens inclusief spaties. Bestaande kentekens veranderen hierdoor niet."
+            },
+            {
+              "key": "Config.DefaultPlatePattern",
+              "default": "true",
+              "text": "Ook voertuigen met het standaard FiveM-spawnpatroon krijgen een Nederlands kenteken. Vast ingestelde kentekens blijven gelijk."
+            },
+            {
+              "key": "Config.NPCPlates",
+              "default": "true",
+              "text": "NPC-voertuigen krijgen Nederlandse kentekens."
+            },
+            {
+              "key": "Config.NPCScanInterval",
+              "default": "2000",
+              "text": "Hoe vaak NPC-voertuigen worden gecontroleerd, in milliseconden."
+            },
+            {
+              "key": "Config.Textures",
+              "default": "plate01 = 'gewoon', ...",
+              "text": "Welke GTA-plaat welke Nederlandse stijl krijgt: gewoon, oldtimer, luxe of taxi. Index 6 (oldtimer) vereist gamebuild 3095 of hoger."
+            },
+            {
+              "key": "Config.DebugCommand",
+              "default": "'nlplaatinfo'",
+              "text": "Commando dat kentekeninfo van je huidige voertuig toont. false = uit."
+            }
+          ]
+        },
+        {
+          "title": "Kentekenbewijs",
+          "options": [
+            {
+              "key": "Config.Registration.enabled",
+              "default": "true",
+              "text": "Kentekenbewijzen aan of uit."
+            },
+            {
+              "key": "Config.Registration.item",
+              "default": "'kentekenbewijs'",
+              "text": "ox_inventory-item van het kentekenbewijs. Voeg dit item toe aan ox_inventory/data/items.lua."
+            },
+            {
+              "key": "Config.Registration.command",
+              "default": "'kentekenbewijs'",
+              "text": "Commando om het bewijs uit het dashboardkastje te bekijken of te tonen."
+            },
+            {
+              "key": "Config.Registration.showDistance",
+              "default": "3.0",
+              "text": "Afstand in meters waarbinnen je het bewijs aan anderen kunt tonen."
+            },
+            {
+              "key": "Config.Registration.unknownOwner",
+              "default": "'Onbekend'",
+              "text": "Tekst als de eigenaar niet bekend is."
+            },
+            {
+              "key": "Config.CompanyNames",
+              "default": "taxi = 'Cab & Co', ...",
+              "text": "Bedrijfsnaam op het bewijs per ESX-job. Niet ingevuld = het label uit ESX."
+            }
+          ]
+        },
+        {
+          "title": "Kentekenloket",
+          "options": [
+            {
+              "key": "Config.Replacement.enabled",
+              "default": "true",
+              "text": "Loket voor een vervangend kentekenbewijs."
+            },
+            {
+              "key": "Config.Replacement.price",
+              "default": "250",
+              "text": "Prijs in euro; 0 = gratis."
+            },
+            {
+              "key": "Config.Replacement.account",
+              "default": "'bank'",
+              "text": "Waar de speler betaalt: 'bank' of 'money'."
+            },
+            {
+              "key": "Config.Replacement.society",
+              "default": "'society_police'",
+              "text": "Bedrijfsrekening die het geld ontvangt."
+            },
+            {
+              "key": "Config.Replacement.placeCommand",
+              "default": "'kentekenpunt'",
+              "text": "Commando om een loket te plaatsen (alleen voor adminGroups)."
+            },
+            {
+              "key": "Config.Replacement.adminGroups",
+              "default": "{ admin, owner, superadmin, god }",
+              "text": "ESX-groepen die loketten mogen plaatsen."
+            },
+            {
+              "key": "Config.Replacement.companyMinGrade",
+              "default": "3",
+              "text": "Minimale rang om een bedrijfsbewijs te vervangen."
+            },
+            {
+              "key": "Config.Replacement.cooldownSeconds",
+              "default": "30",
+              "text": "Wachttijd tussen twee aanvragen per speler."
+            },
+            {
+              "key": "Config.Replacement.blip / label",
+              "default": "true / 'Kentekenloket'",
+              "text": "Blip op de kaart en de naam ervan."
+            }
+          ]
+        },
+        {
+          "title": "Taxi's",
+          "options": [
+            {
+              "key": "Config.Taxi.enabled",
+              "default": "true",
+              "text": "Automatische blauwe taxiplaten."
+            },
+            {
+              "key": "Config.Taxi.models",
+              "default": "{ 'taxi' }",
+              "text": "Spawnnamen die altijd een taxiplaat krijgen, ook bij NPC's."
+            },
+            {
+              "key": "Config.Taxi.jobs",
+              "default": "{ taxi = true }",
+              "text": "Jobs waarvan de garagevoertuigen een taxiplaat krijgen."
+            },
+            {
+              "key": "Config.Taxi.garages",
+              "default": "{ ['Taxi Gemert'] = true }",
+              "text": "Namen van de taxi-jobgarages. Pas aan aan jouw garagenaam."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Logs van uitgifte en vervanging van kentekenbewijzen. Je kunt de URL in config/webhooks.lua zetten, of centraal in ts_bridge bij ts_nlplates.registration. De centrale route heeft voorrang. Nieuwe en vervangende bewijzen gaan naar hetzelfde kanaal.",
+        "routes": [
+          {
+            "key": "TSPlateWebhook.enabled",
+            "text": "Webhooks aan of uit."
+          },
+          {
+            "key": "TSPlateWebhook.url",
+            "text": "Eigen Discord-URL; leeg laten als je de bridge gebruikt."
+          },
+          {
+            "key": "TSPlateWebhook.firstIssue",
+            "text": "Log bij het eerste kentekenbewijs."
+          },
+          {
+            "key": "TSPlateWebhook.replacement",
+            "text": "Log bij een vervangend bewijs."
+          },
+          {
+            "key": "TSPlateWebhook.vehiclePhoto",
+            "text": "Foto van het voertuig meesturen (screenshot-basic, voertuig dichtbij en stilstaand)."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "ts_nlplates gebruikt geen ACE maar ESX-groepen. Wie in Config.Replacement.adminGroups staat (standaard admin, owner, superadmin en god) mag /kentekenpunt gebruiken. De console-opdracht ts_nlplates_check werkt alleen in de serverconsole.",
+        "lines": []
+      }
+    },
+    "ts_nlplates_migrate": {
+      "intro": "Instellingen voor de eenmalige kentekenmigratie. Pas vooral BlockedResources aan voordat je migreert.",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "server",
+          "text": "Alle instellingen van de migratie."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Migratie",
+          "options": [
+            {
+              "key": "Config.Command",
+              "default": "'ts_nlplates_spaties'",
+              "text": "Naam van het consolecommando. Gebruik: ts_nlplates_spaties controle | uitvoeren."
+            },
+            {
+              "key": "Config.BlockedResources",
+              "default": "{ 'ts_nlplates', 'ox_inventory', ... }",
+              "text": "Resources die tijdens de migratie uit moeten staan. Voeg je eigen garages, sleutelscripts en andere scripts toe die voertuiggegevens opslaan."
+            },
+            {
+              "key": "Config.SourceTables",
+              "default": "{ 'owned_vehicles', ... }",
+              "text": "Tabellen waaruit de oude kentekens worden gelezen."
+            },
+            {
+              "key": "Config.PlateColumns",
+              "default": "{ plate = true, ... }",
+              "text": "Kolomnamen die in de hele database als kenteken worden behandeld."
+            },
+            {
+              "key": "Config.JsonFields",
+              "default": "owned_vehicles = { vehicle, glovebox, trunk }, ...",
+              "text": "JSON-velden waarin kentekens voorkomen, zoals inventarissen."
+            },
+            {
+              "key": "Config.KeyTableTerms",
+              "default": "{ 'key', 'lock' }",
+              "text": "Tabellen met deze woorden in de naam worden ook doorzocht (sleutelscripts)."
+            },
+            {
+              "key": "Config.StashPrefixes",
+              "default": "{ 'glove', 'trunk' }",
+              "text": "Voorvoegsels van ox_inventory-stashes die een kenteken in de naam hebben."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Geen ACE nodig. De commando's werken alleen in de serverconsole, niet voor spelers.",
+        "lines": []
+      }
+    },
+    "ts_flatbed": {
+      "intro": "Hier stel je in wie de bergingswagen mag gebruiken, welke voertuigen worden ondersteund en hoe de lier, laadbak en wielheffer zich gedragen. De afstelling per voertuigmodel doe je in-game met /flatbedafstellen; die wordt opgeslagen in calibration.json.",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "gedeeld",
+          "text": "Alle instellingen."
+        },
+        {
+          "path": "calibration.json",
+          "side": "server",
+          "text": "Wordt automatisch gemaakt door /flatbedafstellen. Bewaar dit bestand bij updates."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Toegang en voertuigen",
+          "options": [
+            {
+              "key": "Config.Models",
+              "default": "{ energyrampamec = true, energyguinchotop = true }",
+              "text": "Spawnnamen van de bergingswagens die werken met het script."
+            },
+            {
+              "key": "Config.Jobs",
+              "default": "false",
+              "text": "false = iedereen mag de flatbed gebruiken. Met ESX-jobs en minimale rang: { mechanic = 0, anwb = 0 }."
+            },
+            {
+              "key": "Config.UseAce",
+              "default": "false",
+              "text": "Extra ACE-recht om de flatbed te bedienen, bijvoorbeeld 'ts_flatbed.use'. false = geen ACE-controle."
+            },
+            {
+              "key": "Config.AdminAce",
+              "default": "'ts_flatbed.admin'",
+              "text": "ACE-recht voor /flatbedafstellen (laadbak en oprijplaten afstellen en opslaan)."
+            }
+          ]
+        },
+        {
+          "title": "Bediening en limieten",
+          "options": [
+            {
+              "key": "Config.InteractionDistance",
+              "default": "3.0",
+              "text": "Afstand in meters om de flatbed te bedienen."
+            },
+            {
+              "key": "Config.ServerDistance",
+              "default": "18.0",
+              "text": "Maximale afstand die de server toestaat tot het midden van de vrachtwagen."
+            },
+            {
+              "key": "Config.MaxCableLength",
+              "default": "20.0",
+              "text": "Maximale lengte van de lierkabel in meters."
+            },
+            {
+              "key": "Config.PullSpeed",
+              "default": "0.65",
+              "text": "Liersnelheid in meter per seconde."
+            },
+            {
+              "key": "Config.MaxCargoLength / MaxCargoWidth",
+              "default": "6.5 / 3.0",
+              "text": "Grootste voertuig dat op de laadbak past, in meters."
+            },
+            {
+              "key": "Config.MaxSlope",
+              "default": "5.0",
+              "text": "Maximale helling in graden; de vrachtwagen moet redelijk vlak staan."
+            },
+            {
+              "key": "Config.StreamDistance",
+              "default": "100.0",
+              "text": "Afstand waarop andere spelers lading en onderdelen zien."
+            },
+            {
+              "key": "Config.Timing",
+              "default": "ModelLoad = 5000, ...",
+              "text": "Wachttijden van de stappen in milliseconden. Alleen aanpassen als iets te snel of te traag gaat."
+            },
+            {
+              "key": "Config.SpeedLimits",
+              "default": "Truck = 0.3, ...",
+              "text": "Maximale snelheden (m/s) tijdens laden. Vermenigvuldig met 3,6 voor km/u."
+            },
+            {
+              "key": "Config.Alignment",
+              "default": "SecureSide = 0.65, ...",
+              "text": "Marges in meters en graden voor het uitlijnen van de lading."
+            },
+            {
+              "key": "Config.Debug",
+              "default": "false",
+              "text": "Extra uitvoer voor diagnose."
+            }
+          ]
+        },
+        {
+          "title": "Afstandsbediening, wielheffer en oprijplaten",
+          "options": [
+            {
+              "key": "Config.Remote.enabled",
+              "default": "true",
+              "text": "Zichtbare afstandsbediening met animatie tijdens het lieren. Geen item nodig."
+            },
+            {
+              "key": "Config.WheelLift.enabled",
+              "default": "true",
+              "text": "Wielheffer om een tweede auto achter de wagen mee te nemen."
+            },
+            {
+              "key": "Config.WheelLift.maxAngle",
+              "default": "55.0",
+              "text": "Hoe ver de tweede auto mag meedraaien, in graden."
+            },
+            {
+              "key": "Config.WheelLift.dollies",
+              "default": "{ enabled = true, ... }",
+              "text": "Zichtbare wielkarretjes onder de achterwielen."
+            },
+            {
+              "key": "Config.RampModel",
+              "default": "'imp_prop_flatbed_ramp'",
+              "text": "Propmodel van de oprijplaten. Bij een ander model ook RampHighEnd en RampNativeRise instellen."
+            },
+            {
+              "key": "Config.Defaults / Config.Profiles",
+              "default": "per spawnnaam",
+              "text": "Beginwaarden voor laadbak en oprijplaten. Opgeslagen afstellingen uit /flatbedafstellen gaan altijd voor."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Voor het afstellen van de laadbak is een ACE-recht nodig. Zet de regels in server.cfg en pas de groep of speler aan.",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_flatbed.admin allow",
+            "text": "Admins mogen /flatbedafstellen gebruiken."
+          },
+          {
+            "line": "add_ace group.mechanic ts_flatbed.use allow",
+            "text": "Alleen nodig als je Config.UseAce = 'ts_flatbed.use' zet: deze groep mag de flatbed bedienen."
+          },
+          {
+            "line": "add_principal identifier.license:JOUW_LICENSE group.mechanic",
+            "text": "Voorbeeld: zet een speler in die groep. Vervang JOUW_LICENSE door de license van de speler."
+          }
+        ]
+      }
+    },
+    "ts_repairpoints": {
+      "intro": "Hier stel je de prijzen, de NPC-monteur, de dienstcontrole en de gevolgen van het doden van de monteur in. Reparatiepunten plaats je in-game met /reparatiepunt.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Prijzen, monteur, dienstcontrole en vergoedingen."
+        },
+        {
+          "path": "config/server.lua",
+          "side": "server",
+          "text": "Eigen dienstcontrole (DutyMode = 'custom') en webhookinstellingen. De URL's zelf staan in ts_bridge."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Reparatie en prijs",
+          "options": [
+            {
+              "key": "Config.Interaction",
+              "default": "'ped'",
+              "text": "'ped' = NPC-monteur via ox_target; 'marker' = cirkel met de E-toets."
+            },
+            {
+              "key": "Config.Price",
+              "default": "5000",
+              "text": "Maximale reparatieprijs. De echte prijs hangt af van de schade."
+            },
+            {
+              "key": "Config.MinPrice",
+              "default": "250",
+              "text": "Minimumprijs, ook voor alleen banden of ruiten."
+            },
+            {
+              "key": "Config.DamageWeights",
+              "default": "{ engine = 0.6, body = 0.4 }",
+              "text": "Hoe zwaar motor- en carrosserieschade meetellen in de prijs."
+            },
+            {
+              "key": "Config.Account",
+              "default": "'bank'",
+              "text": "Waar de speler betaalt: 'bank' of 'cash'."
+            },
+            {
+              "key": "Config.Society",
+              "default": "'society_mechanic'",
+              "text": "Bedrijfsrekening die de reparatiekosten ontvangt."
+            },
+            {
+              "key": "Config.Duration",
+              "default": "10000",
+              "text": "Duur van de reparatie in milliseconden."
+            },
+            {
+              "key": "Config.QuoteLifetime",
+              "default": "30",
+              "text": "Seconden om de prijsopgave te bevestigen."
+            },
+            {
+              "key": "Config.Cooldown",
+              "default": "30",
+              "text": "Wachttijd in seconden, per speler en per voertuig."
+            },
+            {
+              "key": "Config.Blips",
+              "default": "true",
+              "text": "Blips voor reparatiepunten op de kaart."
+            }
+          ]
+        },
+        {
+          "title": "Monteur en dienstcontrole",
+          "options": [
+            {
+              "key": "Config.Ped.Model",
+              "default": "'s_m_y_xmech_02'",
+              "text": "Model van de NPC-monteur."
+            },
+            {
+              "key": "Config.Ped.DepartureMode",
+              "default": "'wander'",
+              "text": "Wat de NPC doet als er een echte monteur in dienst komt: 'wander' = wegwandelen, 'point' = naar een vaste plek."
+            },
+            {
+              "key": "Config.MechanicJobs",
+              "default": "{ mechanic = true }",
+              "text": "Exacte jobnamen van echte monteurs."
+            },
+            {
+              "key": "Config.DutyMode",
+              "default": "'auto'",
+              "text": "'auto' = ESX-job en onDuty, 'job' = de jobnaam betekent in dienst, 'custom' = eigen koppeling in config/server.lua."
+            },
+            {
+              "key": "Config.AdminGroups",
+              "default": "{ admin, owner, superadmin, god }",
+              "text": "ESX-groepen die /reparatiepunt mogen gebruiken."
+            },
+            {
+              "key": "Config.Points",
+              "default": "{}",
+              "text": "Optionele vaste punten in de config. Meestal plaats je punten in-game."
+            }
+          ]
+        },
+        {
+          "title": "Monteur gedood",
+          "options": [
+            {
+              "key": "Config.PedDeath.Compensation",
+              "default": "10000",
+              "text": "Schadevergoeding die de dader betaalt per gedode monteur."
+            },
+            {
+              "key": "Config.PedDeath.Account / Society",
+              "default": "'bank' / 'society_police'",
+              "text": "Waarvandaan betaald wordt en welke rekening het ontvangt. Bij te weinig saldo blijft het als schuld staan."
+            },
+            {
+              "key": "Config.PedDeath.PoliceJobs",
+              "default": "{ police = true }",
+              "text": "Jobs die een melding krijgen."
+            },
+            {
+              "key": "Config.PedDeath.RespawnSeconds",
+              "default": "600",
+              "text": "Na hoeveel seconden er een nieuwe monteur komt."
+            },
+            {
+              "key": "Config.UpdateCheck.IntervalHours",
+              "default": "6",
+              "text": "Hoe vaak de versie wordt gecontroleerd; 0 = alleen bij het starten."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "De webhook-URL's staan centraal in ts_bridge (ts_repairpoints.murder, .placed en .removed). In config/server.lua bepaal je welke gebeurtenissen worden gelogd en of er een foto bij komt. Test met ts_repairpoints_webhookcheck in de serverconsole.",
+        "routes": [
+          {
+            "key": "RepairWebhookConfig.Enabled",
+            "text": "Webhooks aan of uit."
+          },
+          {
+            "key": "RepairWebhookConfig.Events",
+            "text": "Per gebeurtenis aan of uit: murder, placed, removed."
+          },
+          {
+            "key": "RepairWebhookConfig.Photos",
+            "text": "Per gebeurtenis een foto meesturen."
+          },
+          {
+            "key": "RepairWebhookConfig.WitnessRadius",
+            "text": "Bij een moord moet de foto komen van een speler binnen deze afstand."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "Wie in Config.AdminGroups staat, mag /reparatiepunt gebruiken. Je kunt het recht ook via ACE geven:",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_repairpoints.admin allow",
+            "text": "Admins mogen reparatiepunten plaatsen, bekijken en verwijderen."
+          }
+        ]
+      }
+    },
+    "ts_keycard": {
+      "intro": "Hier stel je per dienst de sleutelkaart, prijzen, rangen en uitgiftepunten in, en het vervalsingssysteem. Uitgiftepunten plaats je in-game met /kaartpunt.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Kaarten, rangen, prijzen, loketten en vervalsing."
+        },
+        {
+          "path": "config/server.lua",
+          "side": "server",
+          "text": "Politiemeldingen, logging en eigen webhook-URL's."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Politie (standaard)",
+          "options": [
+            {
+              "key": "Config.Item",
+              "default": "'politie_sleutelkaart'",
+              "text": "ox_inventory-item van de politiekaart."
+            },
+            {
+              "key": "Config.Jobs",
+              "default": "{ police = true }",
+              "text": "Jobs die een politiekaart kunnen krijgen. Voeg bijvoorbeeld sheriff = true toe."
+            },
+            {
+              "key": "Config.IssueMinimumGrade",
+              "default": "0",
+              "text": "Minimale rang om een eigen kaart te maken."
+            },
+            {
+              "key": "Config.IssueOthersMinimumGrade",
+              "default": "7",
+              "text": "Minimale rang om een kaart voor een collega te maken."
+            },
+            {
+              "key": "Config.CardPrice",
+              "default": "10",
+              "text": "Prijs van een nieuwe kaart, betaald door de ontvanger."
+            },
+            {
+              "key": "Config.FreeCardMinimumGrade / FreeIssueMinimumGrade",
+              "default": "7 / 7",
+              "text": "Vanaf deze rang zijn nieuwe of vervangende kaarten gratis."
+            },
+            {
+              "key": "Config.SocietyAccount",
+              "default": "'police'",
+              "text": "Alias uit ts_bridge (SocietyAccounts) die het geld ontvangt."
+            },
+            {
+              "key": "Config.PaymentAccount",
+              "default": "'cash'",
+              "text": "Waar de ontvanger betaalt: 'cash' of 'bank'."
+            },
+            {
+              "key": "Config.IssuancePoint",
+              "default": "station + coords",
+              "text": "Standaardlocatie van het politieloket. Een met /kaartpunt opgeslagen locatie gaat voor."
+            }
+          ]
+        },
+        {
+          "title": "Andere diensten",
+          "options": [
+            {
+              "key": "Config.Ambulance",
+              "default": "Item, Jobs, Price, ...",
+              "text": "Eigen kaart, NPC en loket voor ambulance. IssuancePoint = false tot je het loket plaatst met /kaartpunt."
+            },
+            {
+              "key": "Config.Firefighter",
+              "default": "Item, Jobs, Price, ...",
+              "text": "Hetzelfde voor de brandweer (job firefighter)."
+            },
+            {
+              "key": "Config.Departments",
+              "default": "mechanic, taxi, sheriff, justice, fib",
+              "text": "Extra diensten. Per dienst: Label, Jobs, Item, rangen, Price en SocietyAccount. Geen NPC tot je /kaartpunt gebruikt."
+            }
+          ]
+        },
+        {
+          "title": "Beheer en intrekken",
+          "options": [
+            {
+              "key": "Config.SetupCommand",
+              "default": "'kaartpunt'",
+              "text": "Commando om een loket te plaatsen."
+            },
+            {
+              "key": "Config.SetupMinimumGrade",
+              "default": "7",
+              "text": "Minimale rang om /kaartpunt te gebruiken."
+            },
+            {
+              "key": "Config.AdminGroups",
+              "default": "{ owner = true, admin = true }",
+              "text": "ESX-groepen die altijd /kaartpunt en /kaartenintrekken mogen gebruiken."
+            },
+            {
+              "key": "Config.SetupAce",
+              "default": "'ts_keycard.admin'",
+              "text": "ACE-recht voor /kaartpunt en /vervalspunt."
+            },
+            {
+              "key": "Config.RevokeCommand",
+              "default": "'kaartenintrekken'",
+              "text": "Commando om alle uitgegeven politiekaarten in te trekken."
+            },
+            {
+              "key": "Config.RevokeAce / RevokeMinimumGrade",
+              "default": "'ts_keycard.revoke' / 7",
+              "text": "ACE-recht of minimale rang om kaarten in te trekken."
+            },
+            {
+              "key": "Config.RevokeCooldownSeconds",
+              "default": "30",
+              "text": "Wachttijd tussen twee intrekkingen."
+            }
+          ]
+        },
+        {
+          "title": "Vervalsing",
+          "options": [
+            {
+              "key": "Config.Forgery.Enabled",
+              "default": "true",
+              "text": "Illegale handel in vervalste kaarten."
+            },
+            {
+              "key": "Config.Forgery.SetupCommand",
+              "default": "'vervalspunt'",
+              "text": "Commando om het verkooppunt te plaatsen (ACE ts_keycard.admin)."
+            },
+            {
+              "key": "Config.Forgery.Materials",
+              "default": "lege_sleutelpas, kaartchip, codeerset",
+              "text": "Benodigde items en hun prijs. Ze worden verbruikt bij een geslaagde vervalsing."
+            },
+            {
+              "key": "Config.Forgery.DurationSeconds",
+              "default": "86400",
+              "text": "Hoe lang een vervalste kaart werkt (86400 = 24 uur)."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Logs van uitgifte, intrekken, overdracht en het plaatsen van loketten. Vul in config/server.lua de URL's in, of voeg in ts_bridge een centrale route ts_keycard toe; die heeft voorrang. Laat je de tekst plaat_hier_jou_webhook staan, dan wordt er niets verstuurd.",
+        "routes": [
+          {
+            "key": "KeycardAuditConfig.Enabled",
+            "text": "Logging aan of uit."
+          },
+          {
+            "key": "KeycardAuditConfig.Events",
+            "text": "Per gebeurtenis aan of uit: issue, revoke, transfer, point."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.issue",
+            "text": "Kaart uitgegeven of bijgewerkt."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.revoke",
+            "text": "Kaarten ingetrokken."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.transfer",
+            "text": "Kaart overgedragen."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.point",
+            "text": "Loket of vervalspunt geplaatst."
+          },
+          {
+            "key": "KeycardAuditConfig.PoliceAlert",
+            "text": "Politiemelding bij verdachte acties; Jobs en WaypointSeconds instelbaar."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "Leidinggevenden met de juiste rang en de ESX-groepen uit Config.AdminGroups hebben de rechten al. Wil je ze los van rang of groep geven, gebruik dan ACE:",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_keycard.admin allow",
+            "text": "Mag /kaartpunt en /vervalspunt gebruiken."
+          },
+          {
+            "line": "add_ace group.admin ts_keycard.revoke allow",
+            "text": "Mag met /kaartenintrekken alle politiekaarten intrekken."
+          }
+        ]
+      }
+    },
+    "ts_hostage": {
+      "intro": "Hier stel je de bediening, wapens, camera, gijzeling in voertuigen en de politiemelding in. Teksten staan in locales/nl.lua.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Bediening, wapens, camera en animaties."
+        },
+        {
+          "path": "config/server_config.lua",
+          "side": "server",
+          "text": "Webhooks en politiemelding."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Bediening",
+          "options": [
+            {
+              "key": "Config.Interaction",
+              "default": "'both'",
+              "text": "'target' = via ox_target, 'key' = met de E-toets, 'both' = allebei."
+            },
+            {
+              "key": "Config.Keys",
+              "default": "{ Action = 'E', Release = 'X' }",
+              "text": "Toetsen om te gijzelen en los te laten. Spelers kunnen ze aanpassen in FiveM."
+            },
+            {
+              "key": "Config.RequireAimOnFoot",
+              "default": "true",
+              "text": "Te voet alleen gijzelen terwijl je richt (geldt voor de E-toets)."
+            },
+            {
+              "key": "Config.Distance / BreakDistance",
+              "default": "1.8 / 4.0",
+              "text": "Afstand om te beginnen en afstand waarop de gijzeling stopt."
+            },
+            {
+              "key": "Config.ExecuteDelayMs",
+              "default": "1500",
+              "text": "Wachttijd voordat omleggen kan, zodat dezelfde E-toets niet meteen doorgaat."
+            },
+            {
+              "key": "Config.RequireAmmo",
+              "default": "true",
+              "text": "Een vuurwapen moet munitie hebben."
+            },
+            {
+              "key": "Config.HandsUp",
+              "default": "{ Enabled = true, Key = 'H' }",
+              "text": "Eigen handen-omhoog-functie; ook via /handenomhoog."
+            },
+            {
+              "key": "Config.Radial.Enabled",
+              "default": "true",
+              "text": "Opties in het ox_lib-radiaalmenu. Zet uit bij een eigen radiaalmenu."
+            }
+          ]
+        },
+        {
+          "title": "Wapens en camera",
+          "options": [
+            {
+              "key": "Config.Weapons",
+              "default": "WEAPON_PISTOL = 'firearm', ...",
+              "text": "Wapens waarmee je kunt gijzelen: 'firearm', 'blade' of 'blunt'. Voeg custom wapens toe met hun spawnnaam."
+            },
+            {
+              "key": "Config.Camera.ForceFirstPersonOnFoot / InVehicle",
+              "default": "true / true",
+              "text": "De dader zit in first person tijdens de gijzeling."
+            },
+            {
+              "key": "Config.AntipunchCompatibility",
+              "default": "true",
+              "text": "Pauzeert alleen de noodrem van ts_antipunch tijdens een gijzeling."
+            },
+            {
+              "key": "Config.BladePose",
+              "default": "{ Enabled = true, ... }",
+              "text": "Positie van het mes bij de keel. Alleen aanpassen als je de pose wilt bijstellen."
+            }
+          ]
+        },
+        {
+          "title": "Voertuigen",
+          "options": [
+            {
+              "key": "Config.Vehicle.Enabled",
+              "default": "true",
+              "text": "Gijzelen in een voertuig."
+            },
+            {
+              "key": "Config.Vehicle.MaxStartSpeed",
+              "default": "0.5",
+              "text": "Het voertuig moet vrijwel stilstaan (m/s)."
+            },
+            {
+              "key": "Config.Vehicle.SeatPairs",
+              "default": "{ { captor = 0, victim = -1 } }",
+              "text": "Welke stoel gijzelt welke: standaard de bijrijder de bestuurder."
+            }
+          ]
+        },
+        {
+          "title": "Politiemelding",
+          "options": [
+            {
+              "key": "PoliceAlertConfig.Enabled",
+              "default": "true",
+              "text": "Eén melding voor de politie per gestarte gijzeling."
+            },
+            {
+              "key": "PoliceAlertConfig.Jobs",
+              "default": "{ police = true }",
+              "text": "Jobs die de melding krijgen."
+            },
+            {
+              "key": "PoliceAlertConfig.WaypointSeconds",
+              "default": "60",
+              "text": "Tijd om met G een route naar de melding te zetten."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Twee Discord-kanalen: één voor de start van een gijzeling en één voor wat daarna gebeurt. Zet de URL's in config/server_config.lua of centraal in ts_bridge (ts_hostage.start en .actions); de centrale route heeft voorrang. Voor foto's moet screenshot-basic vóór ts_hostage starten en moet je Electron AntiCheat goed instellen.",
+        "routes": [
+          {
+            "key": "WebhookConfig.Enabled",
+            "text": "Webhooks aan of uit."
+          },
+          {
+            "key": "WebhookConfig.Start",
+            "text": "URL voor: gijzeling gestart."
+          },
+          {
+            "key": "WebhookConfig.Actions",
+            "text": "URL voor: loslaten, omleggen of afgebroken."
+          },
+          {
+            "key": "WebhookConfig.Username / AvatarUrl",
+            "text": "Naam en logo van de webhookbot."
+          },
+          {
+            "key": "WebhookConfig.Screenshots",
+            "text": "Foto meesturen (screenshot-basic)."
+          },
+          {
+            "key": "WebhookConfig.LogAutomaticRelease",
+            "text": "Ook loggen als de gijzeling vanzelf eindigt."
+          },
+          {
+            "key": "WebhookConfig.PlayerName",
+            "text": "Functie voor de naam in de log. Standaard FiveM-naam en server-ID; vervang door je eigen RP-naamkoppeling."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "Geen ACE nodig. ts_hostage_policecheck werkt alleen in de serverconsole.",
+        "lines": []
+      }
+    },
+    "ts_antipunch": {
+      "intro": "Hier bepaal je welke combatacties worden geblokkeerd en hoe first person werkt tijdens het richten.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Alle instellingen. Teksten staan in locales/nl.lua."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Camera",
+          "options": [
+            {
+              "key": "Config.ForceFirstPerson",
+              "default": "true",
+              "text": "First person verplicht tijdens het richten te voet."
+            },
+            {
+              "key": "Config.FirstPersonOnlyFirearms",
+              "default": "false",
+              "text": "true = alleen bij vuurwapens; false = bij elke richtknop, ook met vuisten of messen."
+            },
+            {
+              "key": "Config.RestoreCamera",
+              "default": "true",
+              "text": "Na het richten terug naar de vorige camera."
+            },
+            {
+              "key": "Config.DefaultCamera",
+              "default": "1",
+              "text": "Camera om naar terug te gaan: 0 = dichtbij, 1 = gemiddeld, 2 = ver, 4 = first person."
+            },
+            {
+              "key": "Config.CameraRestoreDelay",
+              "default": "50",
+              "text": "Vertraging in milliseconden voordat de camera terugzet."
+            }
+          ]
+        },
+        {
+          "title": "Combat",
+          "options": [
+            {
+              "key": "Config.BlockShootingWithoutAim",
+              "default": "true",
+              "text": "Niet schieten zonder te richten."
+            },
+            {
+              "key": "Config.BlockMeleeWithoutAim",
+              "default": "true",
+              "text": "Geen melee zonder te richten."
+            },
+            {
+              "key": "Config.DisableWeaponMelee",
+              "default": "true",
+              "text": "Niet slaan met een vuurwapen, ook niet tijdens het richten. Herladen blijft werken."
+            },
+            {
+              "key": "Config.CancelForcedMelee",
+              "default": "true",
+              "text": "Extra noodrem die een slag met een vuurwapen afbreekt."
+            },
+            {
+              "key": "Config.MeleeCancelMode",
+              "default": "'secondary'",
+              "text": "'secondary' = rustige annulering (aanbevolen); 'immediate' = harde annulering, alleen als 'secondary' niet genoeg is."
+            },
+            {
+              "key": "Config.RespectCombatContexts",
+              "default": "true",
+              "text": "Andere scripts (zoals ts_hostage) mogen de noodrem tijdelijk pauzeren via ts_bridge."
+            },
+            {
+              "key": "Config.AimControl",
+              "default": "25",
+              "text": "Control-ID van de richtknop (25 = rechtermuisknop / LT)."
+            },
+            {
+              "key": "Config.Debug",
+              "default": "false",
+              "text": "Extra uitvoer voor diagnose."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Geen ACE nodig. Het script heeft geen beheercommando's.",
+        "lines": []
+      }
+    },
+    "ts_nohelmet": {
+      "intro": "Kleine config: helm en doorschuiven aan of uit, het commando en de teksten.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Alle instellingen en meldingen."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Instellingen",
+          "options": [
+            {
+              "key": "DisableAutomaticHelmet",
+              "default": "true",
+              "text": "Geen automatische GTA-motorhelm. Eigen kleding blijft staan."
+            },
+            {
+              "key": "PreventAutoShuffle",
+              "default": "true",
+              "text": "Een passagier schuift niet vanzelf naar de bestuurdersstoel."
+            },
+            {
+              "key": "ShuffleCommand",
+              "default": "'schuif'",
+              "text": "Commando om zelf van voorstoel te wisselen, zonder /. false = uit."
+            },
+            {
+              "key": "ShuffleTimeoutMs",
+              "default": "8000",
+              "text": "Maximale duur van één wissel in milliseconden."
+            },
+            {
+              "key": "Radial.Enabled / Label / Icon",
+              "default": "true / 'Wissel voorstoel' / 'chair'",
+              "text": "Optie in het ox_lib-radiaalmenu, met naam en Font Awesome-icoon."
+            },
+            {
+              "key": "Messages",
+              "default": "NotInVehicle, Dead, ...",
+              "text": "Alle meldingen aan de speler; pas de tekst aan naar wens."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Geen ACE nodig.",
+        "lines": []
+      }
+    },
+    "ts_gemertmap": {
+      "intro": "Hier stel je de radarzoom, de Nederlandse gebiedsnamen en eigen kaartpunten in. Na het vervangen van kaarttextures: volledige serverherstart en opnieuw verbinden.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Alle instellingen."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Kaart",
+          "options": [
+            {
+              "key": "Config.StartupMessage",
+              "default": "'compact'",
+              "text": "Opstartmelding: 'full' = logo en info, 'compact' = alleen versieregel, 'off' = uit."
+            },
+            {
+              "key": "Config.UpdateCheck.Enabled",
+              "default": "true",
+              "text": "Versiecontrole via de TroyScripts-site (met of zonder ts_bridge)."
+            },
+            {
+              "key": "Config.RadarZoom",
+              "default": "1100",
+              "text": "Zoomniveau van de minimap."
+            },
+            {
+              "key": "Config.ZoomRefreshMs",
+              "default": "0",
+              "text": "0 = zoom alleen bij start, respawn en /gemertmapreset (aanbevolen). Vanaf 1000 = steeds opnieuw zetten, alleen als je HUD de zoom overschrijft."
+            },
+            {
+              "key": "Config.DutchZoneNames",
+              "default": "true",
+              "text": "Nederlandse gebiedsnamen in de GTA-interface."
+            },
+            {
+              "key": "Config.ZoneNames",
+              "default": "AIRP = 'Gemert Airport', ...",
+              "text": "Eigen naam per GTA-gebied. Straatnamen veranderen niet."
+            },
+            {
+              "key": "Config.Points",
+              "default": "{}",
+              "text": "Eigen kaartpunten: { label, x, y, z, sprite, colour, scale, shortRange }."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Geen ACE nodig. /postcode en /gemertmapreset zijn voor iedereen.",
+        "lines": []
+      }
+    },
+    "ts_parkeerapp": {
+      "intro": "Tarief, boetes en welke rekeningen het geld ontvangen. De bedrijfsrekeningen zelf stel je in bij ts_bridge (SocietyAccounts).",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "gedeeld",
+          "text": "Alle instellingen."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Parkeren en boetes",
+          "options": [
+            {
+              "key": "centsPerMinute",
+              "default": "250",
+              "text": "Parkeertarief in centen per begonnen minuut (250 = € 2,50)."
+            },
+            {
+              "key": "parkingSociety",
+              "default": "'firefighter'",
+              "text": "Alias uit ts_bridge die het parkeergeld ontvangt."
+            },
+            {
+              "key": "policeJobs",
+              "default": "{ police = true }",
+              "text": "Jobs die kunnen controleren en boetes geven."
+            },
+            {
+              "key": "fineEuros",
+              "default": "100",
+              "text": "Boetebedrag in euro."
+            },
+            {
+              "key": "fineSociety",
+              "default": "'police'",
+              "text": "Alias uit ts_bridge die de boetes ontvangt."
+            },
+            {
+              "key": "evidenceRadius",
+              "default": "8",
+              "text": "Maximale afstand in meters tussen agent en voertuig bij het uitschrijven."
+            },
+            {
+              "key": "versionCheck",
+              "default": "true",
+              "text": "Versiecontrole via ts_bridge en de TroyScripts-site."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Geen ACE nodig. Politierechten lopen via policeJobs.",
+        "lines": []
+      }
+    }
+  }
+}

@@ -1,0 +1,1552 @@
+{
+  "general": {
+    "title": "Webhooks & permissions",
+    "lead": "How to create and fill in Discord webhooks, where they belong, and how to use ACE permissions to decide who may use admin commands.",
+    "create": [
+      "In Discord, open the channel for the logs and click the gear (Edit channel).",
+      "Go to Integrations → Webhooks → New webhook. Give it a name, for example 'TroyScripts hostage'.",
+      "Click 'Copy webhook URL'. It looks like https://discord.com/api/webhooks/ID/TOKEN.",
+      "Paste the URL between the quotes in the right config file, for example start = 'https://discord.com/api/webhooks/...'.",
+      "Restart the script and perform the action once to test."
+    ],
+    "where": [
+      "Central: ts_bridge/config/webhook_config.lua. Configure all scripts in one place. A filled-in central route always takes priority.",
+      "Per script: the script's own server config file (for example ts_hostage/config/server_config.lua). Only used when the central route is empty ('').",
+      "Use either one; the same URL may be used for several events."
+    ],
+    "safety": [
+      "A webhook URL is a password: anyone who has it can post in your channel.",
+      "Only put URLs in files that are loaded on the server only (webhook_config.lua, server.lua, server_config.lua, webhooks.lua). Never in config.lua, because that file is also sent to players.",
+      "Do not share filled-in config files on Discord or GitHub. Has a URL leaked? Delete the webhook in Discord and create a new one.",
+      "Only discord.com URLs of the form /api/webhooks/ID/TOKEN are accepted; no other sites or extra parameters."
+    ],
+    "photos": "Photos in webhooks use screenshot-basic. Start it before the scripts and set up the Electron AntiCheat whitelist. The limits (wait time, size, queue) are in ts_bridge/config/config.lua.",
+    "ace_intro": "ACE is FiveM's permission system. You put the lines in server.cfg. A player gets a permission through a group (principal).",
+    "ace_lines": [
+      [
+        "add_ace group.admin ts_flatbed.admin allow",
+        "Give the admin group the ts_flatbed.admin permission."
+      ],
+      [
+        "add_principal identifier.license:JOUW_LICENSE group.admin",
+        "Add a player to the admin group. Replace JOUW_LICENSE with the player's license (shown in txAdmin)."
+      ],
+      [
+        "add_principal identifier.discord:JOUW_DISCORD_ID group.admin",
+        "The same with a Discord ID instead of a license."
+      ]
+    ],
+    "ace_notes": [
+      "Put the lines after the ensure lines in server.cfg and restart the server.",
+      "Many scripts also accept ESX groups or a minimum job grade; ACE is then an extra way to grant the permission. Each script's needs are listed below."
+    ],
+    "table_head": [
+      "Script",
+      "ACE line",
+      "What does it allow?"
+    ]
+  },
+  "scripts": {
+    "ts_bridge": {
+      "intro": "TS Bridge connects all TroyScripts resources to your framework, banking, inventory, target, garages and Discord. Configure the bridge first: the other scripts use it for notifications, payments, permissions and webhooks.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "All general settings. This file is also sent to players: never put webhook URLs or keys in it."
+        },
+        {
+          "path": "config/webhook_config.lua",
+          "side": "server",
+          "text": "All webhook URLs: central routes for other scripts and the bridge's own audit logs."
+        }
+      ],
+      "groups": [
+        {
+          "title": "General, notifications and keys",
+          "options": [
+            {
+              "key": "TSBridgeConfig.Version",
+              "default": "'0.1.2'",
+              "text": "Config schema. Do not change it yourself; only update it after copying the new fields from an update."
+            },
+            {
+              "key": "TSBridgeConfig.Locale",
+              "default": "'nl'",
+              "text": "Bridge language: 'nl' or 'en'. Missing texts fall back to Dutch."
+            },
+            {
+              "key": "TSBridgeConfig.NotificationTitle",
+              "default": "'Troy Scripts'",
+              "text": "Default title above notifications. Must not be empty; a script may set its own title per notification."
+            },
+            {
+              "key": "TSBridgeConfig.NotificationDuration",
+              "default": "5000",
+              "text": "How long a notification stays visible, in milliseconds (1–300000). 5000 = 5 seconds."
+            },
+            {
+              "key": "TSBridgeConfig.WaypointKey",
+              "default": "'G'",
+              "text": "Key that sets the location of an alert (for example a hostage situation) as a waypoint. FiveM key name, such as 'G' or 'F6'."
+            },
+            {
+              "key": "TSBridgeConfig.AlertDismissKey",
+              "default": "'BACK'",
+              "text": "Key to dismiss your own alert. 'BACK' = Backspace. Players can change both keys in their FiveM key bindings."
+            },
+            {
+              "key": "TSBridgeConfig.AlertBlip",
+              "default": "true",
+              "text": "true = temporary map blip for an alert. No route is set automatically."
+            },
+            {
+              "key": "TSBridgeConfig.DeadStateKeys",
+              "default": "{ 'dead', 'isDead', 'laststand' }",
+              "text": "State bag keys that mean a player is dead or in last stand. Change them if your ambulance script uses other names; {} = no extra check."
+            }
+          ]
+        },
+        {
+          "title": "Location in alerts",
+          "options": [
+            {
+              "key": "AlertLocation.MapResource",
+              "default": "'ts_gemertmap'",
+              "text": "Resource that provides area names and postcodes. Without it, the bridge uses the normal GTA location."
+            },
+            {
+              "key": "AlertLocation.ShowArea",
+              "default": "true",
+              "text": "Show the area name in the alert."
+            },
+            {
+              "key": "AlertLocation.ShowPostcode",
+              "default": "true",
+              "text": "Show the nearest postcode, if the map resource provides one."
+            },
+            {
+              "key": "AlertLocation.ShowStreet",
+              "default": "true",
+              "text": "Add the GTA street or crossing."
+            },
+            {
+              "key": "AlertLocation.MaxPostcodeDistance",
+              "default": "1500.0",
+              "text": "Maximum distance in meters to a postcode. 0 = no limit."
+            }
+          ]
+        },
+        {
+          "title": "Resources and integrations",
+          "options": [
+            {
+              "key": "TSBridgeConfig.InventoryResource",
+              "default": "'ox_inventory'",
+              "text": "Name of your inventory. Must be ox_inventory compatible."
+            },
+            {
+              "key": "TSBridgeConfig.TargetResource",
+              "default": "'ox_target'",
+              "text": "Name of your target resource. ox_target compatible only; qb-target is not supported."
+            },
+            {
+              "key": "Radial.Enabled",
+              "default": "true",
+              "text": "Show bridge options in the ox_lib radial menu. Commands keep working when false. Restart the server after changing."
+            },
+            {
+              "key": "JobCards.Enabled",
+              "default": "true",
+              "text": "Optional staff IDs through 0r_idcard. When false, the desks report that staff IDs are unavailable; keycards keep working."
+            },
+            {
+              "key": "JobCards.Resource",
+              "default": "'0r_idcard'",
+              "text": "Exact name of the staff ID resource (with the digit zero)."
+            },
+            {
+              "key": "JobCards.KeycardResource",
+              "default": "'ts_keycard'",
+              "text": "Resource that manages the shared desks."
+            }
+          ]
+        },
+        {
+          "title": "Vehicles, garage and keys",
+          "options": [
+            {
+              "key": "Vehicles.Enabled",
+              "default": "true",
+              "text": "Vehicle module on or off. Needed for ts_nlplates and the JG integrations."
+            },
+            {
+              "key": "Vehicles.Ownership",
+              "default": "'esx'",
+              "text": "Ownership through the ESX tables owned_vehicles, users and jobs. Requires Server.Framework = 'esx'."
+            },
+            {
+              "key": "Vehicles.DatabaseResource",
+              "default": "'oxmysql'",
+              "text": "Database resource for the vehicle module."
+            },
+            {
+              "key": "Vehicles.Dealer / Vehicles.Garage",
+              "default": "'jg'",
+              "text": "JG Dealerships and JG Advanced Garages. Job garages require the TSGetJobGarages export."
+            },
+            {
+              "key": "Vehicles.Keys",
+              "default": "'mrnewb'",
+              "text": "'mrnewb' = keys through MrNewbVehicleKeys; 'none' = no key integration."
+            },
+            {
+              "key": "Vehicles.SkyFakePlates",
+              "default": "{ Enabled = true, StateKey = 'sky_fakePlate' }",
+              "text": "Use the real plate for registration when a Sky fake plate is active."
+            },
+            {
+              "key": "Vehicles.PlatesResource",
+              "default": "'ts_nlplates'",
+              "text": "Resource that generates new plates for the dealer."
+            }
+          ]
+        },
+        {
+          "title": "Framework, banking and invoices",
+          "options": [
+            {
+              "key": "Server.Framework",
+              "default": "'esx'",
+              "text": "'esx' or 'standalone'. Standalone has no ESX players, jobs or money."
+            },
+            {
+              "key": "Server.ESXResource",
+              "default": "'es_extended'",
+              "text": "Name of your ESX resource."
+            },
+            {
+              "key": "Server.Banking",
+              "default": "'apex'",
+              "text": "'apex' = Apex Banking, 'esx' = ESX bank account, 'okok' = okokBanking. Cash always goes through ESX."
+            },
+            {
+              "key": "Server.Billing",
+              "default": "'apex'",
+              "text": "'apex' = Apex Billing, 'none' = no invoices, 'custom' = your own resource that calls RegisterBillingProvider, 'okok' = only with your own adapter."
+            },
+            {
+              "key": "Server.SocietyResource",
+              "default": "'apex_banking'",
+              "text": "Where company money is stored: 'apex_banking' or 'esx_addonaccount'."
+            },
+            {
+              "key": "Server.SocietyAccounts",
+              "default": "police = { 'society_police', ... }",
+              "text": "Links a short name (alias) to the real account name. Other scripts use the alias, for example 'police'. Add your own as alias = { 'account_name' }."
+            },
+            {
+              "key": "Server.UpdateCheck.Enabled",
+              "default": "true",
+              "text": "Version check through the TroyScripts site. Only reports; never installs anything automatically."
+            }
+          ]
+        },
+        {
+          "title": "Screenshots and logging",
+          "options": [
+            {
+              "key": "Server.ScreenshotResource",
+              "default": "'screenshot-basic'",
+              "text": "Resource used for photos in webhooks."
+            },
+            {
+              "key": "Server.Screenshots",
+              "default": "true",
+              "text": "false = no photos; the webhook text is still sent."
+            },
+            {
+              "key": "Server.ScreenshotTimeoutMs",
+              "default": "45000",
+              "text": "Maximum wait for a photo in milliseconds."
+            },
+            {
+              "key": "Server.MaxImageBytes",
+              "default": "4 * 1024 * 1024",
+              "text": "Maximum photo size (default 4 MiB, max 25 MiB)."
+            },
+            {
+              "key": "Server.MaxQueue",
+              "default": "32",
+              "text": "Maximum number of queued webhooks and photos, for all scripts together."
+            },
+            {
+              "key": "TSBridgeConfig.Audit.Enabled",
+              "default": "true",
+              "text": "Master switch for the bridge's own audit logs (payments, invoices, errors). Other scripts' webhooks keep working."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "The bridge sends all TroyScripts Discord webhooks. In config/webhook_config.lua you set a URL per script and per event. A central route takes priority; if you leave it empty (''), the script may use its own URL from its own server config.",
+        "routes": [
+          {
+            "key": "TSBridgeServer.Webhooks.ts_hostage.start",
+            "text": "A hostage situation starts."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_hostage.actions",
+            "text": "Release, kill or abort."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_nlplates.registration",
+            "text": "New and replacement registration documents. This is the route ts_nlplates uses."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_nlplates.created / .replacement",
+            "text": "Not used by the current ts_nlplates; fill in registration."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.murder",
+            "text": "Mechanic killed, with a photo when available."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.placed",
+            "text": "Repair point placed."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_repairpoints.removed",
+            "text": "Repair point removed."
+          },
+          {
+            "key": "TSBridgeServer.Webhooks.ts_keycard = { issue, revoke, transfer, point }",
+            "text": "Optional: add this line yourself to handle keycard logs centrally."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.payments",
+            "text": "Successful personal payments through the bridge."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.societies",
+            "text": "Successful company account transactions."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.invoices",
+            "text": "Created invoices (not: paid invoices)."
+          },
+          {
+            "key": "TSBridgeAuditConfig.Webhooks.errors",
+            "text": "Failed money actions, invoices and balance lookups."
+          }
+        ],
+        "example": "TSBridgeServer.Webhooks = {\n    ts_hostage = {\n        start = 'https://discord.com/api/webhooks/ID/TOKEN',\n        actions = 'https://discord.com/api/webhooks/ID/TOKEN'\n    }\n}"
+      },
+      "aces": null
+    },
+    "ts_nlplates": {
+      "intro": "Here you set the plate format, the registration document, the plate desk and taxi plates. Webhooks live in a separate file that is only loaded on the server.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Plates, registration document, desk, company names and taxis."
+        },
+        {
+          "path": "config/webhooks.lua",
+          "side": "server",
+          "text": "Webhook settings for issuing and replacing registration documents."
+        }
+      ],
+      "groups": [
+        {
+          "title": "License plates",
+          "options": [
+            {
+              "key": "Config.Version",
+              "default": "'1.0.6'",
+              "text": "Config schema. Only update after copying new fields."
+            },
+            {
+              "key": "Config.VersionCheck",
+              "default": "true",
+              "text": "Version check on start. Manually in the console: ts_nlplates_check."
+            },
+            {
+              "key": "Config.PlateFormat",
+              "default": "'A 111 AA'",
+              "text": "Pattern for new plates: A = letter, 1 = digit, max 8 characters including spaces. Existing plates do not change."
+            },
+            {
+              "key": "Config.DefaultPlatePattern",
+              "default": "true",
+              "text": "Vehicles with the default FiveM spawn pattern also get a Dutch plate. Explicitly set plates stay the same."
+            },
+            {
+              "key": "Config.NPCPlates",
+              "default": "true",
+              "text": "NPC vehicles get Dutch plates."
+            },
+            {
+              "key": "Config.NPCScanInterval",
+              "default": "2000",
+              "text": "How often NPC vehicles are checked, in milliseconds."
+            },
+            {
+              "key": "Config.Textures",
+              "default": "plate01 = 'gewoon', ...",
+              "text": "Which GTA plate gets which Dutch style: gewoon (regular), oldtimer, luxe or taxi. Index 6 (oldtimer) requires game build 3095 or higher."
+            },
+            {
+              "key": "Config.DebugCommand",
+              "default": "'nlplaatinfo'",
+              "text": "Command that shows plate info for your current vehicle. false = off."
+            }
+          ]
+        },
+        {
+          "title": "Registration document",
+          "options": [
+            {
+              "key": "Config.Registration.enabled",
+              "default": "true",
+              "text": "Registration documents on or off."
+            },
+            {
+              "key": "Config.Registration.item",
+              "default": "'kentekenbewijs'",
+              "text": "ox_inventory item for the document. Add it to ox_inventory/data/items.lua."
+            },
+            {
+              "key": "Config.Registration.command",
+              "default": "'kentekenbewijs'",
+              "text": "Command to view or show the document from the glovebox."
+            },
+            {
+              "key": "Config.Registration.showDistance",
+              "default": "3.0",
+              "text": "Distance in meters within which you can show the document."
+            },
+            {
+              "key": "Config.Registration.unknownOwner",
+              "default": "'Onbekend'",
+              "text": "Text when the owner is unknown."
+            },
+            {
+              "key": "Config.CompanyNames",
+              "default": "taxi = 'Cab & Co', ...",
+              "text": "Company name on the document per ESX job. Not set = the ESX label."
+            }
+          ]
+        },
+        {
+          "title": "Plate desk",
+          "options": [
+            {
+              "key": "Config.Replacement.enabled",
+              "default": "true",
+              "text": "Desk for a replacement registration document."
+            },
+            {
+              "key": "Config.Replacement.price",
+              "default": "250",
+              "text": "Price in euros; 0 = free."
+            },
+            {
+              "key": "Config.Replacement.account",
+              "default": "'bank'",
+              "text": "How the player pays: 'bank' or 'money'."
+            },
+            {
+              "key": "Config.Replacement.society",
+              "default": "'society_police'",
+              "text": "Company account that receives the money."
+            },
+            {
+              "key": "Config.Replacement.placeCommand",
+              "default": "'kentekenpunt'",
+              "text": "Command to place a desk (adminGroups only)."
+            },
+            {
+              "key": "Config.Replacement.adminGroups",
+              "default": "{ admin, owner, superadmin, god }",
+              "text": "ESX groups allowed to place desks."
+            },
+            {
+              "key": "Config.Replacement.companyMinGrade",
+              "default": "3",
+              "text": "Minimum grade to replace a company document."
+            },
+            {
+              "key": "Config.Replacement.cooldownSeconds",
+              "default": "30",
+              "text": "Wait time between two requests per player."
+            },
+            {
+              "key": "Config.Replacement.blip / label",
+              "default": "true / 'Kentekenloket'",
+              "text": "Map blip and its name."
+            }
+          ]
+        },
+        {
+          "title": "Taxis",
+          "options": [
+            {
+              "key": "Config.Taxi.enabled",
+              "default": "true",
+              "text": "Automatic blue taxi plates."
+            },
+            {
+              "key": "Config.Taxi.models",
+              "default": "{ 'taxi' }",
+              "text": "Spawn names that always get a taxi plate, including NPCs."
+            },
+            {
+              "key": "Config.Taxi.jobs",
+              "default": "{ taxi = true }",
+              "text": "Jobs whose garage vehicles get a taxi plate."
+            },
+            {
+              "key": "Config.Taxi.garages",
+              "default": "{ ['Taxi Gemert'] = true }",
+              "text": "Names of the taxi job garages. Change to your garage name."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Logs for issuing and replacing registration documents. Set the URL in config/webhooks.lua, or centrally in ts_bridge under ts_nlplates.registration. The central route takes priority. New and replacement documents go to the same channel.",
+        "routes": [
+          {
+            "key": "TSPlateWebhook.enabled",
+            "text": "Webhooks on or off."
+          },
+          {
+            "key": "TSPlateWebhook.url",
+            "text": "Own Discord URL; leave empty when using the bridge."
+          },
+          {
+            "key": "TSPlateWebhook.firstIssue",
+            "text": "Log on the first document."
+          },
+          {
+            "key": "TSPlateWebhook.replacement",
+            "text": "Log on a replacement document."
+          },
+          {
+            "key": "TSPlateWebhook.vehiclePhoto",
+            "text": "Include a vehicle photo (screenshot-basic, vehicle close and standing still)."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "ts_nlplates uses ESX groups instead of ACE. Anyone in Config.Replacement.adminGroups (admin, owner, superadmin and god by default) can use /kentekenpunt. The console command ts_nlplates_check only works in the server console.",
+        "lines": []
+      }
+    },
+    "ts_nlplates_migrate": {
+      "intro": "Settings for the one-time plate migration. Above all, check BlockedResources before you migrate.",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "server",
+          "text": "All migration settings."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Migration",
+          "options": [
+            {
+              "key": "Config.Command",
+              "default": "'ts_nlplates_spaties'",
+              "text": "Console command name. Usage: ts_nlplates_spaties controle | uitvoeren."
+            },
+            {
+              "key": "Config.BlockedResources",
+              "default": "{ 'ts_nlplates', 'ox_inventory', ... }",
+              "text": "Resources that must be stopped during the migration. Add your own garages, key scripts and other scripts that store vehicle data."
+            },
+            {
+              "key": "Config.SourceTables",
+              "default": "{ 'owned_vehicles', ... }",
+              "text": "Tables the old plates are read from."
+            },
+            {
+              "key": "Config.PlateColumns",
+              "default": "{ plate = true, ... }",
+              "text": "Column names treated as plates across the database."
+            },
+            {
+              "key": "Config.JsonFields",
+              "default": "owned_vehicles = { vehicle, glovebox, trunk }, ...",
+              "text": "JSON fields that contain plates, such as inventories."
+            },
+            {
+              "key": "Config.KeyTableTerms",
+              "default": "{ 'key', 'lock' }",
+              "text": "Tables with these words in their name are also searched (key scripts)."
+            },
+            {
+              "key": "Config.StashPrefixes",
+              "default": "{ 'glove', 'trunk' }",
+              "text": "Prefixes of ox_inventory stashes that contain a plate in their name."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "No ACE needed. The commands only work in the server console, not for players.",
+        "lines": []
+      }
+    },
+    "ts_flatbed": {
+      "intro": "Here you set who may use the tow truck, which vehicles are supported and how the winch, deck and wheel lift behave. Per-model calibration is done in-game with /flatbedafstellen and saved in calibration.json.",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "gedeeld",
+          "text": "All settings."
+        },
+        {
+          "path": "calibration.json",
+          "side": "server",
+          "text": "Created automatically by /flatbedafstellen. Keep this file when updating."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Access and vehicles",
+          "options": [
+            {
+              "key": "Config.Models",
+              "default": "{ energyrampamec = true, energyguinchotop = true }",
+              "text": "Spawn names of the supported tow trucks."
+            },
+            {
+              "key": "Config.Jobs",
+              "default": "false",
+              "text": "false = everyone may use the flatbed. With ESX jobs and minimum grade: { mechanic = 0, anwb = 0 }."
+            },
+            {
+              "key": "Config.UseAce",
+              "default": "false",
+              "text": "Extra ACE permission to operate the flatbed, for example 'ts_flatbed.use'. false = no ACE check."
+            },
+            {
+              "key": "Config.AdminAce",
+              "default": "'ts_flatbed.admin'",
+              "text": "ACE permission for /flatbedafstellen (calibrate and save deck and ramps)."
+            }
+          ]
+        },
+        {
+          "title": "Operation and limits",
+          "options": [
+            {
+              "key": "Config.InteractionDistance",
+              "default": "3.0",
+              "text": "Distance in meters to operate the flatbed."
+            },
+            {
+              "key": "Config.ServerDistance",
+              "default": "18.0",
+              "text": "Maximum distance the server allows to the middle of the truck."
+            },
+            {
+              "key": "Config.MaxCableLength",
+              "default": "20.0",
+              "text": "Maximum winch cable length in meters."
+            },
+            {
+              "key": "Config.PullSpeed",
+              "default": "0.65",
+              "text": "Winch speed in meters per second."
+            },
+            {
+              "key": "Config.MaxCargoLength / MaxCargoWidth",
+              "default": "6.5 / 3.0",
+              "text": "Largest vehicle that fits on the deck, in meters."
+            },
+            {
+              "key": "Config.MaxSlope",
+              "default": "5.0",
+              "text": "Maximum slope in degrees; the truck must stand fairly level."
+            },
+            {
+              "key": "Config.StreamDistance",
+              "default": "100.0",
+              "text": "Distance at which other players see cargo and parts."
+            },
+            {
+              "key": "Config.Timing",
+              "default": "ModelLoad = 5000, ...",
+              "text": "Step timings in milliseconds. Only change if something is too fast or too slow."
+            },
+            {
+              "key": "Config.SpeedLimits",
+              "default": "Truck = 0.3, ...",
+              "text": "Maximum speeds (m/s) while loading. Multiply by 3.6 for km/h."
+            },
+            {
+              "key": "Config.Alignment",
+              "default": "SecureSide = 0.65, ...",
+              "text": "Margins in meters and degrees for aligning the cargo."
+            },
+            {
+              "key": "Config.Debug",
+              "default": "false",
+              "text": "Extra diagnostic output."
+            }
+          ]
+        },
+        {
+          "title": "Remote, wheel lift and ramps",
+          "options": [
+            {
+              "key": "Config.Remote.enabled",
+              "default": "true",
+              "text": "Visible remote with animation while winching. No item needed."
+            },
+            {
+              "key": "Config.WheelLift.enabled",
+              "default": "true",
+              "text": "Wheel lift to tow a second car behind the truck."
+            },
+            {
+              "key": "Config.WheelLift.maxAngle",
+              "default": "55.0",
+              "text": "How far the second car may swing, in degrees."
+            },
+            {
+              "key": "Config.WheelLift.dollies",
+              "default": "{ enabled = true, ... }",
+              "text": "Visible wheel dollies under the rear wheels."
+            },
+            {
+              "key": "Config.RampModel",
+              "default": "'imp_prop_flatbed_ramp'",
+              "text": "Prop model of the ramps. For another model, also set RampHighEnd and RampNativeRise."
+            },
+            {
+              "key": "Config.Defaults / Config.Profiles",
+              "default": "per spawnnaam",
+              "text": "Starting values for deck and ramps. Saved calibrations from /flatbedafstellen always take priority."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "Calibrating the deck requires an ACE permission. Put the lines in server.cfg and adjust the group or player.",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_flatbed.admin allow",
+            "text": "Admins may use /flatbedafstellen."
+          },
+          {
+            "line": "add_ace group.mechanic ts_flatbed.use allow",
+            "text": "Only needed when Config.UseAce = 'ts_flatbed.use': this group may operate the flatbed."
+          },
+          {
+            "line": "add_principal identifier.license:JOUW_LICENSE group.mechanic",
+            "text": "Example: add a player to that group. Replace JOUW_LICENSE with the player's license."
+          }
+        ]
+      }
+    },
+    "ts_repairpoints": {
+      "intro": "Here you set prices, the NPC mechanic, the duty check and what happens when the mechanic is killed. Place repair points in-game with /reparatiepunt.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Prices, mechanic, duty check and compensation."
+        },
+        {
+          "path": "config/server.lua",
+          "side": "server",
+          "text": "Custom duty check (DutyMode = 'custom') and webhook settings. The URLs themselves are in ts_bridge."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Repair and price",
+          "options": [
+            {
+              "key": "Config.Interaction",
+              "default": "'ped'",
+              "text": "'ped' = NPC mechanic through ox_target; 'marker' = circle with the E key."
+            },
+            {
+              "key": "Config.Price",
+              "default": "5000",
+              "text": "Maximum repair price. The actual price depends on the damage."
+            },
+            {
+              "key": "Config.MinPrice",
+              "default": "250",
+              "text": "Minimum price, also for only tyres or windows."
+            },
+            {
+              "key": "Config.DamageWeights",
+              "default": "{ engine = 0.6, body = 0.4 }",
+              "text": "How much engine and body damage count towards the price."
+            },
+            {
+              "key": "Config.Account",
+              "default": "'bank'",
+              "text": "How the player pays: 'bank' or 'cash'."
+            },
+            {
+              "key": "Config.Society",
+              "default": "'society_mechanic'",
+              "text": "Company account that receives the repair costs."
+            },
+            {
+              "key": "Config.Duration",
+              "default": "10000",
+              "text": "Repair duration in milliseconds."
+            },
+            {
+              "key": "Config.QuoteLifetime",
+              "default": "30",
+              "text": "Seconds to confirm the quote."
+            },
+            {
+              "key": "Config.Cooldown",
+              "default": "30",
+              "text": "Wait time in seconds, per player and per vehicle."
+            },
+            {
+              "key": "Config.Blips",
+              "default": "true",
+              "text": "Map blips for repair points."
+            }
+          ]
+        },
+        {
+          "title": "Mechanic and duty check",
+          "options": [
+            {
+              "key": "Config.Ped.Model",
+              "default": "'s_m_y_xmech_02'",
+              "text": "Model of the NPC mechanic."
+            },
+            {
+              "key": "Config.Ped.DepartureMode",
+              "default": "'wander'",
+              "text": "What the NPC does when a real mechanic goes on duty: 'wander' = walk away, 'point' = go to a fixed spot."
+            },
+            {
+              "key": "Config.MechanicJobs",
+              "default": "{ mechanic = true }",
+              "text": "Exact job names of real mechanics."
+            },
+            {
+              "key": "Config.DutyMode",
+              "default": "'auto'",
+              "text": "'auto' = ESX job and onDuty, 'job' = the job name means on duty, 'custom' = your own check in config/server.lua."
+            },
+            {
+              "key": "Config.AdminGroups",
+              "default": "{ admin, owner, superadmin, god }",
+              "text": "ESX groups allowed to use /reparatiepunt."
+            },
+            {
+              "key": "Config.Points",
+              "default": "{}",
+              "text": "Optional fixed points in the config. Usually you place points in-game."
+            }
+          ]
+        },
+        {
+          "title": "Mechanic killed",
+          "options": [
+            {
+              "key": "Config.PedDeath.Compensation",
+              "default": "10000",
+              "text": "Compensation the killer pays per killed mechanic."
+            },
+            {
+              "key": "Config.PedDeath.Account / Society",
+              "default": "'bank' / 'society_police'",
+              "text": "Where it is paid from and which account receives it. If the balance is too low, it stays as a debt."
+            },
+            {
+              "key": "Config.PedDeath.PoliceJobs",
+              "default": "{ police = true }",
+              "text": "Jobs that receive an alert."
+            },
+            {
+              "key": "Config.PedDeath.RespawnSeconds",
+              "default": "600",
+              "text": "After how many seconds a new mechanic appears."
+            },
+            {
+              "key": "Config.UpdateCheck.IntervalHours",
+              "default": "6",
+              "text": "How often the version is checked; 0 = only on start."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "The webhook URLs are set centrally in ts_bridge (ts_repairpoints.murder, .placed and .removed). In config/server.lua you choose which events are logged and whether a photo is included. Test with ts_repairpoints_webhookcheck in the server console.",
+        "routes": [
+          {
+            "key": "RepairWebhookConfig.Enabled",
+            "text": "Webhooks on or off."
+          },
+          {
+            "key": "RepairWebhookConfig.Events",
+            "text": "Per event on or off: murder, placed, removed."
+          },
+          {
+            "key": "RepairWebhookConfig.Photos",
+            "text": "Include a photo per event."
+          },
+          {
+            "key": "RepairWebhookConfig.WitnessRadius",
+            "text": "For a murder, the photo must come from a player within this distance."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "Anyone in Config.AdminGroups can use /reparatiepunt. You can also grant it through ACE:",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_repairpoints.admin allow",
+            "text": "Admins may place, view and remove repair points."
+          }
+        ]
+      }
+    },
+    "ts_keycard": {
+      "intro": "Here you set the keycard, prices, grades and issuing points per department, and the forgery system. Place issuing points in-game with /kaartpunt.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Cards, grades, prices, desks and forgery."
+        },
+        {
+          "path": "config/server.lua",
+          "side": "server",
+          "text": "Police alerts, logging and own webhook URLs."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Police (default)",
+          "options": [
+            {
+              "key": "Config.Item",
+              "default": "'politie_sleutelkaart'",
+              "text": "ox_inventory item for the police card."
+            },
+            {
+              "key": "Config.Jobs",
+              "default": "{ police = true }",
+              "text": "Jobs that can get a police card. Add for example sheriff = true."
+            },
+            {
+              "key": "Config.IssueMinimumGrade",
+              "default": "0",
+              "text": "Minimum grade to make your own card."
+            },
+            {
+              "key": "Config.IssueOthersMinimumGrade",
+              "default": "7",
+              "text": "Minimum grade to make a card for a colleague."
+            },
+            {
+              "key": "Config.CardPrice",
+              "default": "10",
+              "text": "Price of a new card, paid by the recipient."
+            },
+            {
+              "key": "Config.FreeCardMinimumGrade / FreeIssueMinimumGrade",
+              "default": "7 / 7",
+              "text": "From this grade, new or replacement cards are free."
+            },
+            {
+              "key": "Config.SocietyAccount",
+              "default": "'police'",
+              "text": "Alias from ts_bridge (SocietyAccounts) that receives the money."
+            },
+            {
+              "key": "Config.PaymentAccount",
+              "default": "'cash'",
+              "text": "How the recipient pays: 'cash' or 'bank'."
+            },
+            {
+              "key": "Config.IssuancePoint",
+              "default": "station + coords",
+              "text": "Default location of the police desk. A location saved with /kaartpunt takes priority."
+            }
+          ]
+        },
+        {
+          "title": "Other departments",
+          "options": [
+            {
+              "key": "Config.Ambulance",
+              "default": "Item, Jobs, Price, ...",
+              "text": "Own card, NPC and desk for ambulance. IssuancePoint = false until you place the desk with /kaartpunt."
+            },
+            {
+              "key": "Config.Firefighter",
+              "default": "Item, Jobs, Price, ...",
+              "text": "The same for the fire department (job firefighter)."
+            },
+            {
+              "key": "Config.Departments",
+              "default": "mechanic, taxi, sheriff, justice, fib",
+              "text": "Extra departments. Per department: Label, Jobs, Item, grades, Price and SocietyAccount. No NPC until you use /kaartpunt."
+            }
+          ]
+        },
+        {
+          "title": "Management and revoking",
+          "options": [
+            {
+              "key": "Config.SetupCommand",
+              "default": "'kaartpunt'",
+              "text": "Command to place a desk."
+            },
+            {
+              "key": "Config.SetupMinimumGrade",
+              "default": "7",
+              "text": "Minimum grade to use /kaartpunt."
+            },
+            {
+              "key": "Config.AdminGroups",
+              "default": "{ owner = true, admin = true }",
+              "text": "ESX groups that can always use /kaartpunt and /kaartenintrekken."
+            },
+            {
+              "key": "Config.SetupAce",
+              "default": "'ts_keycard.admin'",
+              "text": "ACE permission for /kaartpunt and /vervalspunt."
+            },
+            {
+              "key": "Config.RevokeCommand",
+              "default": "'kaartenintrekken'",
+              "text": "Command to revoke all issued police cards."
+            },
+            {
+              "key": "Config.RevokeAce / RevokeMinimumGrade",
+              "default": "'ts_keycard.revoke' / 7",
+              "text": "ACE permission or minimum grade to revoke cards."
+            },
+            {
+              "key": "Config.RevokeCooldownSeconds",
+              "default": "30",
+              "text": "Wait time between two revocations."
+            }
+          ]
+        },
+        {
+          "title": "Forgery",
+          "options": [
+            {
+              "key": "Config.Forgery.Enabled",
+              "default": "true",
+              "text": "Illegal trade in forged cards."
+            },
+            {
+              "key": "Config.Forgery.SetupCommand",
+              "default": "'vervalspunt'",
+              "text": "Command to place the dealer (ACE ts_keycard.admin)."
+            },
+            {
+              "key": "Config.Forgery.Materials",
+              "default": "lege_sleutelpas, kaartchip, codeerset",
+              "text": "Required items and their price. They are used up on a successful forgery."
+            },
+            {
+              "key": "Config.Forgery.DurationSeconds",
+              "default": "86400",
+              "text": "How long a forged card works (86400 = 24 hours)."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Logs for issuing, revoking, transfers and placing desks. Set the URLs in config/server.lua, or add a central ts_keycard route in ts_bridge, which takes priority. If you leave the text plaat_hier_jou_webhook, nothing is sent.",
+        "routes": [
+          {
+            "key": "KeycardAuditConfig.Enabled",
+            "text": "Logging on or off."
+          },
+          {
+            "key": "KeycardAuditConfig.Events",
+            "text": "Per event on or off: issue, revoke, transfer, point."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.issue",
+            "text": "Card issued or updated."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.revoke",
+            "text": "Cards revoked."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.transfer",
+            "text": "Card transferred."
+          },
+          {
+            "key": "KeycardAuditConfig.Webhooks.point",
+            "text": "Desk or forgery point placed."
+          },
+          {
+            "key": "KeycardAuditConfig.PoliceAlert",
+            "text": "Police alert on suspicious actions; Jobs and WaypointSeconds configurable."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "Leaders with the right grade and the ESX groups in Config.AdminGroups already have these permissions. To grant them regardless of grade or group, use ACE:",
+        "lines": [
+          {
+            "line": "add_ace group.admin ts_keycard.admin allow",
+            "text": "May use /kaartpunt and /vervalspunt."
+          },
+          {
+            "line": "add_ace group.admin ts_keycard.revoke allow",
+            "text": "May revoke all police cards with /kaartenintrekken."
+          }
+        ]
+      }
+    },
+    "ts_hostage": {
+      "intro": "Here you set controls, weapons, camera, hostage situations in vehicles and the police alert. Texts are in locales/nl.lua.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "Controls, weapons, camera and animations."
+        },
+        {
+          "path": "config/server_config.lua",
+          "side": "server",
+          "text": "Webhooks and police alert."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Controls",
+          "options": [
+            {
+              "key": "Config.Interaction",
+              "default": "'both'",
+              "text": "'target' = through ox_target, 'key' = with the E key, 'both' = both."
+            },
+            {
+              "key": "Config.Keys",
+              "default": "{ Action = 'E', Release = 'X' }",
+              "text": "Keys to take and release a hostage. Players can change them in FiveM."
+            },
+            {
+              "key": "Config.RequireAimOnFoot",
+              "default": "true",
+              "text": "On foot, only take a hostage while aiming (applies to the E key)."
+            },
+            {
+              "key": "Config.Distance / BreakDistance",
+              "default": "1.8 / 4.0",
+              "text": "Distance to start and distance at which the situation ends."
+            },
+            {
+              "key": "Config.ExecuteDelayMs",
+              "default": "1500",
+              "text": "Delay before killing is possible, so the same E press does not carry through."
+            },
+            {
+              "key": "Config.RequireAmmo",
+              "default": "true",
+              "text": "A firearm must have ammo."
+            },
+            {
+              "key": "Config.HandsUp",
+              "default": "{ Enabled = true, Key = 'H' }",
+              "text": "Own hands-up function; also through /handenomhoog."
+            },
+            {
+              "key": "Config.Radial.Enabled",
+              "default": "true",
+              "text": "Options in the ox_lib radial menu. Turn off if you use your own radial menu."
+            }
+          ]
+        },
+        {
+          "title": "Weapons and camera",
+          "options": [
+            {
+              "key": "Config.Weapons",
+              "default": "WEAPON_PISTOL = 'firearm', ...",
+              "text": "Weapons that can be used: 'firearm', 'blade' or 'blunt'. Add custom weapons by spawn name."
+            },
+            {
+              "key": "Config.Camera.ForceFirstPersonOnFoot / InVehicle",
+              "default": "true / true",
+              "text": "The captor is in first person during the situation."
+            },
+            {
+              "key": "Config.AntipunchCompatibility",
+              "default": "true",
+              "text": "Only pauses ts_antipunch's emergency brake during a situation."
+            },
+            {
+              "key": "Config.BladePose",
+              "default": "{ Enabled = true, ... }",
+              "text": "Knife position at the throat. Only change to fine-tune the pose."
+            }
+          ]
+        },
+        {
+          "title": "Vehicles",
+          "options": [
+            {
+              "key": "Config.Vehicle.Enabled",
+              "default": "true",
+              "text": "Hostage situations in a vehicle."
+            },
+            {
+              "key": "Config.Vehicle.MaxStartSpeed",
+              "default": "0.5",
+              "text": "The vehicle must be almost stationary (m/s)."
+            },
+            {
+              "key": "Config.Vehicle.SeatPairs",
+              "default": "{ { captor = 0, victim = -1 } }",
+              "text": "Which seat takes which: by default the passenger takes the driver."
+            }
+          ]
+        },
+        {
+          "title": "Police alert",
+          "options": [
+            {
+              "key": "PoliceAlertConfig.Enabled",
+              "default": "true",
+              "text": "One police alert per started situation."
+            },
+            {
+              "key": "PoliceAlertConfig.Jobs",
+              "default": "{ police = true }",
+              "text": "Jobs that receive the alert."
+            },
+            {
+              "key": "PoliceAlertConfig.WaypointSeconds",
+              "default": "60",
+              "text": "Time to set a route to the alert with G."
+            }
+          ]
+        }
+      ],
+      "webhooks": {
+        "intro": "Two Discord channels: one for the start of a situation and one for what happens next. Set the URLs in config/server_config.lua or centrally in ts_bridge (ts_hostage.start and .actions); the central route takes priority. For photos, screenshot-basic must start before ts_hostage and Electron AntiCheat must be configured.",
+        "routes": [
+          {
+            "key": "WebhookConfig.Enabled",
+            "text": "Webhooks on or off."
+          },
+          {
+            "key": "WebhookConfig.Start",
+            "text": "URL for: situation started."
+          },
+          {
+            "key": "WebhookConfig.Actions",
+            "text": "URL for: released, killed or aborted."
+          },
+          {
+            "key": "WebhookConfig.Username / AvatarUrl",
+            "text": "Name and logo of the webhook bot."
+          },
+          {
+            "key": "WebhookConfig.Screenshots",
+            "text": "Include a photo (screenshot-basic)."
+          },
+          {
+            "key": "WebhookConfig.LogAutomaticRelease",
+            "text": "Also log when the situation ends by itself."
+          },
+          {
+            "key": "WebhookConfig.PlayerName",
+            "text": "Function for the name in the log. Default is FiveM name and server ID; replace with your own RP name lookup."
+          }
+        ],
+        "example": null
+      },
+      "aces": {
+        "intro": "No ACE needed. ts_hostage_policecheck only works in the server console.",
+        "lines": []
+      }
+    },
+    "ts_antipunch": {
+      "intro": "Here you choose which combat actions are blocked and how first person works while aiming.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "All settings. Texts are in locales/nl.lua."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Camera",
+          "options": [
+            {
+              "key": "Config.ForceFirstPerson",
+              "default": "true",
+              "text": "First person required while aiming on foot."
+            },
+            {
+              "key": "Config.FirstPersonOnlyFirearms",
+              "default": "false",
+              "text": "true = only with firearms; false = on every aim, also with fists or knives."
+            },
+            {
+              "key": "Config.RestoreCamera",
+              "default": "true",
+              "text": "Return to the previous camera after aiming."
+            },
+            {
+              "key": "Config.DefaultCamera",
+              "default": "1",
+              "text": "Camera to return to: 0 = close, 1 = medium, 2 = far, 4 = first person."
+            },
+            {
+              "key": "Config.CameraRestoreDelay",
+              "default": "50",
+              "text": "Delay in milliseconds before the camera is restored."
+            }
+          ]
+        },
+        {
+          "title": "Combat",
+          "options": [
+            {
+              "key": "Config.BlockShootingWithoutAim",
+              "default": "true",
+              "text": "No shooting without aiming."
+            },
+            {
+              "key": "Config.BlockMeleeWithoutAim",
+              "default": "true",
+              "text": "No melee without aiming."
+            },
+            {
+              "key": "Config.DisableWeaponMelee",
+              "default": "true",
+              "text": "No hitting with a firearm, not even while aiming. Reloading keeps working."
+            },
+            {
+              "key": "Config.CancelForcedMelee",
+              "default": "true",
+              "text": "Extra emergency brake that cancels a firearm hit."
+            },
+            {
+              "key": "Config.MeleeCancelMode",
+              "default": "'secondary'",
+              "text": "'secondary' = gentle cancel (recommended); 'immediate' = hard cancel, only if 'secondary' is not enough."
+            },
+            {
+              "key": "Config.RespectCombatContexts",
+              "default": "true",
+              "text": "Other scripts (such as ts_hostage) may pause the emergency brake through ts_bridge."
+            },
+            {
+              "key": "Config.AimControl",
+              "default": "25",
+              "text": "Control ID of the aim button (25 = right mouse button / LT)."
+            },
+            {
+              "key": "Config.Debug",
+              "default": "false",
+              "text": "Extra diagnostic output."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "No ACE needed. The script has no admin commands.",
+        "lines": []
+      }
+    },
+    "ts_nohelmet": {
+      "intro": "Small config: helmet and seat shuffling on or off, the command and the texts.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "All settings and messages."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Settings",
+          "options": [
+            {
+              "key": "DisableAutomaticHelmet",
+              "default": "true",
+              "text": "No automatic GTA motorcycle helmet. Your own clothing stays."
+            },
+            {
+              "key": "PreventAutoShuffle",
+              "default": "true",
+              "text": "A passenger does not move to the driver's seat automatically."
+            },
+            {
+              "key": "ShuffleCommand",
+              "default": "'schuif'",
+              "text": "Command to switch front seats yourself, without /. false = off."
+            },
+            {
+              "key": "ShuffleTimeoutMs",
+              "default": "8000",
+              "text": "Maximum duration of one switch in milliseconds."
+            },
+            {
+              "key": "Radial.Enabled / Label / Icon",
+              "default": "true / 'Wissel voorstoel' / 'chair'",
+              "text": "Option in the ox_lib radial menu, with name and Font Awesome icon."
+            },
+            {
+              "key": "Messages",
+              "default": "NotInVehicle, Dead, ...",
+              "text": "All messages to the player; change the text as you like."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "No ACE needed.",
+        "lines": []
+      }
+    },
+    "ts_gemertmap": {
+      "intro": "Here you set the radar zoom, Dutch area names and your own map points. After replacing map textures: full server restart and reconnect.",
+      "files": [
+        {
+          "path": "config/config.lua",
+          "side": "gedeeld",
+          "text": "All settings."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Map",
+          "options": [
+            {
+              "key": "Config.StartupMessage",
+              "default": "'compact'",
+              "text": "Startup message: 'full' = logo and info, 'compact' = version line only, 'off' = off."
+            },
+            {
+              "key": "Config.UpdateCheck.Enabled",
+              "default": "true",
+              "text": "Version check through the TroyScripts site (with or without ts_bridge)."
+            },
+            {
+              "key": "Config.RadarZoom",
+              "default": "1100",
+              "text": "Minimap zoom level."
+            },
+            {
+              "key": "Config.ZoomRefreshMs",
+              "default": "0",
+              "text": "0 = set zoom only on start, respawn and /gemertmapreset (recommended). From 1000 = keep resetting it, only if your HUD overrides the zoom."
+            },
+            {
+              "key": "Config.DutchZoneNames",
+              "default": "true",
+              "text": "Dutch area names in the GTA interface."
+            },
+            {
+              "key": "Config.ZoneNames",
+              "default": "AIRP = 'Gemert Airport', ...",
+              "text": "Own name per GTA area. Street names do not change."
+            },
+            {
+              "key": "Config.Points",
+              "default": "{}",
+              "text": "Own map points: { label, x, y, z, sprite, colour, scale, shortRange }."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "No ACE needed. /postcode and /gemertmapreset are for everyone.",
+        "lines": []
+      }
+    },
+    "ts_parkeerapp": {
+      "intro": "Rate, fines and which accounts receive the money. The company accounts themselves are set in ts_bridge (SocietyAccounts).",
+      "files": [
+        {
+          "path": "config.lua",
+          "side": "gedeeld",
+          "text": "All settings."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Parking and fines",
+          "options": [
+            {
+              "key": "centsPerMinute",
+              "default": "250",
+              "text": "Parking rate in cents per started minute (250 = € 2.50)."
+            },
+            {
+              "key": "parkingSociety",
+              "default": "'firefighter'",
+              "text": "Alias from ts_bridge that receives parking money."
+            },
+            {
+              "key": "policeJobs",
+              "default": "{ police = true }",
+              "text": "Jobs that can check and fine."
+            },
+            {
+              "key": "fineEuros",
+              "default": "100",
+              "text": "Fine amount in euros."
+            },
+            {
+              "key": "fineSociety",
+              "default": "'police'",
+              "text": "Alias from ts_bridge that receives fines."
+            },
+            {
+              "key": "evidenceRadius",
+              "default": "8",
+              "text": "Maximum distance in meters between officer and vehicle when fining."
+            },
+            {
+              "key": "versionCheck",
+              "default": "true",
+              "text": "Version check through ts_bridge and the TroyScripts site."
+            }
+          ]
+        }
+      ],
+      "webhooks": null,
+      "aces": {
+        "intro": "No ACE needed. Police rights go through policeJobs.",
+        "lines": []
+      }
+    }
+  }
+}

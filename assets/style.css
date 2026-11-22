@@ -64,3 +64,16 @@
 .setup-script code,.guide-step code{color:#b7f1f6;background:#163b4b;padding:2px 5px;border-radius:4px}
 @media(max-width:830px){.pick-grid{grid-template-columns:1fr}}
 @media(max-width:530px){.guide-step{grid-template-columns:1fr}}
+/* Configuratie-uitleg per script */
+.cfg-section h3{margin:22px 0 8px;font-size:17px;scroll-margin-top:95px}
+.cfg-group{margin:12px 0;border:1px solid #2b4764;border-radius:12px;background:#0d1d31;overflow:hidden}
+.cfg-group summary{cursor:pointer;padding:12px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cfg-group[open] summary{border-bottom:1px solid #2b4764}
+.cfg-count{font-size:12px;color:#8fb0cf;background:#16304b;border-radius:999px;padding:2px 9px}
+.cfg-table td:first-child code{white-space:nowrap}
+.cfg-table code{overflow-wrap:anywhere}
+.cfg-default{color:#ffd479}
+.cfg-side{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.cfg-gedeeld{background:#16304b;color:#9fd2ff}
+.cfg-server{background:#3a2a10;color:#ffcf7a}
+@media (max-width:700px){.cfg-table td:first-child code{white-space:normal}}

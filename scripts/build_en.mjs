@@ -2,6 +2,7 @@ import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {GROUP_ORDER,escapeHtml as h,latestVersion,releasesFor,publishedReleases,siteConfig,absolute} from './core.mjs';
+import {renderConfigSection,renderGeneral} from './configs.mjs';
 
 const root=fileURLToPath(new URL('..',import.meta.url));
 const dist=join(root,'dist');
@@ -11,6 +12,7 @@ const releases=JSON.parse(readFileSync(join(root,'data/releases.json'),'utf8'));
 const en=JSON.parse(readFileSync(join(root,'data/en.json'),'utf8'));
 const releaseEn=JSON.parse(readFileSync(join(root,'data/releases_en.json'),'utf8'));
 const anti=JSON.parse(readFileSync(join(root,'data/anticheat_en.json'),'utf8'));
+const configs=JSON.parse(readFileSync(join(root,'data/configs_en.json'),'utf8'));
 const all=publishedReleases(releases).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
 function write(path,content){const target=join(dist,path);mkdirSync(dirname(target),{recursive:true});writeFileSync(target,content,'utf8');}
 const url=(path='')=>absolute(enHome,path);
@@ -22,6 +24,7 @@ function sidebar(active){
  '<a class="side-home" href="'+h(enHome)+'">⌂ &nbsp; All updates</a>'+
  '<a class="side-special" href="'+h(url('installatie/'))+'">⚙ Interactive installation guide ↗</a>'+
  '<a class="side-special ac-nav" href="'+h(url('anticheat/'))+'">🛡 Electron AntiCheat ↗</a>'+
+ '<a class="side-special" href="'+h(url('webhooks/'))+'">🔗 Webhooks & permissions ↗</a>'+
  '<div class="side-label side-gap">DOCUMENTATION</div>'+
  GROUP_ORDER.map(c=>{const members=catalog.filter(s=>s.category===c);if(!members.length)return '';
  return '<div class="side-group"><h3 class="side-category">'+h(group(c))+'</h3>'+
@@ -30,6 +33,7 @@ function sidebar(active){
  '<div class="side-children"><a href="'+h(url('scripts/'+s.id+'/#introduction'))+'">ⓘ Introduction</a>'+
  '<a href="'+h(url('scripts/'+s.id+'/#changelog'))+'">◴ Changelog</a>'+
  '<a href="'+h(url('scripts/'+s.id+'/#installation'))+'">⚙ Installation</a>'+
+ (configs.scripts[s.id]?'<a href="'+h(url('scripts/'+s.id+'/#configuration'))+'">🛠 Configuration</a>':'')+
  '<a href="'+h(url('installatie/?script='+s.id))+'">▣ Setup plan</a></div></details>').join('')+'</div>';
  }).join('')+
  '<div class="sidebar-foot">TroyScripts documentation and release updates. Always verify files and settings on your own server.</div></aside>';
@@ -44,7 +48,7 @@ function page({title,description,body,active,route=''}) {
  '<link rel="stylesheet" href="'+h(absolute(nlHome,'assets/language.css'))+'"><script src="'+h(absolute(nlHome,'assets/app.js'))+'" defer></script>'+
  '<script src="'+h(absolute(nlHome,'assets/installer-en.js'))+'" defer></script></head><body>'+
  '<header class="topbar"><div class="topbar-inner"><a class="brand" href="'+h(enHome)+'" aria-label="TroyScripts home"><span class="brand-mark"><span>T</span>S</span><span>Troy<span class="brand-accent">Scripts</span><small>DOCUMENTATION & UPDATES</small></span></a>'+
- '<nav class="top-links"><a href="'+h(enHome)+'">Overview</a><a href="'+h(url('#scripts'))+'">Projects</a><a href="'+h(url('#updates'))+'">Updates</a><a href="'+h(url('installatie/'))+'">Installation guide</a><a href="'+h(url('anticheat/'))+'">AntiCheat</a><a href="https://troy-scripts.tebex.store/" target="_blank" rel="noopener noreferrer">Tebex ↗</a></nav>'+
+ '<nav class="top-links"><a href="'+h(enHome)+'">Overview</a><a href="'+h(url('#scripts'))+'">Projects</a><a href="'+h(url('#updates'))+'">Updates</a><a href="'+h(url('installatie/'))+'">Installation guide</a><a href="'+h(url('anticheat/'))+'">AntiCheat</a><a href="'+h(url('webhooks/'))+'">Webhooks</a><a href="https://troy-scripts.tebex.store/" target="_blank" rel="noopener noreferrer">Tebex ↗</a></nav>'+
  '<label class="language-picker"><span>🌐</span><select data-language data-language-root="'+h(nlHome)+'" aria-label="Choose language"><option value="nl">Nederlands</option><option value="en" selected>English</option></select></label></div></header>'+
  '<div class="layout"><button class="mobile-nav" data-sidebar-toggle aria-controls="sidebar" aria-expanded="false">☰ &nbsp; Open script menu</button>'+
  sidebar(active)+'<main id="main">'+body+'</main></div><footer class="footer"><span>© '+new Date().getUTCFullYear()+' TroyScripts · Versions from the official release catalog</span><a href="'+h(enHome)+'">Back to overview ↑</a></footer></body></html>';
@@ -77,7 +81,7 @@ for(const s of catalog){
  '<section id="introduction" class="script-hero intro-section"><div class="big-icon">'+h(s.icon)+'</div><div><span class="section-kicker">'+h(group(s.category))+'</span><h1>'+h(display(s))+'</h1><p>'+h(describe(s))+'</p><div class="script-tags"><span class="version">Current registered version: '+h(latest)+'</span><span>'+history.length+' release notes</span></div></div></section>'+
  (!history.some(r=>r.version===latest)?'<div class="notice"><span>ℹ</span><p>Version '+h(latest)+' is registered, but a verified feature changelog is not available. It may be an administrative release. Previous documented changes appear below.</p></div>':'')+
  '<section id="installation" class="guide-section"><span class="section-kicker">INSTALL OR UPDATE</span><h2>Installation: '+h(display(s))+'</h2><p>'+h(m.summary)+'</p><h3>Requirements</h3>'+bullets(m.requirements)+'<h3>New installation</h3>'+bullets(m.install)+'<h3>Updating an existing installation</h3>'+bullets(m.update)+
- '<div class="guide-action-links"><a class="primary-btn" href="'+h(url('installatie/?script='+s.id))+'">⚙ Create setup plan</a><a class="secondary-btn" href="'+h(url('installatie/?script='+s.id+'&mode=update'))+'">↻ Update plan</a>'+(m.type==='fivem'?'<a class="secondary-btn" href="'+h(url('anticheat/'))+'">🛡 AntiCheat guide</a>':'')+'</div></section>'+
+ '<div class="guide-action-links"><a class="primary-btn" href="'+h(url('installatie/?script='+s.id))+'">⚙ Create setup plan</a><a class="secondary-btn" href="'+h(url('installatie/?script='+s.id+'&mode=update'))+'">↻ Update plan</a>'+(m.type==='fivem'?'<a class="secondary-btn" href="'+h(url('anticheat/'))+'">🛡 AntiCheat guide</a>':'')+'</div></section>'+renderConfigSection(configs.scripts[s.id],display(s),'en',url('webhooks/'))+
  '<section id="changelog" class="history-header"><div><span class="section-kicker">RELEASE ARCHIVE</span><h2>Changelog</h2><p>English summaries of the published release history for '+h(display(s))+'.</p></div><a class="secondary-btn" href="'+h(enHome)+'">← All projects</a></section>'+
  '<div class="timeline">'+(releaseHtml||'<p class="muted">No release notes have been published yet.</p>')+'</div>';
  write('en/scripts/'+s.id+'/index.html',page({title:display(s)+' · Changelog',description:describe(s),body:content,active:s.id,route:'scripts/'+s.id+'/'}));
@@ -96,10 +100,11 @@ const antiBody='<div class="breadcrumb"><a href="'+h(enHome)+'">Home</a><span>/<
  '<section id="problemen" class="ac-panel"><h2>Troubleshooting</h2><div class="ac-faq">'+anti.troubleshooting.map((x,i)=>'<details '+(i===0?'open':'')+'><summary>'+h(x.title)+'<span>⌄</span></summary><div><p>'+h(x.answer)+'</p>'+(x.code?'<pre><code>'+h(x.code)+'</code></pre>':'')+'</div></details>').join('')+'</div></section>'+
  '<section class="ac-panel"><h2>Important notes</h2><ul class="ac-list">'+el([anti.notes[0],anti.notes[2]])+'</ul><h3>Official references</h3><div class="ac-source-links">'+anti.sources.map(s=>'<a href="'+h(s.url)+'" rel="noopener noreferrer" target="_blank">'+h(s.label)+' ↗</a>').join('')+'</div><p class="ac-source-note">'+h(anti.sourceNote)+'</p></section>'+
  '<div class="ac-bottom"><a class="primary-btn" href="'+h(url('installatie/'))+'">⚙ Installation guide</a><a class="secondary-btn" href="'+h(enHome)+'">← All projects</a></div>';
+write('en/webhooks/index.html',page({title:configs.general.title,description:configs.general.lead,body:renderGeneral(configs,catalog,'en',{home:enHome,scriptUrl:s=>url('scripts/'+s.id+'/'),displayName:display}),route:'webhooks/'}));
 write('en/anticheat/index.html',page({title:'Electron AntiCheat · Whitelist Guide',description:anti.scope,body:antiBody,route:'anticheat/'}));
-const sitemap='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[enHome,url('installatie/'),url('anticheat/'),...catalog.map(s=>url('scripts/'+s.id+'/'))].map(s=>'<url><loc>'+h(s)+'</loc></url>').join('')+'</urlset>';
+const sitemap='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+[enHome,url('installatie/'),url('anticheat/'),url('webhooks/'),...catalog.map(s=>url('scripts/'+s.id+'/'))].map(s=>'<url><loc>'+h(s)+'</loc></url>').join('')+'</urlset>';
 write('en/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>'+sitemap);
-console.log('English pages built: '+(catalog.length+3)+' (NL version catalog unchanged)');
+console.log('English pages built: '+(catalog.length+4)+' (NL version catalog unchanged)');
 
 
 /* Render the interactive installer in English without changing the Dutch original. */
