@@ -470,21 +470,26 @@
   },
   "tgc_bot": {
     "type": "bot",
-    "summary": "Discord-bot voor tickets, economie, meldingen, moderatie, radio en centrale hub.",
+    "summary": "Discord-bot voor tickets, economie, meldingen, moderatie met waarschuwingenbeheer, ideeënbus, herinneringen, tijdelijke spraakkanalen, radio en centrale hub.",
     "providers": [],
     "needs": [],
     "onesync": false,
     "requirements": [
       "Node.js 24.x op bestaande bot-hosting, Discord-applicatie en eigen token.",
       "Volledige botbestanden met package.json en package-lock.json.",
-      "Blijvende opslag voor SQLite-database, logs en back-ups; Node.js 22 wordt niet ondersteund."
+      "Blijvende opslag voor SQLite-database, logs en back-ups; Node.js 22 wordt niet ondersteund.",
+      "Botrechten voor de optionele functies: Kanalen beheren en Leden verplaatsen (tijdelijke spraakkanalen), Openbare threads maken in het ideeënkanaal en Leden modereren/Leden kicken (opschaling van waarschuwingen)."
     ],
     "install": [
       "Maak in het Discord Developer Portal een eigen applicatie, zet benodigde Gateway Intents aan en geef de bot passende rollen en rechten.",
       "Plaats de volledige botmap op de bestaande Node.js-hosting. index.js en package.json moeten in dezelfde hoofdmap staan.",
       "Maak een eigen .env met TOKEN, CLIENT_ID, GUILD_ID en OWNER_IDS; bewaar die buiten GitHub.",
       "Voer npm ci --no-audit --no-fund uit en start de bot met npm start.",
-      "Gebruik de installatiemodus en het /help-systeem om de Discord-serverinstellingen te controleren."
+      "Gebruik de installatiemodus en het /help-systeem om de Discord-serverinstellingen te controleren.",
+      "Optioneel – ideeënbus: /config instellen instelling:Suggestions.Channel waarde:#ideeën en daarna Suggestions.Enabled op ja. Leden plaatsen ideeën met /suggestie; staff beoordeelt ze met de knoppen onder het idee.",
+      "Optioneel – tijdelijke spraakkanalen: maak een spraakkanaal zoals \"➕ Maak kanaal\", stel het in met /config instellen instelling:TempVoice.CreateChannel en zet TempVoice.Enabled op ja. Leden beheren hun kanaal met /voice naam, limiet, slot en overnemen.",
+      "Herinneringen (/herinner nieuw, lijst, verwijderen) staan standaard aan; het maximum per lid stel je in met Reminders.MaxPerUser.",
+      "Optioneel – automatische opschaling van waarschuwingen: zet Warnings.Escalation op ja en kies Warnings.TimeoutAt, Warnings.TimeoutMinutes en Warnings.KickAt. Staff trekt waarschuwingen in met /warnings verwijderen of /warnings wissen."
     ],
     "update": [
       "Stop de hoofd-hub en aangesloten bots. Bewaar de database, .env, uploads en eigen instellingen.",

@@ -529,21 +529,26 @@
     },
     "tgc_bot": {
       "type": "bot",
-      "summary": "Discord bot for ticketing, economy, notifications, moderation, radio and the central hub.",
+      "summary": "Discord bot for ticketing, economy, notifications, moderation with warning management, a suggestion box, reminders, temporary voice channels, radio and the central hub.",
       "providers": [],
       "needs": [],
       "onesync": false,
       "requirements": [
         "Node.js 24.x on existing bot hosting, a Discord application and your own bot token.",
         "Complete bot files, including package.json and package-lock.json.",
-        "Persistent storage for the SQLite database, logs and backups. Node.js 22 is no longer supported."
+        "Persistent storage for the SQLite database, logs and backups. Node.js 22 is no longer supported.",
+        "Bot permissions for the optional features: Manage Channels and Move Members (temporary voice channels), Create Public Threads in the suggestion channel and Moderate Members/Kick Members (warning escalation)."
       ],
       "install": [
         "Create your application in the Discord Developer Portal, enable required gateway intents and grant appropriate role permissions.",
         "Upload the full bot project to your Node.js host. index.js and package.json must be in the same project root.",
         "Create a private .env containing TOKEN, CLIENT_ID, GUILD_ID and OWNER_IDS. Never commit it to GitHub.",
         "Run npm ci --no-audit --no-fund and start the bot with npm start.",
-        "Use setup mode and /help to check your Discord server settings."
+        "Use setup mode and /help to check your Discord server settings.",
+        "Optional – suggestion box: /config instellen instelling:Suggestions.Channel waarde:#ideas, then set Suggestions.Enabled to ja. Members post ideas with /suggestie; staff review them with the buttons below each idea.",
+        "Optional – temporary voice channels: create a voice channel such as \"➕ Create channel\", set it with /config instellen instelling:TempVoice.CreateChannel and set TempVoice.Enabled to ja. Members manage their channel with /voice naam, limiet, slot and overnemen.",
+        "Reminders (/herinner nieuw, lijst, verwijderen) are enabled by default; set the maximum per member with Reminders.MaxPerUser.",
+        "Optional – automatic warning escalation: set Warnings.Escalation to ja and choose Warnings.TimeoutAt, Warnings.TimeoutMinutes and Warnings.KickAt. Staff revoke warnings with /warnings verwijderen or /warnings wissen."
       ],
       "update": [
         "Stop the central hub and connected bots. Back up the database, .env, uploads and custom settings.",
