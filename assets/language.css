@@ -8,3 +8,13 @@
 @media(max-width:1000px){.topbar-inner{gap:15px}.top-links{gap:12px}.topbar .top-pill{display:none}}
 @media(max-width:790px){.topbar-inner{height:70px}.brand{font-size:19px}.brand-mark{width:37px;height:37px}.language-picker{margin-left:auto;padding:6px 8px}}
 @media(max-width:390px){.language-picker select{min-width:76px}.brand{font-size:17px}.brand small{font-size:7px}}
+
+/* Bovenbalk op tablets en kleine laptops: links scrollen binnen de balk in plaats van de pagina te verbreden. */
+.top-links{min-width:0;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.top-links::-webkit-scrollbar{display:none}
+.top-links a{flex:none}
+@media(max-width:1400px){.topbar .top-pill{display:none}}
+.script-hero>div{min-width:0}
+.script-tags{flex-wrap:wrap}
+.files-list code,.bullet-list code{overflow-wrap:anywhere}
+@media(max-width:1360px) and (min-width:791px){.top-links{font-size:14px;padding-right:28px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}}
