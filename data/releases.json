@@ -460,6 +460,32 @@
   },
   {
     "script": "tgc_bot",
+    "version": "3.8.5",
+    "date": "2026-11-23",
+    "status": "published",
+    "highlights": [
+      "/warnings heeft nu de subcommands bekijken, verwijderen en wissen: staff kan een onterechte waarschuwing intrekken of alle waarschuwingen van een lid wissen.",
+      "Nieuwe, standaard uitgeschakelde automatische opschaling: vanaf een ingesteld aantal waarschuwingen volgt automatisch een timeout of kick."
+    ],
+    "changes": [
+      "De waarschuwingenlijst toont het ID van elke waarschuwing en kapt lange lijsten netjes af binnen de Discord-limiet.",
+      "/warnings wissen vraagt eerst een bevestiging (5 minuten geldig, alleen voor degene die het startte).",
+      "Waarschuwingen van staff met een hogere rol kunnen niet worden ingetrokken; alleen waarschuwingen van de eigen server zijn vindbaar.",
+      "Elke intrekking en wisactie wordt gelogd in het moderatielog met moderator, reden en de oorspronkelijke waarschuwing.",
+      "Instellingen via /config: Warnings.Escalation, Warnings.TimeoutAt (3), Warnings.TimeoutMinutes (60) en Warnings.KickAt (5). Rolhiërarchie en botrechten worden gecontroleerd.",
+      "/warn toont het totaal aantal waarschuwingen en de eventuele automatische actie; de DM noemt de actie vooraf."
+    ],
+    "files": [],
+    "instructions": [
+      "Neem de volledige release over en voer npm ci uit; de nieuwe subcommands worden bij het opstarten automatisch geregistreerd.",
+      "Geen nieuwe databasetabellen; bestaande waarschuwingen blijven behouden.",
+      "Gebruik voortaan /warnings bekijken in plaats van /warnings.",
+      "Automatische opschaling staat uit; zet die desgewenst aan met /config instellen instelling:Warnings.Escalation waarde:ja."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van troy-s_game_community_appV3 v3.8.5; direct gepubliceerd op verzoek van Troy (geen aparte testronde)."
+  },
+  {
+    "script": "tgc_bot",
     "version": "3.8.4",
     "date": null,
     "status": "published",
