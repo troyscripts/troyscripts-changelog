@@ -495,11 +495,13 @@
     "verify": [
       "Controleer console, gatewayverbinding en slashcommando's.",
       "Test tickets, meldingen en hubcommunicatie met de beschikbare testserver.",
-      "Test de radio wanneer FFmpeg of voice-dependencies zijn bijgewerkt."
+      "Test de radio wanneer FFmpeg of voice-dependencies zijn bijgewerkt.",
+      "Test na het instellen de ideeënbus (/suggestie), een herinnering (/herinner nieuw wanneer:2m) en het aanmaken en opruimen van een tijdelijk spraakkanaal."
     ],
     "warnings": [
       "Dit is een afzonderlijke Discord-bot, geen FiveM-resource: voeg geen ensure-regel aan server.cfg toe.",
-      "Upload nooit TOKEN, .env, databasebestanden of andere privégegevens naar de openbare changelogsite."
+      "Upload nooit TOKEN, .env, databasebestanden of andere privégegevens naar de openbare changelogsite.",
+      "Tijdelijke spraakkanalen vereisen de botrechten Kanalen beheren en Leden verplaatsen; zonder die rechten worden geen kanalen gemaakt."
     ],
     "preserve": [
       ".env",

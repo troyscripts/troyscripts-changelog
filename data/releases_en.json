@@ -190,5 +190,8 @@
   },
   "tgc_bot@3.8.5": {
     "summary": "/warnings gains view, remove and clear subcommands so staff can revoke warnings, plus optional automatic timeout/kick escalation (off by default)."
+  },
+  "tgc_bot@3.8.6": {
+    "summary": "Adds a suggestion box with voting and staff review, persistent reminders (/herinner) and automatic temporary voice channels managed with /voice."
   }
 }

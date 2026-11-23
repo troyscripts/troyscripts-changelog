@@ -460,6 +460,30 @@
   },
   {
     "script": "tgc_bot",
+    "version": "3.8.6",
+    "date": "2026-11-23",
+    "status": "published",
+    "highlights": [
+      "Ideeënbus: /suggestie plaatst een idee met 👍/👎-stemknoppen; staff keurt goed, zet in behandeling of wijst af en de indiener krijgt een DM.",
+      "Herinneringen: /herinner nieuw begrijpt 10m, 2u, 1u30m, 3 dagen, 18:30 en 24-12-2026 18:30 en blijft bewaard na een herstart.",
+      "Tijdelijke spraakkanalen: wie het ingestelde kanaal joint, krijgt een eigen spraakkanaal dat automatisch verdwijnt als het leeg is."
+    ],
+    "changes": [
+      "Ideeënbus met optionele discussiethread per idee; stemmen sluit na goedkeuren of afwijzen. Instellingen Suggestions.Enabled, Suggestions.Channel en Suggestions.Threads.",
+      "/herinner lijst en /herinner verwijderen; bezorging via DM of in het kanaal, met terugval op het kanaal als DM's dicht staan. Alleen de eigenaar wordt gepingd. Instellingen Reminders.Enabled en Reminders.MaxPerUser.",
+      "Eigenaars van een tijdelijk kanaal gebruiken /voice naam, limiet, slot en overnemen. Nieuwe kanalen nemen de rechten van de categorie over; lege kanalen worden ook na een herstart opgeruimd. Instellingen TempVoice.*.",
+      "Nieuwe databasetabellen suggestions, reminders en temp_voice_channels worden automatisch aangemaakt."
+    ],
+    "files": [],
+    "instructions": [
+      "Neem de volledige release over en voer npm ci uit; de nieuwe commands worden bij het opstarten automatisch geregistreerd.",
+      "Ideeënbus en tijdelijke spraakkanalen staan standaard uit: stel Suggestions.Channel en TempVoice.CreateChannel in via /config en zet daarna Suggestions.Enabled en TempVoice.Enabled op ja.",
+      "Geef de bot voor tijdelijke spraakkanalen Kanalen beheren en Leden verplaatsen; voor de ideeënbus ook Openbare threads maken in het ideeënkanaal."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van troy-s_game_community_appV3 v3.8.6; direct gepubliceerd op verzoek van Troy (geen aparte testronde)."
+  },
+  {
+    "script": "tgc_bot",
     "version": "3.8.5",
     "date": "2026-11-23",
     "status": "published",
