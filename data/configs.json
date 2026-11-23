@@ -2029,7 +2029,7 @@
             {
               "key": "Economy.Enabled",
               "default": "true",
-              "text": "Schakelt stelen, rekeningen en de winkel (/store) aan of uit. Andere spelgeldcommands zoals daily en work blijven werken."
+              "text": "Zet de economie aan of uit. Daily en work blijven altijd werken."
             },
             {
               "key": "Economy.StartingMoney",
