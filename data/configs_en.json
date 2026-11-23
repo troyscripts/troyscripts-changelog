@@ -1547,6 +1547,743 @@
         "intro": "No ACE needed. Police rights go through policeJobs.",
         "lines": []
       }
+    },
+    "tgc_bot": {
+      "intro": "Configure the bot per Discord server with /config instellen instelling:<name> waarde:<value> (ja/nee for on/off, a mention or ID for roles and channels, leeg to clear). /config bekijken shows the current values. The defaults below apply to a new server; secrets are only stored in .env.",
+      "files": [
+        {
+          "path": ".env",
+          "side": "server",
+          "text": "TOKEN, CLIENT_ID, GUILD_ID, OWNER_IDS and other secret or host-specific values. Never share or upload them."
+        },
+        {
+          "path": "config/defaults.js",
+          "side": "server",
+          "text": "Base values for new servers. Override them per server with /config; those values are stored in the SQLite database."
+        }
+      ],
+      "groups": [
+        {
+          "title": "General",
+          "options": [
+            {
+              "key": "Debug",
+              "default": "false",
+              "text": "Extra debugging information in the console."
+            },
+            {
+              "key": "Prefix",
+              "default": "\"!\"",
+              "text": "Prefix excluding ordinary messages from processing. Commands themselves use slash commands"
+            },
+            {
+              "key": "Bot.Language",
+              "default": "\"both\"",
+              "text": "Language of public bot messages: nl, en or both."
+            },
+            {
+              "key": "Bot.Name",
+              "default": "\"Troy's Gamecommunity\"",
+              "text": "Name in bot messages. {server} uses the actual server name. Does not rename the bot account"
+            },
+            {
+              "key": "Bot.Color",
+              "default": "\"#c9a91b\"",
+              "text": "Embed color"
+            },
+            {
+              "key": "Bot.Footer",
+              "default": "\"Troy's Gamecommunity Discord\"",
+              "text": "Embed footer"
+            }
+          ]
+        },
+        {
+          "title": "Roles and staff",
+          "options": [
+            {
+              "key": "Roles.Developer",
+              "default": "empty",
+              "text": "Developer role with owner access on this server, including /config"
+            },
+            {
+              "key": "Roles.Owner",
+              "default": "empty",
+              "text": "Owner role with owner access on this server, including /config"
+            },
+            {
+              "key": "Roles.HeadAdmin",
+              "default": "empty",
+              "text": "Head Admin role, including access to give and economy-reset"
+            },
+            {
+              "key": "Roles.Admin",
+              "default": "empty",
+              "text": "Admin role, including access to give and economy-reset"
+            },
+            {
+              "key": "Roles.HeadModerator",
+              "default": "empty",
+              "text": "Head Moderator role; also add it to StaffRoles for staff access"
+            },
+            {
+              "key": "Roles.Moderator",
+              "default": "empty",
+              "text": "Moderator role; also add it to StaffRoles for staff access"
+            },
+            {
+              "key": "Roles.Verified",
+              "default": "empty",
+              "text": "Role assigned by the verification button"
+            },
+            {
+              "key": "Roles.NewUser",
+              "default": "empty",
+              "text": "Role removed after verification"
+            },
+            {
+              "key": "StaffRoles",
+              "default": "[]",
+              "text": "Regular staff roles. Omit waarde when configuring to select up to 25 roles"
+            },
+            {
+              "key": "SelfRoles.fivem",
+              "default": "empty",
+              "text": "FiveM button role on an old default panel; use /selfrollen for new panels"
+            },
+            {
+              "key": "SelfRoles.ats",
+              "default": "empty",
+              "text": "ATS button role on an old default panel"
+            },
+            {
+              "key": "SelfRoles.minecraft",
+              "default": "empty",
+              "text": "Minecraft button role on an old default panel"
+            },
+            {
+              "key": "SelfRoles.streams",
+              "default": "empty",
+              "text": "Streams button role on an old default panel"
+            },
+            {
+              "key": "Store.VIPRole",
+              "default": "empty",
+              "text": "Dedicated temporary VIP role sold through /store and removed when purchased time expires"
+            }
+          ]
+        },
+        {
+          "title": "Warnings",
+          "options": [
+            {
+              "key": "Warnings.Escalation",
+              "default": "false",
+              "text": "Escalation on/off"
+            },
+            {
+              "key": "Warnings.TimeoutAt",
+              "default": "3",
+              "text": "From this count: timeout (0 = skip, max 50)"
+            },
+            {
+              "key": "Warnings.TimeoutMinutes",
+              "default": "60",
+              "text": "Timeout duration, 1–40320 minutes"
+            },
+            {
+              "key": "Warnings.KickAt",
+              "default": "5",
+              "text": "From this count: kick (0 = skip, max 50); takes precedence over timeout"
+            }
+          ]
+        },
+        {
+          "title": "Suggestion box",
+          "options": [
+            {
+              "key": "Suggestions.Enabled",
+              "default": "false",
+              "text": "Suggestion box on/off"
+            },
+            {
+              "key": "Suggestions.Channel",
+              "default": "empty",
+              "text": "Channel for ideas"
+            },
+            {
+              "key": "Suggestions.Threads",
+              "default": "true",
+              "text": "Discussion thread per idea"
+            }
+          ]
+        },
+        {
+          "title": "Reminders",
+          "options": [
+            {
+              "key": "Reminders.Enabled",
+              "default": "true",
+              "text": "Reminders on/off"
+            },
+            {
+              "key": "Reminders.MaxPerUser",
+              "default": "25",
+              "text": "Pending reminders per member (1–100)"
+            }
+          ]
+        },
+        {
+          "title": "Temporary voice channels",
+          "options": [
+            {
+              "key": "TempVoice.Enabled",
+              "default": "false",
+              "text": "Feature on/off"
+            },
+            {
+              "key": "TempVoice.CreateChannel",
+              "default": "empty",
+              "text": "Voice channel members join to create a channel"
+            },
+            {
+              "key": "TempVoice.Category",
+              "default": "empty",
+              "text": "Category for new channels; empty = category of CreateChannel"
+            },
+            {
+              "key": "TempVoice.NameTemplate",
+              "default": "\"🔊 {user}\"",
+              "text": "Name of new channels; {user} = display name"
+            },
+            {
+              "key": "TempVoice.UserLimit",
+              "default": "0",
+              "text": "Default limit (0–99)"
+            }
+          ]
+        },
+        {
+          "title": "Tickets",
+          "options": [
+            {
+              "key": "Tickets.Enabled",
+              "default": "false",
+              "text": "Allow new tickets through ticket-open buttons"
+            },
+            {
+              "key": "Tickets.Transcript",
+              "default": "true",
+              "text": "This switch currently does not prevent transcripts from being sent"
+            },
+            {
+              "key": "Tickets.AutoClose",
+              "default": "false",
+              "text": "Automatic closing is currently inactive; close tickets manually"
+            },
+            {
+              "key": "Tickets.Category",
+              "default": "empty",
+              "text": "General fallback for old panels without their own destination"
+            },
+            {
+              "key": "Tickets.LogChannel",
+              "default": "empty",
+              "text": "Ticket logs and transcript copies, if accessible"
+            },
+            {
+              "key": "Tickets.ThreadLogChannel",
+              "default": "empty",
+              "text": "Separate staff-only transcript destination; must differ from Tickets.LogChannel."
+            },
+            {
+              "key": "Tickets.MaxOpenPerUser",
+              "default": "5",
+              "text": "Maximum simultaneous open tickets per user per server. Existing saved values take precedence"
+            }
+          ]
+        },
+        {
+          "title": "Soft moderation",
+          "options": [
+            {
+              "key": "SoftModeration.Enabled",
+              "default": "false",
+              "text": "Soft moderation on/off."
+            },
+            {
+              "key": "SoftModeration.LogChannel",
+              "default": "empty",
+              "text": "Channel for soft moderation reviews."
+            },
+            {
+              "key": "SoftModeration.TimeoutHours",
+              "default": "24",
+              "text": "Timeout duration, 1–672 hours."
+            },
+            {
+              "key": "SoftModeration.RepeatWindowHours",
+              "default": "24",
+              "text": "Window in which a repeat offence leads to a timeout, 1–720 hours."
+            },
+            {
+              "key": "SoftModeration.MinConfidence",
+              "default": "0.9",
+              "text": "Minimum AI confidence for action (0.8–1)."
+            },
+            {
+              "key": "SoftModeration.AdultContent",
+              "default": "true",
+              "text": "Remove explicit adult content with a registered warning."
+            },
+            {
+              "key": "SoftModeration.AdultMinConfidence",
+              "default": "0.95",
+              "text": "Minimum confidence for adult-content detection (0.9–1)."
+            },
+            {
+              "key": "SoftModeration.ScanImages",
+              "default": "true",
+              "text": "Also check images for adult content."
+            },
+            {
+              "key": "SoftModeration.VisionModel",
+              "default": "\"qwen/qwen3.8-27b\"",
+              "text": "AI model used for image checks."
+            },
+            {
+              "key": "SoftModeration.SpamMessages",
+              "default": "6",
+              "text": "Messages within the window that count as spam (3–50)."
+            },
+            {
+              "key": "SoftModeration.SpamWindowSeconds",
+              "default": "10",
+              "text": "Spam window in seconds (2–120)."
+            },
+            {
+              "key": "SoftModeration.MentionLimit",
+              "default": "6",
+              "text": "Mentions per message that count as mass mentions (3–50)."
+            },
+            {
+              "key": "SoftModeration.QueueLimit",
+              "default": "200",
+              "text": "Maximum messages waiting for review (10–1000)."
+            }
+          ]
+        },
+        {
+          "title": "Honeypot",
+          "options": [
+            {
+              "key": "Honeypot.Enabled",
+              "default": "false",
+              "text": "Enable/disable detection"
+            },
+            {
+              "key": "Honeypot.Channel",
+              "default": "empty",
+              "text": "Channel where posting is prohibited"
+            },
+            {
+              "key": "Honeypot.Action",
+              "default": "\"ban\"",
+              "text": "ban or timeout (seven days)"
+            },
+            {
+              "key": "Honeypot.CrossServerBan",
+              "default": "false",
+              "text": "Take part in cross-server honeypot bans and timeouts."
+            },
+            {
+              "key": "Honeypot.LogChannel",
+              "default": "empty",
+              "text": "Dedicated log channel; falls back to Logging.Channel"
+            },
+            {
+              "key": "Honeypot.Mention",
+              "default": "\"verified\"",
+              "text": "Mention below the warning: verified, none, everyone, here or a role ID."
+            }
+          ]
+        },
+        {
+          "title": "Logging",
+          "options": [
+            {
+              "key": "Logging.Language",
+              "default": "\"nl\"",
+              "text": "Language of Discord log messages: nl, en or both."
+            },
+            {
+              "key": "Logging.Enabled",
+              "default": "true",
+              "text": "Enable activity, update and self-role messages in Discord. Deleted-message logging has its own switch"
+            },
+            {
+              "key": "Logging.Console",
+              "default": "true",
+              "text": "Show log lines in the hosting console."
+            },
+            {
+              "key": "Logging.Files",
+              "default": "true",
+              "text": "Keep log files on the host."
+            },
+            {
+              "key": "Logging.MessageDelete",
+              "default": "true",
+              "text": "Log deleted user messages in the configured Discord log channel"
+            },
+            {
+              "key": "Logging.IgnoreBots",
+              "default": "false",
+              "text": "Skip message logs for all bots and webhooks."
+            },
+            {
+              "key": "Logging.IgnoredAuthors",
+              "default": "[]",
+              "text": "Bot or user IDs whose messages are not logged; @user also works."
+            },
+            {
+              "key": "Logging.IgnoredUserMentions",
+              "default": "[]",
+              "text": "Do not log messages mentioning these users."
+            },
+            {
+              "key": "Logging.IgnoredRoleMentions",
+              "default": "[]",
+              "text": "Do not log messages mentioning these roles."
+            },
+            {
+              "key": "Logging.Channel",
+              "default": "empty",
+              "text": "Logs for messages, commands, members, self-roles and bot updates"
+            },
+            {
+              "key": "Logging.RetentionDays",
+              "default": "30",
+              "text": "How long log data is kept locally (1–365 days)."
+            },
+            {
+              "key": "Logging.MaxRecords",
+              "default": "50000",
+              "text": "Maximum stored log records per server (100–100000)."
+            },
+            {
+              "key": "Logging.QueueLimit",
+              "default": "5000",
+              "text": "Maximum queued log messages (10–10000)."
+            },
+            {
+              "key": "Logging.Channels.<categorie>",
+              "default": "empty",
+              "text": "Separate log channel per category; empty = Logging.Channel. Categories: Messages, MessageEdits, MessageDeletes, Reactions, Members, Roles, Channels, Threads, Voice, Moderation, Invites, Server, Expressions, ScheduledEvents, Integrations, AutoMod, Commands, Audit, Presence, Typing, Polls."
+            },
+            {
+              "key": "Logging.Events.<categorie>",
+              "default": "true",
+              "text": "Turn a log category on/off, using the same categories as Logging.Channels."
+            }
+          ]
+        },
+        {
+          "title": "Levels",
+          "options": [
+            {
+              "key": "Levels.Enabled",
+              "default": "true",
+              "text": "Automatic XP awards, including counting. Existing level commands remain available"
+            },
+            {
+              "key": "Levels.XPMin",
+              "default": "5",
+              "text": "Minimum random XP award per normal message"
+            },
+            {
+              "key": "Levels.XPMax",
+              "default": "14",
+              "text": "Maximum random XP award per normal message"
+            },
+            {
+              "key": "Levels.Cooldown",
+              "default": "60",
+              "text": "Seconds between normal XP awards for the same user"
+            },
+            {
+              "key": "Levels.AnnounceLevelUp",
+              "default": "true",
+              "text": "Announce level increases in the message channel"
+            },
+            {
+              "key": "Levels.Roles.<level>",
+              "default": "empty",
+              "text": "Role from a level, e.g. Levels.Roles.10; custom levels can be added. The highest reached threshold applies."
+            }
+          ]
+        },
+        {
+          "title": "Economy",
+          "options": [
+            {
+              "key": "Economy.Enabled",
+              "default": "true",
+              "text": "Enables/disables stealing, bills and the shop (/store). Other money commands such as daily and work keep working."
+            },
+            {
+              "key": "Economy.StartingMoney",
+              "default": "500",
+              "text": "Starting wallet balance when an economy profile is created"
+            },
+            {
+              "key": "Economy.DailyCooldownHours",
+              "default": "24",
+              "text": "Daily cooldown in hours; 0 still uses 24 hours"
+            },
+            {
+              "key": "Economy.WorkCooldownMinutes",
+              "default": "60",
+              "text": "Work cooldown in minutes; 0 still uses 60 minutes"
+            }
+          ]
+        },
+        {
+          "title": "Counting game",
+          "options": [
+            {
+              "key": "Counting.Enabled",
+              "default": "true",
+              "text": "Enable counting in the selected channel"
+            },
+            {
+              "key": "Counting.Channel",
+              "default": "empty",
+              "text": "Channel where players take turns posting consecutive numbers"
+            },
+            {
+              "key": "Counting.RewardXP",
+              "default": "10",
+              "text": "XP for a correct number; requires Levels.Enabled"
+            },
+            {
+              "key": "Counting.FeedbackDeleteSeconds",
+              "default": "30",
+              "text": "Seconds before a counting error message is deleted; 0 keeps it"
+            }
+          ]
+        },
+        {
+          "title": "AI chat",
+          "options": [
+            {
+              "key": "AIChat.Enabled",
+              "default": "false",
+              "text": "Enable AI replies"
+            },
+            {
+              "key": "AIChat.Channels",
+              "default": "[]",
+              "text": "Channel IDs where AI may reply. Empty means nowhere. Threads require their own ID"
+            },
+            {
+              "key": "AIChat.Mode",
+              "default": "\"all\"",
+              "text": "all: reply to ordinary text; mention: require an explicit bot mention"
+            },
+            {
+              "key": "AIChat.CooldownSeconds",
+              "default": "10",
+              "text": "Cooldown per user per channel after a successful reply, 1–300 seconds"
+            },
+            {
+              "key": "AIChat.HistoryTurns",
+              "default": "4",
+              "text": "Previous conversation turns retained, 0–8; 0 disables conversation history"
+            },
+            {
+              "key": "AIChat.Personality",
+              "default": "default text",
+              "text": "Tone/community context, up to 2,000 characters; default asks for a friendly gaming tone and occasional emoji"
+            }
+          ]
+        },
+        {
+          "title": "Birthdays",
+          "options": [
+            {
+              "key": "Birthday.Enabled",
+              "default": "true",
+              "text": "Daily birthday processing; commands remain available"
+            },
+            {
+              "key": "Birthday.CheckTime",
+              "default": "\"00:00\"",
+              "text": "Daily birthday processing time, HH:MM"
+            },
+            {
+              "key": "Birthday.Timezone",
+              "default": "\"Europe/Amsterdam\"",
+              "text": "Birthday processing timezone"
+            },
+            {
+              "key": "Birthday.Role",
+              "default": "empty",
+              "text": "Temporary birthday-calendar-day role; previous birthday roles are removed on the next check. Also grants 2× rewards"
+            },
+            {
+              "key": "Birthday.Channel",
+              "default": "empty",
+              "text": "Birthday greeting channel"
+            },
+            {
+              "key": "Birthday.Messages",
+              "default": "3 default messages",
+              "text": "{user} becomes a mention of the birthday member"
+            }
+          ]
+        },
+        {
+          "title": "YouTube schedule",
+          "options": [
+            {
+              "key": "Agenda.Timezone",
+              "default": "\"Europe/Amsterdam\"",
+              "text": "Timezone for schedule dates and times"
+            },
+            {
+              "key": "Agenda.Title",
+              "default": "\"📅 YouTube-planning\"",
+              "text": "Schedule title"
+            },
+            {
+              "key": "Agenda.YouTubeUrl",
+              "default": "empty",
+              "text": "Full YouTube link; leeg or geen removes it"
+            },
+            {
+              "key": "Agenda.MaxVisibleItems",
+              "default": "80",
+              "text": "Maximum visible schedule items, further limited by embed capacity"
+            }
+          ]
+        },
+        {
+          "title": "Welcome and leave",
+          "options": [
+            {
+              "key": "Welcome.Enabled",
+              "default": "true",
+              "text": "Enable welcome messages"
+            },
+            {
+              "key": "Welcome.Channel",
+              "default": "empty",
+              "text": "Welcome message channel"
+            },
+            {
+              "key": "Welcome.AutoRole",
+              "default": "empty",
+              "text": "Role granted on joining, independently of Welcome.Enabled"
+            },
+            {
+              "key": "Welcome.Message",
+              "default": "default text",
+              "text": "Template using placeholders listed under /welkomstbericht; edit with /welkomstbericht instellen"
+            },
+            {
+              "key": "Leave.Enabled",
+              "default": "true",
+              "text": "Enable departure messages"
+            },
+            {
+              "key": "Leave.Channel",
+              "default": "empty",
+              "text": "Departure message channel"
+            }
+          ]
+        },
+        {
+          "title": "Notifications and bump",
+          "options": [
+            {
+              "key": "Notify.PingRole1 – 4",
+              "default": "empty",
+              "text": "Ping roles 1–4 for creator notifications (Notify.PingRole1 to 4)."
+            },
+            {
+              "key": "Bump.Channel",
+              "default": "empty",
+              "text": "Channel for an immediate bump reminder when enabled, then every two hours; uit disables it"
+            }
+          ]
+        },
+        {
+          "title": "Radio",
+          "options": [
+            {
+              "key": "Radio.Enabled",
+              "default": "true",
+              "text": "Allow starting the radio; off = no new starts or volume changes."
+            },
+            {
+              "key": "Radio.DefaultVolume",
+              "default": "30",
+              "text": "Volume on every start or station change (0–100%)."
+            },
+            {
+              "key": "Radio.EmptySeconds",
+              "default": "60",
+              "text": "Seconds to wait after the last human listener leaves (5–3600)."
+            },
+            {
+              "key": "Radio.Stations.<StationN>.Name / .Url",
+              "default": "12 of 25 slots filled",
+              "text": "Name and stream URL per station (StationN.Name / StationN.Url); empty = station disabled."
+            }
+          ]
+        },
+        {
+          "title": "Startup",
+          "options": [
+            {
+              "key": "StartupMessageScan.Enabled",
+              "default": "true",
+              "text": "Read missed messages at startup."
+            },
+            {
+              "key": "StartupMessageScan.InitialMessagesPerChannel",
+              "default": "100",
+              "text": "Messages per channel on the first scan."
+            },
+            {
+              "key": "StartupMessageScan.MaxNewMessagesPerChannel",
+              "default": "1000",
+              "text": "Maximum new messages per channel per scan."
+            },
+            {
+              "key": "StartupMessageScan.ProcessMissedXP",
+              "default": "true",
+              "text": "Award missed XP during the startup scan"
+            },
+            {
+              "key": "StartupMessageScan.DelayMs",
+              "default": "150",
+              "text": "Pause between scan requests in milliseconds."
+            },
+            {
+              "key": "StartupReport.Enabled",
+              "default": "true",
+              "text": "Enable startup reports in Discord"
+            },
+            {
+              "key": "StartupReport.Channel",
+              "default": "empty",
+              "text": "Startup status and scan results channel"
+            }
+          ]
+        }
+      ]
     }
   }
 }

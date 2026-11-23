@@ -1547,6 +1547,743 @@
         "intro": "Geen ACE nodig. Politierechten lopen via policeJobs.",
         "lines": []
       }
+    },
+    "tgc_bot": {
+      "intro": "De bot stel je per Discord-server in met /config instellen instelling:<naam> waarde:<waarde> (ja/nee voor aan/uit, een vermelding of ID voor rollen en kanalen, leeg om te wissen). /config bekijken toont de huidige waarden. De standaarden hieronder gelden voor een nieuwe server; geheime gegevens staan alleen in .env.",
+      "files": [
+        {
+          "path": ".env",
+          "side": "server",
+          "text": "TOKEN, CLIENT_ID, GUILD_ID, OWNER_IDS en andere geheime of hostinggebonden gegevens. Nooit delen of uploaden."
+        },
+        {
+          "path": "config/defaults.js",
+          "side": "server",
+          "text": "Basiswaarden voor nieuwe servers. Per server overschrijf je ze met /config; die waarden worden in de SQLite-database bewaard."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Algemeen",
+          "options": [
+            {
+              "key": "Debug",
+              "default": "false",
+              "text": "Extra foutopsporingsinformatie in de console."
+            },
+            {
+              "key": "Prefix",
+              "default": "\"!\"",
+              "text": "Prefix die gewone berichten uitsluit van verwerking, bijvoorbeeld !. De bot voert opdrachten via slashcommands uit."
+            },
+            {
+              "key": "Bot.Language",
+              "default": "\"both\"",
+              "text": "Taal van openbare botberichten: nl, en of both (beide talen)."
+            },
+            {
+              "key": "Bot.Name",
+              "default": "\"Troy's Gamecommunity\"",
+              "text": "Naam in botberichten; {server} in de welkomsttekst gebruikt de Discord-servernaam; wijzigt niet de Discord-accountnaam."
+            },
+            {
+              "key": "Bot.Color",
+              "default": "\"#c9a91b\"",
+              "text": "Kleur van embeds, bijvoorbeeld #c9a91b."
+            },
+            {
+              "key": "Bot.Footer",
+              "default": "\"Troy's Gamecommunity Discord\"",
+              "text": "Voettekst onder embeds."
+            }
+          ]
+        },
+        {
+          "title": "Rollen en staff",
+          "options": [
+            {
+              "key": "Roles.Developer",
+              "default": "leeg",
+              "text": "Developer-rol met ownerrechten binnen de server, inclusief /config. Standaard niet gekoppeld."
+            },
+            {
+              "key": "Roles.Owner",
+              "default": "leeg",
+              "text": "Owner-rol met ownerrechten binnen de server, inclusief /config."
+            },
+            {
+              "key": "Roles.HeadAdmin",
+              "default": "leeg",
+              "text": "Hoofdadminrol; onder meer voor give en economy-reset."
+            },
+            {
+              "key": "Roles.Admin",
+              "default": "leeg",
+              "text": "Adminrol; onder meer voor give en economy-reset."
+            },
+            {
+              "key": "Roles.HeadModerator",
+              "default": "leeg",
+              "text": "Hoofdmoderatorrol. Voeg deze ook toe aan StaffRoles voor stafftoegang."
+            },
+            {
+              "key": "Roles.Moderator",
+              "default": "leeg",
+              "text": "Moderatorrol. Voeg deze ook toe aan StaffRoles voor stafftoegang."
+            },
+            {
+              "key": "Roles.Verified",
+              "default": "leeg",
+              "text": "Rol die de verificatieknop toekent."
+            },
+            {
+              "key": "Roles.NewUser",
+              "default": "leeg",
+              "text": "Rol die de verificatieknop na verificatie verwijdert."
+            },
+            {
+              "key": "StaffRoles",
+              "default": "[]",
+              "text": "Gewone staffrollen. Laat waarde leeg bij /config instellen om rollen aan te klikken (maximaal 25)."
+            },
+            {
+              "key": "SelfRoles.fivem",
+              "default": "leeg",
+              "text": "Rol voor de FiveM-knop op een oud standaardpaneel. Gebruik /selfrollen voor nieuwe panelen."
+            },
+            {
+              "key": "SelfRoles.ats",
+              "default": "leeg",
+              "text": "Rol voor de ATS-knop op een oud standaardpaneel. Gebruik /selfrollen voor nieuwe panelen."
+            },
+            {
+              "key": "SelfRoles.minecraft",
+              "default": "leeg",
+              "text": "Rol voor de Minecraft-knop op een oud standaardpaneel. Gebruik /selfrollen voor nieuwe panelen."
+            },
+            {
+              "key": "SelfRoles.streams",
+              "default": "leeg",
+              "text": "Rol voor de Streams-knop op een oud standaardpaneel. Gebruik /selfrollen voor nieuwe panelen."
+            },
+            {
+              "key": "Store.VIPRole",
+              "default": "leeg",
+              "text": "Aparte tijdelijke VIP-rol voor /store; wordt bij afloop automatisch verwijderd."
+            }
+          ]
+        },
+        {
+          "title": "Waarschuwingen",
+          "options": [
+            {
+              "key": "Warnings.Escalation",
+              "default": "false",
+              "text": "Opschaling aan/uit"
+            },
+            {
+              "key": "Warnings.TimeoutAt",
+              "default": "3",
+              "text": "Vanaf dit aantal: timeout (0 = overslaan, max. 50)"
+            },
+            {
+              "key": "Warnings.TimeoutMinutes",
+              "default": "60",
+              "text": "Duur van de timeout, 1–40320 minuten"
+            },
+            {
+              "key": "Warnings.KickAt",
+              "default": "5",
+              "text": "Vanaf dit aantal: kick (0 = overslaan, max. 50); gaat vóór timeout"
+            }
+          ]
+        },
+        {
+          "title": "Ideeënbus",
+          "options": [
+            {
+              "key": "Suggestions.Enabled",
+              "default": "false",
+              "text": "Ideeënbus aan/uit"
+            },
+            {
+              "key": "Suggestions.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor de ideeën"
+            },
+            {
+              "key": "Suggestions.Threads",
+              "default": "true",
+              "text": "Discussiethread per idee"
+            }
+          ]
+        },
+        {
+          "title": "Herinneringen",
+          "options": [
+            {
+              "key": "Reminders.Enabled",
+              "default": "true",
+              "text": "Herinneringen aan/uit"
+            },
+            {
+              "key": "Reminders.MaxPerUser",
+              "default": "25",
+              "text": "Openstaande herinneringen per lid (1–100)"
+            }
+          ]
+        },
+        {
+          "title": "Tijdelijke spraakkanalen",
+          "options": [
+            {
+              "key": "TempVoice.Enabled",
+              "default": "false",
+              "text": "Functie aan/uit"
+            },
+            {
+              "key": "TempVoice.CreateChannel",
+              "default": "leeg",
+              "text": "Het spraakkanaal waarmee leden een kanaal maken"
+            },
+            {
+              "key": "TempVoice.Category",
+              "default": "leeg",
+              "text": "Categorie voor nieuwe kanalen; leeg = categorie van CreateChannel"
+            },
+            {
+              "key": "TempVoice.NameTemplate",
+              "default": "\"🔊 {user}\"",
+              "text": "Naam van nieuwe kanalen; {user} = weergavenaam"
+            },
+            {
+              "key": "TempVoice.UserLimit",
+              "default": "0",
+              "text": "Standaardlimiet (0–99)"
+            }
+          ]
+        },
+        {
+          "title": "Tickets",
+          "options": [
+            {
+              "key": "Tickets.Enabled",
+              "default": "false",
+              "text": "Nieuwe tickets via de ticket-openknop toestaan."
+            },
+            {
+              "key": "Tickets.Transcript",
+              "default": "true",
+              "text": "Deze schakelaar stopt het versturen van gespreksoverzichten momenteel niet."
+            },
+            {
+              "key": "Tickets.AutoClose",
+              "default": "false",
+              "text": "Automatisch sluiten is momenteel niet actief. Sluit tickets handmatig."
+            },
+            {
+              "key": "Tickets.Category",
+              "default": "leeg",
+              "text": "Algemene terugvalbestemming voor oude panelen zonder eigen doelcategorie."
+            },
+            {
+              "key": "Tickets.LogChannel",
+              "default": "leeg",
+              "text": "Ticketmeldingen en verplichte transcriptbestemming bij sluiten; bij mislukte aflevering blijft het kanaal behouden."
+            },
+            {
+              "key": "Tickets.ThreadLogChannel",
+              "default": "leeg",
+              "text": "Afzonderlijk staffkanaal voor vertrouwelijk staffoverleg; moet verschillen van Tickets.LogChannel."
+            },
+            {
+              "key": "Tickets.MaxOpenPerUser",
+              "default": "5",
+              "text": "Maximumaantal gelijktijdig open tickets per gebruiker per server. Bestaande opgeslagen waarden blijven leidend."
+            }
+          ]
+        },
+        {
+          "title": "Softmoderatie",
+          "options": [
+            {
+              "key": "SoftModeration.Enabled",
+              "default": "false",
+              "text": "Activering per server"
+            },
+            {
+              "key": "SoftModeration.LogChannel",
+              "default": "leeg",
+              "text": "Staffkanaal met beoordelingsknoppen"
+            },
+            {
+              "key": "SoftModeration.TimeoutHours",
+              "default": "24",
+              "text": "Time-outduur, 1–672 uur"
+            },
+            {
+              "key": "SoftModeration.RepeatWindowHours",
+              "default": "24",
+              "text": "Herhalingsvenster, 1–720 uur"
+            },
+            {
+              "key": "SoftModeration.MinConfidence",
+              "default": "0.9",
+              "text": "Minimale AI-zekerheid voor automatische actie, 0.8–1"
+            },
+            {
+              "key": "SoftModeration.AdultContent",
+              "default": "true",
+              "text": "Expliciete 18+-inhoud verwijderen met een geregistreerde waarschuwing."
+            },
+            {
+              "key": "SoftModeration.AdultMinConfidence",
+              "default": "0.95",
+              "text": "Minimale zekerheid voor 18+-detectie (0.9–1)."
+            },
+            {
+              "key": "SoftModeration.ScanImages",
+              "default": "true",
+              "text": "Ook afbeeldingen controleren op 18+-inhoud."
+            },
+            {
+              "key": "SoftModeration.VisionModel",
+              "default": "\"qwen/qwen3.8-27b\"",
+              "text": "AI-model voor de afbeeldingscontrole."
+            },
+            {
+              "key": "SoftModeration.SpamMessages",
+              "default": "6",
+              "text": "Berichten binnen het spamvenster, 3–50"
+            },
+            {
+              "key": "SoftModeration.SpamWindowSeconds",
+              "default": "10",
+              "text": "Spamvenster, 2–120 seconden"
+            },
+            {
+              "key": "SoftModeration.MentionLimit",
+              "default": "6",
+              "text": "Aantal gebruikers/rollen in een bericht, 3–50"
+            },
+            {
+              "key": "SoftModeration.QueueLimit",
+              "default": "200",
+              "text": "Maximum wachtende controles, 10–1000"
+            }
+          ]
+        },
+        {
+          "title": "Honeypot",
+          "options": [
+            {
+              "key": "Honeypot.Enabled",
+              "default": "false",
+              "text": "Controle aan/uit"
+            },
+            {
+              "key": "Honeypot.Channel",
+              "default": "leeg",
+              "text": "Kanaal waarin niet gepost mag worden"
+            },
+            {
+              "key": "Honeypot.Action",
+              "default": "\"ban\"",
+              "text": "ban of timeout (zeven dagen)"
+            },
+            {
+              "key": "Honeypot.CrossServerBan",
+              "default": "false",
+              "text": "Deelnemen aan serveroverstijgende honeypot-bans en time-outs."
+            },
+            {
+              "key": "Honeypot.LogChannel",
+              "default": "leeg",
+              "text": "Eigen logkanaal; leeg gebruikt Logging.Channel"
+            },
+            {
+              "key": "Honeypot.Mention",
+              "default": "\"verified\"",
+              "text": "Vermelding onder de waarschuwing: verified, none, everyone, here of een rol-ID."
+            }
+          ]
+        },
+        {
+          "title": "Logging",
+          "options": [
+            {
+              "key": "Logging.Language",
+              "default": "\"nl\"",
+              "text": "Taal van Discord-logberichten: nl, en of both."
+            },
+            {
+              "key": "Logging.Enabled",
+              "default": "true",
+              "text": "Activiteitsmeldingen, updateberichten en selfrolmeldingen in Discord aan- of uitzetten. Verwijderde berichten schakel je apart in of uit met Logging.MessageDelete."
+            },
+            {
+              "key": "Logging.Console",
+              "default": "true",
+              "text": "Logregels in de hostingconsole tonen."
+            },
+            {
+              "key": "Logging.Files",
+              "default": "true",
+              "text": "Logbestanden op de hosting bewaren."
+            },
+            {
+              "key": "Logging.MessageDelete",
+              "default": "true",
+              "text": "Verwijderde gebruikersberichten loggen in het ingestelde Discord-logkanaal."
+            },
+            {
+              "key": "Logging.IgnoreBots",
+              "default": "false",
+              "text": "Berichtlogs van alle bots en webhooks overslaan."
+            },
+            {
+              "key": "Logging.IgnoredAuthors",
+              "default": "[]",
+              "text": "Bot- of gebruikers-ID's waarvan berichten niet worden gelogd; @gebruiker mag ook."
+            },
+            {
+              "key": "Logging.IgnoredUserMentions",
+              "default": "[]",
+              "text": "Berichten met deze gebruikersvermeldingen niet loggen."
+            },
+            {
+              "key": "Logging.IgnoredRoleMentions",
+              "default": "[]",
+              "text": "Berichten met deze rolvermeldingen niet loggen."
+            },
+            {
+              "key": "Logging.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor meldingen over berichten, commandgebruik, leden, selfrollen en botupdates."
+            },
+            {
+              "key": "Logging.RetentionDays",
+              "default": "30",
+              "text": "Hoe lang loggegevens lokaal bewaard blijven (1–365 dagen)."
+            },
+            {
+              "key": "Logging.MaxRecords",
+              "default": "50000",
+              "text": "Maximumaantal bewaarde logregels per server (100–100000)."
+            },
+            {
+              "key": "Logging.QueueLimit",
+              "default": "5000",
+              "text": "Maximumaantal logberichten in de wachtrij (10–10000)."
+            },
+            {
+              "key": "Logging.Channels.<categorie>",
+              "default": "leeg",
+              "text": "Apart logkanaal per categorie; leeg = Logging.Channel. Categorieën: Messages, MessageEdits, MessageDeletes, Reactions, Members, Roles, Channels, Threads, Voice, Moderation, Invites, Server, Expressions, ScheduledEvents, Integrations, AutoMod, Commands, Audit, Presence, Typing, Polls."
+            },
+            {
+              "key": "Logging.Events.<categorie>",
+              "default": "true",
+              "text": "Logcategorie aan/uit, met dezelfde categorieën als Logging.Channels."
+            }
+          ]
+        },
+        {
+          "title": "Levels",
+          "options": [
+            {
+              "key": "Levels.Enabled",
+              "default": "true",
+              "text": "Automatische XP-toekenning aan- of uitzetten, ook voor counting. Bestaande levelcommands blijven beschikbaar."
+            },
+            {
+              "key": "Levels.XPMin",
+              "default": "5",
+              "text": "Minimum willekeurige XP-beloning per normaal bericht."
+            },
+            {
+              "key": "Levels.XPMax",
+              "default": "14",
+              "text": "Maximum willekeurige XP-beloning per normaal bericht."
+            },
+            {
+              "key": "Levels.Cooldown",
+              "default": "60",
+              "text": "Wachttijd in seconden tussen normale XP-beloningen voor dezelfde gebruiker."
+            },
+            {
+              "key": "Levels.AnnounceLevelUp",
+              "default": "true",
+              "text": "Een levelstijging in het berichtkanaal aankondigen."
+            },
+            {
+              "key": "Levels.Roles.<level>",
+              "default": "leeg",
+              "text": "Rol vanaf een level, bijv. Levels.Roles.10; eigen levels toevoegen mag. De hoogste behaalde drempel telt."
+            }
+          ]
+        },
+        {
+          "title": "Economie",
+          "options": [
+            {
+              "key": "Economy.Enabled",
+              "default": "true",
+              "text": "Schakelt stelen, rekeningen en de winkel (/store) aan of uit. Andere spelgeldcommands zoals daily en work blijven werken."
+            },
+            {
+              "key": "Economy.StartingMoney",
+              "default": "500",
+              "text": "Startbedrag in de portemonnee bij het aanmaken van een economierekening."
+            },
+            {
+              "key": "Economy.DailyCooldownHours",
+              "default": "24",
+              "text": "Wachttijd voor daily, in uren. Bij 0 blijft de wachttijd 24 uur."
+            },
+            {
+              "key": "Economy.WorkCooldownMinutes",
+              "default": "60",
+              "text": "Wachttijd voor work, in minuten. Bij 0 blijft de wachttijd 60 minuten."
+            }
+          ]
+        },
+        {
+          "title": "Telspel",
+          "options": [
+            {
+              "key": "Counting.Enabled",
+              "default": "true",
+              "text": "Het telspel in het ingestelde kanaal inschakelen."
+            },
+            {
+              "key": "Counting.Channel",
+              "default": "leeg",
+              "text": "Kanaal waarin spelers om de beurt opeenvolgende getallen plaatsen."
+            },
+            {
+              "key": "Counting.RewardXP",
+              "default": "10",
+              "text": "XP-beloning voor een correct getal; vereist Levels.Enabled."
+            },
+            {
+              "key": "Counting.FeedbackDeleteSeconds",
+              "default": "30",
+              "text": "Na hoeveel seconden een foutmelding van counting wordt verwijderd; 0 laat de melding staan."
+            }
+          ]
+        },
+        {
+          "title": "AI-chat",
+          "options": [
+            {
+              "key": "AIChat.Enabled",
+              "default": "false",
+              "text": "AI-antwoorden aan- of uitzetten."
+            },
+            {
+              "key": "AIChat.Channels",
+              "default": "[]",
+              "text": "Lijst kanaal-ID’s waarin de AI mag antwoorden. Lege lijst betekent nergens antwoorden. Threads vereisen hun eigen ID."
+            },
+            {
+              "key": "AIChat.Mode",
+              "default": "\"all\"",
+              "text": "all: reageer op gewone tekstberichten. mention: reageer alleen op een expliciete vermelding van de bot."
+            },
+            {
+              "key": "AIChat.CooldownSeconds",
+              "default": "10",
+              "text": "Wachttijd per gebruiker per kanaal na een succesvol antwoord: 1–300 seconden."
+            },
+            {
+              "key": "AIChat.HistoryTurns",
+              "default": "4",
+              "text": "Aantal eerdere gespreksrondes dat de AI onthoudt: 0–8; bij 0 kijkt de AI niet terug in het gesprek."
+            },
+            {
+              "key": "AIChat.Personality",
+              "default": "standaardtekst",
+              "text": "Extra beschrijving van de toon of communitykennis, maximaal 2000 tekens."
+            }
+          ]
+        },
+        {
+          "title": "Verjaardagen",
+          "options": [
+            {
+              "key": "Birthday.Enabled",
+              "default": "true",
+              "text": "Dagelijkse verjaardagscontrole aan- of uitzetten; de commands blijven beschikbaar."
+            },
+            {
+              "key": "Birthday.CheckTime",
+              "default": "\"00:00\"",
+              "text": "Tijd van de dagelijkse verjaardagsverwerking, in UU:MM."
+            },
+            {
+              "key": "Birthday.Timezone",
+              "default": "\"Europe/Amsterdam\"",
+              "text": "Tijdzone voor verjaardagsverwerking, bijvoorbeeld Europe/Amsterdam."
+            },
+            {
+              "key": "Birthday.Role",
+              "default": "leeg",
+              "text": "Tijdelijke rol voor de verjaardagskalenderdag; eerdere jarigen verliezen de rol bij een volgende controle. Geeft ook 2× beloningen."
+            },
+            {
+              "key": "Birthday.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor felicitaties."
+            },
+            {
+              "key": "Birthday.Messages",
+              "default": "3 standaardteksten",
+              "text": "Felicitatieteksten; {user} wordt vervangen door een vermelding van de jarige."
+            }
+          ]
+        },
+        {
+          "title": "YouTube-agenda",
+          "options": [
+            {
+              "key": "Agenda.Timezone",
+              "default": "\"Europe/Amsterdam\"",
+              "text": "Tijdzone voor de ingevoerde agenda-datum en tijd."
+            },
+            {
+              "key": "Agenda.Title",
+              "default": "\"📅 YouTube-planning\"",
+              "text": "Titel van de YouTube-planning."
+            },
+            {
+              "key": "Agenda.YouTubeUrl",
+              "default": "leeg",
+              "text": "Volledige YouTube-link in de planning; leeg/geen verwijdert de link."
+            },
+            {
+              "key": "Agenda.MaxVisibleItems",
+              "default": "80",
+              "text": "Maximumaantal zichtbare agendapunten; de weergave begrenst dit ook op wat in de embeds past."
+            }
+          ]
+        },
+        {
+          "title": "Welkom en vertrek",
+          "options": [
+            {
+              "key": "Welcome.Enabled",
+              "default": "true",
+              "text": "Welkomstbericht voor nieuwe leden aan- of uitzetten."
+            },
+            {
+              "key": "Welcome.Channel",
+              "default": "leeg",
+              "text": "Kanaal waarin het welkomstbericht verschijnt."
+            },
+            {
+              "key": "Welcome.AutoRole",
+              "default": "leeg",
+              "text": "Rol die nieuwe leden bij binnenkomst krijgen; wordt onafhankelijk van Welcome.Enabled toegepast."
+            },
+            {
+              "key": "Welcome.Message",
+              "default": "standaardtekst",
+              "text": "Tekst met de invulvelden uit het hoofdstuk /welkomstbericht. Gebruik /welkomstbericht instellen om deze te wijzigen."
+            },
+            {
+              "key": "Leave.Enabled",
+              "default": "true",
+              "text": "Vertrekberichten aan- of uitzetten."
+            },
+            {
+              "key": "Leave.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor vertrekberichten."
+            }
+          ]
+        },
+        {
+          "title": "Meldingen en bump",
+          "options": [
+            {
+              "key": "Notify.PingRole1 – 4",
+              "default": "leeg",
+              "text": "Pingrollen 1–4 voor creatormeldingen (Notify.PingRole1 t/m 4)."
+            },
+            {
+              "key": "Bump.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor een directe bump-herinnering bij activeren en daarna iedere twee uur; uit schakelt deze uit."
+            }
+          ]
+        },
+        {
+          "title": "Radio",
+          "options": [
+            {
+              "key": "Radio.Enabled",
+              "default": "true",
+              "text": "Radio starten toestaan; uit = geen nieuwe starts of volumewijzigingen."
+            },
+            {
+              "key": "Radio.DefaultVolume",
+              "default": "30",
+              "text": "Volume bij iedere start of zenderwissel (0–100%)."
+            },
+            {
+              "key": "Radio.EmptySeconds",
+              "default": "60",
+              "text": "Seconden wachten nadat de laatste luisteraar vertrekt (5–3600)."
+            },
+            {
+              "key": "Radio.Stations.<StationN>.Name / .Url",
+              "default": "12 van 25 plekken gevuld",
+              "text": "Naam en stream-URL per zender (StationN.Name / StationN.Url); leeg = zender uit."
+            }
+          ]
+        },
+        {
+          "title": "Opstarten",
+          "options": [
+            {
+              "key": "StartupMessageScan.Enabled",
+              "default": "true",
+              "text": "Bij opstarten gemiste berichten inlezen."
+            },
+            {
+              "key": "StartupMessageScan.InitialMessagesPerChannel",
+              "default": "100",
+              "text": "Berichten per kanaal bij de eerste scan."
+            },
+            {
+              "key": "StartupMessageScan.MaxNewMessagesPerChannel",
+              "default": "1000",
+              "text": "Maximaal aantal nieuwe berichten per kanaal per scan."
+            },
+            {
+              "key": "StartupMessageScan.ProcessMissedXP",
+              "default": "true",
+              "text": "Tijdens de opstartscan ook XP toekennen voor gemiste berichten."
+            },
+            {
+              "key": "StartupMessageScan.DelayMs",
+              "default": "150",
+              "text": "Pauze tussen scanaanvragen in milliseconden."
+            },
+            {
+              "key": "StartupReport.Enabled",
+              "default": "true",
+              "text": "Opstartrapport in Discord aan- of uitzetten."
+            },
+            {
+              "key": "StartupReport.Channel",
+              "default": "leeg",
+              "text": "Kanaal voor opstartmelding en scanresultaat."
+            }
+          ]
+        }
+      ]
     }
   }
 }
