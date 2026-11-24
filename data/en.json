@@ -498,7 +498,8 @@
       "requirements": [
         "Sky Phone (tested with 1.6.1), OneSync, oxmysql, ox_lib, ESX and ts_bridge are required.",
         "Custom/external apps must be enabled in Sky Phone's active settings.",
-        "Banking, fire department revenue accounts and any fine accounts must exist in the bridge. FiveManage is configured through Sky Phone."
+        "Banking, fire department revenue accounts and any fine accounts must exist in the bridge. FiveManage is configured through Sky Phone.",
+        "Optional for fake plates: sky_mechanicjob (fake plates) and jg-advancedgarages (impound). Without these scripts the app works as before."
       ],
       "install": [
         "Install ts_parkeerapp as its own resource and import sql/install.sql into the same MariaDB database used by ESX and Sky Phone.",
@@ -510,16 +511,19 @@
         "Back up the database, config.lua and existing parking sessions.",
         "Replace the script files and transfer custom prices, police jobs, banking and fire department settings.",
         "Do not delete active sessions or unpaid charges during the update.",
-        "Optionally copy the new versionCheck = true line into config.lua; if it is missing, the version check is on."
+        "Optionally copy the new versionCheck = true line into config.lua; if it is missing, the version check is on.",
+        "From 1.1.0, copy the lines configVersion = '1.1.0' and fakePlateCheck = true into your own config.lua; with an outdated config the console reports the config schema."
       ],
       "verify": [
         "Test a one-minute parking session, bank debit and credit to the fire department.",
         "With another player, test police plate searches, camera evidence, GPS and parking fines.",
         "Test restarting with an active or unpaid parking session.",
-        "Check the version message through ts_bridge in the server console."
+        "Check the version message through ts_bridge in the server console.",
+        "Fake plates: as an officer next to a vehicle with a fake plate, check that the app shows the real plate and blocks the fine, and that Tow vehicle opens the JG impound form."
       ],
       "warnings": [
         "The app manages its own fines; do not automatically create a duplicate Apex Billing invoice.",
+        "Towing: JG picks the closest vehicle within 5 metres. Make sure no other vehicle is closer.",
         "Sky Phone manages media uploads; never publish your private FiveManage key on this website."
       ],
       "preserve": [

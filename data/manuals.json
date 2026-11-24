@@ -439,7 +439,8 @@
     "requirements": [
       "Sky Phone (getest voor versie 1.6.1), OneSync, oxmysql, ox_lib, ESX en ts_bridge.",
       "Custom/externe apps moeten in de actieve Sky Phone-instellingen zijn toegestaan.",
-      "Bankprovider, brandweerrekening en eventuele boeterekening moeten in de bridge bestaan. FiveManage wordt via Sky Phone geconfigureerd."
+      "Bankprovider, brandweerrekening en eventuele boeterekening moeten in de bridge bestaan. FiveManage wordt via Sky Phone geconfigureerd.",
+      "Optioneel voor valse kentekens: sky_mechanicjob (fake plates) en jg-advancedgarages (inbeslagname). Zonder deze scripts werkt de app zoals voorheen."
     ],
     "install": [
       "Plaats ts_parkeerapp als eigen resource en importeer sql/install.sql in dezelfde MariaDB-database als ESX/Sky Phone.",
@@ -451,16 +452,19 @@
       "Maak een databaseback-up en bewaar config.lua en bestaande parkeersessies.",
       "Vervang de scriptbestanden en neem eigen bedragen, politiebanen, bank- en brandweerinstellingen over.",
       "Verwijder geen sessies of openstaande betalingen tijdens de update.",
-      "Neem eventueel de nieuwe regel versionCheck = true over in config.lua; ontbreekt die, dan staat de versiecontrole aan."
+      "Neem eventueel de nieuwe regel versionCheck = true over in config.lua; ontbreekt die, dan staat de versiecontrole aan.",
+      "Neem vanaf 1.1.0 de regels configVersion = '1.1.0' en fakePlateCheck = true over in je eigen config.lua; bij een verouderde config meldt de console het configschema."
     ],
     "verify": [
       "Test een parkeersessie van een minuut met een bankafschrijving en bijschrijving aan brandweer.",
       "Controleer politiecontrole, camerafoto, GPS en boete met een tweede speler.",
       "Test herstarten met een actieve of nog onbetaalde parkeersessie.",
-      "Controleer in de serverconsole de versiemelding via ts_bridge."
+      "Controleer in de serverconsole de versiemelding via ts_bridge.",
+      "Valse kentekens: controleer als agent naast een voertuig met vals kenteken dat de app het echte kenteken toont en de boete blokkeert, en dat Voertuig wegslepen het JG-inbeslagnameformulier opent."
     ],
     "warnings": [
       "Het script maakt boetes binnen de eigen app; voeg niet automatisch een tweede Apex Billing-factuur toe.",
+      "Wegslepen: JG kiest het dichtstbijzijnde voertuig binnen 5 meter. Zorg dat er geen ander voertuig dichterbij staat.",
       "Sky Phone beheert de bestaande media-upload; plaats geen geheime FiveManage-sleutel op deze site."
     ],
     "preserve": [

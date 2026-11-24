@@ -1,4 +1,7 @@
 {
+  "ts_parkeerapp@1.1.0": {
+    "summary": "Detects fake plates through sky_mechanicjob: when the officer stands at the vehicle, the police check shows the real plate and blocks the parking fine. A new Tow vehicle button removes the fake plate and opens the jg-advancedgarages impound form. config.lua now has config schema 1.1.0 with a console notice for outdated configs; without sky_mechanicjob or jg-advancedgarages the app works as before."
+  },
   "ts_parkeerapp@1.0.3": {
     "summary": "Fixed the camera staying open after taking a licence plate photo. After a new photo the phone now returns to Parkeren automatically through Sky Phone's OpenCustomApp export and rechecks the plate, so the photo is ready for the fine. Parking, payments, version checking, config.lua and the database are unchanged."
   },

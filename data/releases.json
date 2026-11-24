@@ -1,6 +1,45 @@
 [
   {
     "script": "ts_parkeerapp",
+    "version": "1.1.0",
+    "date": "2026-11-24",
+    "status": "draft",
+    "highlights": [
+      "Nieuw: valse kentekens herkennen via sky_mechanicjob; de politiecontrole toont dan het echte kenteken.",
+      "Nieuw: voertuig met vals kenteken wegslepen via het inbeslagnameformulier van jg-advancedgarages.",
+      "Nieuw: configschema 1.1.0 met consolemelding bij een verouderde config.lua."
+    ],
+    "changes": [
+      "Staat de agent bij het voertuig, dan controleert de app via sky_mechanicjob of het kenteken vals is en legt de VIN-controle vast.",
+      "Een parkeerboete op een vals kenteken is geblokkeerd, zodat de echte eigenaar van het zichtbare kenteken geen boete krijgt.",
+      "Voertuig wegslepen verwijdert eerst het valse kenteken, zodat het garagescript het voertuig op het echte kenteken vindt.",
+      "Nieuwe instellingen configVersion en fakePlateCheck in config.lua; ontbreken ze, dan gelden de standaardwaarden.",
+      "Zonder sky_mechanicjob of jg-advancedgarages werkt de app zoals voorheen."
+    ],
+    "files": [
+      "server/main.lua",
+      "server/config_check.lua",
+      "client/main.lua",
+      "web/app.js",
+      "web/style.css",
+      "config.lua",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "tests/fakeplate_spec.lua",
+      "tests/config_check_spec.lua"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak een databaseback-up en bewaar config.lua.",
+      "Vervang de scriptbestanden en neem de regels configVersion = '1.1.0' en fakePlateCheck = true over in je eigen config.lua.",
+      "Valse kentekens: start sky_mechanicjob en jg-advancedgarages vóór ts_parkeerapp. Zorg in JG voor een impound en een politiebaan die mag inbeslagnemen.",
+      "Herstart en controleer dat de console geen configschema-melding meer geeft."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.1.0; goedgekeurd na test op de testserver op 24 november 2026."
+  },
+  {
+    "script": "ts_parkeerapp",
     "version": "1.0.3",
     "date": "2026-11-24",
     "status": "published",
