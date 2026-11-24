@@ -20,7 +20,7 @@
       "Do not share filled-in config files on Discord or GitHub. Has a URL leaked? Delete the webhook in Discord and create a new one.",
       "Only discord.com URLs of the form /api/webhooks/ID/TOKEN are accepted; no other sites or extra parameters."
     ],
-    "photos": "Photos in webhooks use screenshot-basic. Start it before the scripts and set up the Electron AntiCheat whitelist. The limits (wait time, size, queue) are in ts_bridge/config/config.lua.",
+    "photos": "Photos in webhooks use screencapture (default) or screenshot-basic. Start it before the scripts, never both at once, and set up the Electron AntiCheat whitelist. The limits (wait time, size, queue) are in ts_bridge/config/config.lua.",
     "ace_intro": "ACE is FiveM's permission system. You put the lines in server.cfg. A player gets a permission through a group (principal).",
     "ace_lines": [
       [
@@ -257,8 +257,8 @@
           "options": [
             {
               "key": "Server.ScreenshotResource",
-              "default": "'screenshot-basic'",
-              "text": "Resource used for photos in webhooks."
+              "default": "'screencapture'",
+              "text": "Resource used for photos in webhooks: 'screencapture' or 'screenshot-basic'. If the chosen resource is not running, the bridge uses the other one automatically."
             },
             {
               "key": "Server.Screenshots",

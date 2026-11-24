@@ -20,7 +20,7 @@
       "Deel ingevulde configbestanden niet op Discord of GitHub. Is een URL uitgelekt? Verwijder de webhook in Discord en maak een nieuwe.",
       "Alleen discord.com-URL's van de vorm /api/webhooks/ID/TOKEN worden geaccepteerd; geen andere sites of extra parameters."
     ],
-    "photos": "Foto's in webhooks gebruiken screenshot-basic. Start die vóór de scripts en stel bij Electron AntiCheat de whitelist in. De limieten (wachttijd, grootte, wachtrij) staan in ts_bridge/config/config.lua.",
+    "photos": "Foto's in webhooks gebruiken screencapture (standaard) of screenshot-basic. Start die vóór de scripts, niet allebei tegelijk, en stel bij Electron AntiCheat de whitelist in. De limieten (wachttijd, grootte, wachtrij) staan in ts_bridge/config/config.lua.",
     "ace_intro": "ACE is het rechtensysteem van FiveM. Je zet de regels in server.cfg. Een speler krijgt een recht via een groep (principal).",
     "ace_lines": [
       [
@@ -257,8 +257,8 @@
           "options": [
             {
               "key": "Server.ScreenshotResource",
-              "default": "'screenshot-basic'",
-              "text": "Resource voor foto's in webhooks."
+              "default": "'screencapture'",
+              "text": "Resource voor foto's in webhooks: 'screencapture' of 'screenshot-basic'. Draait de gekozen resource niet, dan gebruikt de bridge automatisch de andere."
             },
             {
               "key": "Server.Screenshots",

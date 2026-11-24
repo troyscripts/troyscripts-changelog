@@ -68,7 +68,8 @@
       "onesync": false,
       "requirements": [
         "ox_lib is required. Select your current ESX, inventory, target, banking and billing providers in the bridge configuration.",
-        "The FiveM resource and the private GitHub repository are both named ts_bridge."
+        "The FiveM resource and the private GitHub repository are both named ts_bridge.",
+        "For photos in webhooks: screencapture (recommended, release zip) or screenshot-basic. Start it before ts_bridge and do not run both."
       ],
       "install": [
         "Place the complete resource in resources/[troyscripts]/ts_bridge, with fxmanifest.lua directly inside that folder.",
@@ -79,12 +80,14 @@
         "Back up config/config.lua and config/webhook_config.lua outside the active resource directory.",
         "Stop dependent resources before stopping ts_bridge. Replace the entire resource, especially if the file structure changed.",
         "Transfer your custom settings and webhooks to the new configuration files. Do not simply increase the configuration schema number.",
-        "Start ts_bridge first and then restart all scripts that use it."
+        "Start ts_bridge first and then restart all scripts that use it.",
+        "From 1.2.3: set Version = '0.1.3' and ScreenshotResource = 'screencapture' (or 'screenshot-basic') in your own config/config.lua."
       ],
       "verify": [
         "Run ts_bridge_check in the server console.",
         "Check the configured providers, society payments, screenshots, webhooks and dependent resources.",
-        "Check in the server console that version messages of all connected scripts appear through ts_bridge, without HTTP 404."
+        "Check in the server console that version messages of all connected scripts appear through ts_bridge, without HTTP 404.",
+        "Trigger an action with a photo and check the server console for 'Photo for … received: … KB'. A yellow warning means a black client capture; see docs/INSTALLATIE.md."
       ],
       "warnings": [
         "Never publish real webhook URLs or API tokens on the public site or GitHub.",

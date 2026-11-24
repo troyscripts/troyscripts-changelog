@@ -7,6 +7,10 @@
       "condition": "Each installed resource that uses the screenshot feature; use its exact resource folder name."
     },
     {
+      "name": "screencapture",
+      "condition": "When the screenshot feature uses screencapture (default since ts_bridge 1.2.3)."
+    },
+    {
       "name": "screenshot-basic",
       "condition": "When the screenshot feature uses screenshot-basic."
     },

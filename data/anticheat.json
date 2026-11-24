@@ -9,6 +9,10 @@
       "condition": "Voor iedere geïnstalleerde resource waarvan je de screenshotfunctie gebruikt; gebruik de exacte resourcenaam."
     },
     {
+      "name": "screencapture",
+      "condition": "Wanneer de screenshotfunctie screencapture gebruikt (standaard vanaf ts_bridge 1.2.3)."
+    },
+    {
       "name": "screenshot-basic",
       "condition": "Wanneer de screenshotfunctie screenshot-basic gebruikt."
     },

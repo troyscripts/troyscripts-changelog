@@ -9,7 +9,8 @@
     "onesync": false,
     "requirements": [
       "ox_lib is verplicht. Kies bestaande ESX-, inventory-, target-, banking- en billingproviders in de bridgeconfiguratie.",
-      "De FiveM-resourcenaam en de privé GitHub-repository heten allebei ts_bridge."
+      "De FiveM-resourcenaam en de privé GitHub-repository heten allebei ts_bridge.",
+      "Voor foto's in webhooks: screencapture (aanbevolen, release-zip) of screenshot-basic. Start die vóór ts_bridge en start ze niet allebei."
     ],
     "install": [
       "Plaats de volledige map als resources/[troyscripts]/ts_bridge met fxmanifest.lua direct in die map.",
@@ -20,12 +21,14 @@
       "Maak een back-up van config/config.lua en config/webhook_config.lua buiten de actieve resourcemap.",
       "Stop afhankelijke scripts vóór je ts_bridge stopt. Vervang de volledige oude map, zeker bij een gewijzigde mappenstructuur.",
       "Neem persoonlijke instellingen en webhooks over in de nieuwe configbestanden; verhoog niet alleen het configversienummer.",
-      "Start eerst de bridge en herstart daarna alle scripts die deze gebruiken."
+      "Start eerst de bridge en herstart daarna alle scripts die deze gebruiken.",
+      "Vanaf 1.2.3: zet Version = '0.1.3' en ScreenshotResource = 'screencapture' (of 'screenshot-basic') in je eigen config/config.lua."
     ],
     "verify": [
       "Voer ts_bridge_check uit in de serverconsole.",
       "Controleer ingestelde providers, societybetalingen, screenshots/webhooks en afhankelijke resources.",
-      "Controleer in de serverconsole dat de versiemeldingen van alle aangesloten scripts via ts_bridge verschijnen, zonder HTTP 404."
+      "Controleer in de serverconsole dat de versiemeldingen van alle aangesloten scripts via ts_bridge verschijnen, zonder HTTP 404.",
+      "Voer een actie met foto uit en controleer in de serverconsole de regel 'Foto voor … ontvangen: … KB'. Een gele waarschuwing betekent een zwarte clientopname; zie docs/INSTALLATIE.md."
     ],
     "warnings": [
       "Echte webhook-URL's en tokens horen niet op de openbare website of in GitHub.",

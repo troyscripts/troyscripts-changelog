@@ -1,5 +1,47 @@
 [
   {
+    "script": "ts_bridge",
+    "version": "1.2.3",
+    "date": "2026-11-25",
+    "status": "draft",
+    "highlights": [
+      "Geen zwarte foto's meer in Discord: elke clientopname wordt op helderheid gecontroleerd en een zwarte foto wordt niet meer meegestuurd.",
+      "Standaard screenshotresource is nu screencapture, met automatische terugval op screenshot-basic.",
+      "De voertuigfoto bij een kentekenbewijs (ts_nlplates) komt weer met beeld binnen."
+    ],
+    "changes": [
+      "Lijkt een foto zwart, dan maakt de bridge eenmaal een nieuwe opname met het gewone spelersbeeld. Blijft die zwart, dan krijgt het Discord-bericht een tekstregel in plaats van een zwarte afbeelding.",
+      "De serverconsole toont per foto een regel met resource, speler-ID en grootte, en een gele waarschuwing bij een zwarte opname.",
+      "Werkt met screencapture: levert de resource bij 'jpg' een PNG, dan vraagt de bridge opnieuw met 'jpeg'.",
+      "Voertuigfoto: de fotocamera wordt alleen buiten interieurs en met vrij zicht op het voertuig gebruikt, en pas vastgelegd als de camera echt rendert.",
+      "Configschema 0.1.2 → 0.1.3 (nieuwe standaard ScreenshotResource = 'screencapture'). Exports en bestaande events blijven compatibel."
+    ],
+    "files": [
+      "client/core/screenshots.lua",
+      "server/services/webhooks.lua",
+      "server/services/updates.lua",
+      "web/alerts.js",
+      "locales/nl.lua",
+      "locales/en.lua",
+      "config/config.lua",
+      "shared/config_version.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/INSTALLATIE.md",
+      "docs/PROVIDERS.md"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Maak een back-up van config/config.lua en config/webhook_config.lua.",
+      "Zet in je eigen config/config.lua Version = '0.1.3' en ScreenshotResource = 'screencapture' (of laat 'screenshot-basic' staan).",
+      "Gebruik je screencapture: installeer de release-zip (screencapture.zip), niet de broncode, start hem vóór ts_bridge en start screenshot-basic niet tegelijk.",
+      "Vervang het volledige pakket, start ts_bridge vóór de overige TroyScripts en controleer in de serverconsole de regel 'Foto voor … ontvangen'."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_bridge v1.2.3; goedgekeurd na test op de testserver op 25 november 2026."
+  },
+  {
     "script": "ts_parkeerapp",
     "version": "1.1.0",
     "date": "2026-11-24",

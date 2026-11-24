@@ -199,5 +199,8 @@
   },
   "tgc_bot@3.8.6": {
     "summary": "Adds a suggestion box with voting and staff review, persistent reminders (/herinner) and automatic temporary voice channels managed with /voice."
+  },
+  "ts_bridge@1.2.3": {
+    "summary": "No more black photos in Discord: every client capture is checked for brightness, a black capture is retried once from the normal player view and is never sent as a black image. screencapture is now the default screenshot resource with automatic fallback to screenshot-basic, and the vehicle photo for ts_nlplates registration documents works again. Config schema 0.1.2 → 0.1.3."
   }
 }
