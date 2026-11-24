@@ -3,7 +3,7 @@
     "script": "ts_bridge",
     "version": "1.2.3",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Geen zwarte foto's meer in Discord: elke clientopname wordt op helderheid gecontroleerd en een zwarte foto wordt niet meer meegestuurd.",
       "Standaard screenshotresource is nu screencapture, met automatische terugval op screenshot-basic.",
