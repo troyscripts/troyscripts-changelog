@@ -3,7 +3,7 @@
     "script": "ts_parkeerapp",
     "version": "1.1.0",
     "date": "2026-11-24",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Nieuw: valse kentekens herkennen via sky_mechanicjob; de politiecontrole toont dan het echte kenteken.",
       "Nieuw: voertuig met vals kenteken wegslepen via het inbeslagnameformulier van jg-advancedgarages.",
