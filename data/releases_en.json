@@ -1,4 +1,7 @@
 {
+  "ts_parkeerapp@1.0.3": {
+    "summary": "Fixed the camera staying open after taking a licence plate photo. After a new photo the phone now returns to Parkeren automatically through Sky Phone's OpenCustomApp export and rechecks the plate, so the photo is ready for the fine. Parking, payments, version checking, config.lua and the database are unchanged."
+  },
   "ts_bridge@1.2.2": {
     "summary": "Scripts can check their version again once the previous check has finished, so the periodic check of ts_repairpoints and the ts_nlplates_check console command work through the central version API. Concurrent requests are still refused; caching, exports and config schema 0.1.2 are unchanged. The GitHub repository is now also named ts_bridge."
   },

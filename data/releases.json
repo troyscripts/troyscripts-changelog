@@ -1,5 +1,33 @@
 [
   {
+    "script": "ts_parkeerapp",
+    "version": "1.0.3",
+    "date": "2026-11-24",
+    "status": "draft",
+    "highlights": [
+      "Opgelost: na het maken van een kentekenfoto bleef de camera open en kon de agent niet verder."
+    ],
+    "changes": [
+      "Na een nieuwe foto keert de telefoon automatisch terug naar Parkeren via de Sky Phone-export OpenCustomApp.",
+      "Het gecontroleerde kenteken wordt na de foto automatisch opnieuw gecontroleerd, zodat de foto direct klaarstaat voor de boete.",
+      "Parkeren, betalen, versiecontrole, config.lua en de database zijn ongewijzigd."
+    ],
+    "files": [
+      "client/main.lua",
+      "server/main.lua",
+      "web/app.js",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Bewaar config.lua en vervang de overige scriptbestanden.",
+      "Herstart ts_parkeerapp en test als agent: Open telefooncamera, maak een foto en controleer dat je automatisch terugkeert in Parkeren."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van v1.0.3; goedgekeurd na test op de testserver op 24 november 2026."
+  },
+  {
     "script": "ts_nlplates_migrate",
     "version": "1.0.3",
     "date": "2026-11-22",
