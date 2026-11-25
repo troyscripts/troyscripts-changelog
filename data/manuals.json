@@ -243,7 +243,7 @@
     ],
     "onesync": true,
     "requirements": [
-      "OneSync, ESX, ox_lib, ox_inventory, ox_target en ts_bridge 1.3.1 of nieuwer.",
+      "OneSync, ESX, ox_lib, ox_inventory, ox_target en ts_bridge 1.3.0 of nieuwer (1.3.1 voor het tabblad Locaties).",
       "De ingestelde jobnamen en de bijbehorende societyrekeningen moeten bestaan.",
       "0r_idcard is optioneel voor de werkpassen; zonder deze integratie blijven gewone sleutelkaarten werken."
     ],
@@ -258,13 +258,13 @@
       "Vervang de oude volledige resourcemap om oude Lua-bestanden en paden niet achter te laten.",
       "Neem nieuwe Config.Departments en andere vereiste velden over; wijzig niet uitsluitend Config.Version.",
       "Behoud opgeslagen locaties en kaartgegevens; start inventory en bridge vóór ts_keycard.",
-      "Vanaf 1.3.7: werk eerst ts_bridge bij naar 1.3.1, neem Config.IngameConfig = true over en zet Config.Version = '1.2.2'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen."
+      "Vanaf 1.3.7: gebruik ts_bridge 1.3.0 of nieuwer, neem Config.IngameConfig = true over en zet Config.Version = '1.2.2'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen."
     ],
     "verify": [
       "Vraag per werkelijk geïnstalleerde job een kaart aan; controleer prijs en society.",
       "Test vervalsingen, deurtoegang, gestolen kaarten en de intrekkingsblokkade.",
       "Test optioneel werkpasuitgifte met en zonder 0r_idcard.",
-      "Open /tsconfig → Sleutelkaarten: controleer de instellingen en plaats via het tabblad Locaties een uitgiftepunt met de muis."
+      "Open /tsconfig → Sleutelkaarten en controleer de instellingen. Met ts_bridge 1.3.1: plaats via het tabblad Locaties een uitgiftepunt met de muis."
     ],
     "warnings": [
       "De itemdefinities worden gecombineerd voor ox_inventory; voeg reeds bestaande items niet dubbel toe.",

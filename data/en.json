@@ -302,7 +302,7 @@
       ],
       "onesync": true,
       "requirements": [
-        "OneSync, ESX, ox_lib, ox_inventory, ox_target and ts_bridge 1.3.1 or newer are required.",
+        "OneSync, ESX, ox_lib, ox_inventory, ox_target and ts_bridge 1.3.0 or newer are required (1.3.1 for the Locations tab).",
         "Configured job names and associated society accounts must exist.",
         "0r_idcard is optional for staff ID cards. Ordinary keycards still function without it."
       ],
@@ -317,13 +317,13 @@
         "Replace the complete previous resource folder so that old Lua files do not remain.",
         "Merge newly required Config.Departments and other fields. Do not change only Config.Version.",
         "Preserve stored keycard locations and records; start ox_inventory and ts_bridge before ts_keycard.",
-        "From 1.3.7: update ts_bridge to 1.3.1 first, add Config.IngameConfig = true and set Config.Version = '1.2.2'. Your config.lua values are imported once on first start."
+        "From 1.3.7: use ts_bridge 1.3.0 or newer, add Config.IngameConfig = true and set Config.Version = '1.2.2'. Your config.lua values are imported once on first start."
       ],
       "verify": [
         "Issue a card for each installed job and verify pricing and society payments.",
         "Test forged cards, door permissions, stolen cards and the revocation cooldown.",
         "If 0r_idcard is used, test staff ID issuing both with and without that integration.",
-        "Open /tsconfig → Keycards: check the settings and place an issuance point with the mouse in the Locations tab."
+        "Open /tsconfig → Keycards and check the settings. With ts_bridge 1.3.1: place an issuance point with the mouse in the Locations tab."
       ],
       "warnings": [
         "Combine item definitions with your existing ox_inventory items; never add duplicates.",
