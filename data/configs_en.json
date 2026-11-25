@@ -642,6 +642,11 @@
           "text": "All settings."
         },
         {
+          "path": "schema.json",
+          "side": "gedeeld",
+          "text": "Describes the settings for the in-game configurator. Do not edit."
+        },
+        {
           "path": "calibration.json",
           "side": "server",
           "text": "Created automatically by /flatbedafstellen. Keep this file when updating."
@@ -651,6 +656,11 @@
         {
           "title": "Access and vehicles",
           "options": [
+            {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = configure through /tsconfig of ts_bridge (1.3.0+); config.lua values are imported once on first start. Jobs, UseAce, Timing, SpeedLimits and Alignment always stay in config.lua. false = config.lua only."
+            },
             {
               "key": "Config.Models",
               "default": "{ energyrampamec = true, energyguinchotop = true }",

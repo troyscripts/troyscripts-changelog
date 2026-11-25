@@ -219,11 +219,13 @@
       "update": [
         "Back up config.lua and calibration.json.",
         "Replace the script files and transfer your custom models, permissions and settings to the latest config.lua.",
-        "Keep calibration.json, which stores existing vehicle calibrations."
+        "Keep calibration.json, which stores existing vehicle calibrations.",
+        "From 1.0.5: add Config.IngameConfig = true and set Config.Version = '1.1.3'. Your config.lua values are imported once on first start; after that configure them with /tsconfig (ts_bridge 1.3.0 or newer)."
       ],
       "verify": [
         "Test ramps, winch loading/unloading and braking on level ground.",
-        "Check a second vehicle on the wheel lift. Adjust model calibrations with /flatbedmeten and /flatbedafstellen if needed."
+        "Check a second vehicle on the wheel lift. Adjust model calibrations with /flatbedmeten and /flatbedafstellen if needed.",
+        "Open /tsconfig → Flatbed, change the winch speed and check while loading that the new speed applies immediately."
       ],
       "warnings": [
         "The required vehicle models are not included with ts_flatbed.",

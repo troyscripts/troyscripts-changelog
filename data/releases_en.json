@@ -220,5 +220,8 @@
   },
   "ts_keycard@1.3.7": {
     "summary": "Configure ts_keycard in-game through /tsconfig of ts_bridge. A Config.IngameConfig switch (default true) imports your config.lua values once. Language, payment method, distances, cooldowns, items, jobs, grades, prices and societies for police, ambulance and fire department, admin and revoke permissions, NPCs and forgery items are configurable. From ts_bridge 1.3.1, the Locations tab places issuance points per department and the forgery dealer with mouse and keyboard, with the same permissions, storage and logging as /kaartpunt. The department choice in /kaartpunt is now translated. Config version 1.2.1 → 1.2.2; works with ts_bridge 1.3.0; the Locations tab appears once ts_bridge 1.3.1 is installed."
+  },
+  "ts_flatbed@1.0.5": {
+    "summary": "Configure ts_flatbed in-game through /tsconfig of ts_bridge (1.3.0 or newer). A Config.IngameConfig switch (default true) imports your config.lua values once. Vehicle models, admin ACE, interaction, server and stream distances, maximum cable length, winch speed, maximum slope, vehicle control timeout, remote control, wheel lift (maximum length and width, render distance), wheel dollies and the version check are configurable. Jobs, UseAce, Timing, SpeedLimits, Alignment, the remote model and animation, the ramp model and profiles stay in config.lua. The startup config check also validates in-game values. Config version 1.1.2 → 1.1.3."
   }
 }

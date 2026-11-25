@@ -160,11 +160,13 @@
     "update": [
       "Maak een back-up van config.lua en calibration.json.",
       "Vervang de scriptbestanden; neem de eigen modellen, rechten en instellingen in de nieuwste config.lua over.",
-      "Behoud calibration.json: daarin staan eerder opgeslagen voertuigafstellingen."
+      "Behoud calibration.json: daarin staan eerder opgeslagen voertuigafstellingen.",
+      "Vanaf 1.0.5: neem Config.IngameConfig = true over en zet Config.Version = '1.1.3'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen; daarna stel je ze in met /tsconfig (ts_bridge 1.3.0 of nieuwer)."
     ],
     "verify": [
       "Test rijplaten, lier laden/lossen en remmen op vlak terrein.",
-      "Controleer een tweede auto aan de lepel; pas indien nodig voertuigafstellingen aan met /flatbedmeten en /flatbedafstellen."
+      "Controleer een tweede auto aan de lepel; pas indien nodig voertuigafstellingen aan met /flatbedmeten en /flatbedafstellen.",
+      "Open /tsconfig → Flatbed, wijzig de liersnelheid en controleer bij het laden dat de nieuwe snelheid direct geldt."
     ],
     "warnings": [
       "De voertuigresource zelf wordt niet met ts_flatbed meegeleverd.",

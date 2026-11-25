@@ -1,5 +1,37 @@
 [
   {
+    "script": "ts_flatbed",
+    "version": "1.0.5",
+    "date": "2026-11-25",
+    "status": "draft",
+    "highlights": [
+      "Instellen via de ingame configurator van ts_bridge (/tsconfig)."
+    ],
+    "changes": [
+      "Nieuwe schakelaar Config.IngameConfig (standaard true). Bij de eerste start worden je huidige waarden uit config.lua eenmalig overgenomen; false = alleen config.lua.",
+      "Ingame instelbaar: voertuigmodellen, admin-ACE, bedienings-, server- en zichtafstand, maximale kabellengte, liersnelheid, maximale helling, wachttijd voertuigcontrole, afstandsbediening, lepel (maximale lengte en breedte, zichtafstand), wielkarretjes en versiecontrole.",
+      "Blijft in config.lua: Jobs, UseAce, Timing, SpeedLimits, Alignment, model en animatie van de afstandsbediening, het rijplaatmodel en de profielen.",
+      "De bestaande configcontrole bij het opstarten controleert ook de ingame waarden.",
+      "Configversie 1.1.2 → 1.1.3. Werkt met ts_bridge 1.3.0 of nieuwer."
+    ],
+    "files": [
+      "schema.json",
+      "config.lua",
+      "shared/config_version.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md"
+    ],
+    "instructions": [
+      "Download de update via https://portal.cfx.re/assets/granted-assets en bewaar config.lua en calibration.json.",
+      "Gebruik ts_bridge 1.3.0 of nieuwer.",
+      "Neem in je eigen config.lua de regel Config.IngameConfig = true over en zet Config.Version = '1.1.3'.",
+      "Vervang de volledige resourcemap en herstart ts_flatbed na ts_bridge. De serverconsole meldt dat de waarden uit config.lua zijn overgenomen.",
+      "Controleer in /tsconfig → Flatbed de instellingen."
+    ],
+    "sourceNote": "Gebaseerd op README.md van ts_flatbed v1.0.5; goedgekeurd na test op de testserver op 25 november 2026."
+  },
+  {
     "script": "ts_bridge",
     "version": "1.3.1",
     "date": "2026-11-25",
