@@ -43,7 +43,7 @@ function sidebar(active) {
           <a href="${h(target+'#changelog')}">◴ Changelog</a>
           <a href="${h(target+'#installation')}">⚙ Installatie</a>
           ${configs.scripts[s.id]?`<a href="${h(target+'#configuration')}">🛠 Configuratie</a>`:''}
-          <a href="${h(installUrl+'?script='+encodeURIComponent(s.id))}">▣ Installatieplan</a>${s.category!=='Discord-bot'?`<a href="${h(target+'#support')}">💬 Ondersteuning</a>`:''}
+          <a href="${h(installUrl+'?script='+encodeURIComponent(s.id))}">▣ Installatieplan</a>${s.category!=='Discord-bot'?`<a href="${h(target+'#support')}">🔌 Koppeling aanvragen</a>`:''}
         </div></details>`;
       }).join('')}</div>`;
     }).join('')}

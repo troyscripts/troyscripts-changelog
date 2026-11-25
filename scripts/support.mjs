@@ -1,4 +1,4 @@
-// Supportblok op de pagina van elk FiveM-script (niet bij de Discord-bot). Teksten staan in data/support.json.
+// Blok "koppeling aanvragen" (scripts die we nog niet ondersteunen) op de pagina van elk FiveM-script (niet bij de Discord-bot). Teksten staan in data/support.json.
 import {readFileSync} from 'node:fs';
 import {escapeHtml as h} from './core.mjs';
 

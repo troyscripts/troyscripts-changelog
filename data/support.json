@@ -1,41 +1,39 @@
 {
   "discord": "https://discord.gg/nTzVy5uMWX",
   "nl": {
-    "kicker": "ONDERSTEUNING",
-    "title": "Hulp nodig met {script}?",
-    "intro": "Loop je ergens tegenaan of werkt iets niet zoals verwacht? Open een ticket in de TroyScripts Discord, dan kijken we graag met je mee. Met de onderstaande gegevens kunnen we je het snelst helpen.",
+    "kicker": "KOPPELING AANVRAGEN",
+    "title": "Gebruik je een script dat {script} nog niet ondersteunt?",
+    "intro": "Werk je met een inventory, banking, garage, dealer, telefoon of ander script waar we nog geen koppeling voor hebben? Open een ticket in de TroyScripts Discord. We bekijken samen of en hoe we ondersteuning kunnen toevoegen. Met de onderstaande gegevens kunnen we je aanvraag het snelst beoordelen.",
     "listTitle": "Lever dit aan in je ticket",
     "items": [
-      "De naam en versie van het script (staat in fxmanifest.lua of in je serverconsole bij het opstarten).",
-      "Je framework en versie (bijvoorbeeld ESX Legacy 1.x) en je FiveM-serverbuild (artifact).",
-      "Een duidelijke omschrijving: wat gebeurt er, wat had je verwacht en sinds wanneer speelt het?",
-      "De stappen waarmee we het probleem kunnen nadoen.",
-      "Foutmeldingen uit de serverconsole en de F8-console, als tekst of screenshot.",
-      "Je config/config.lua en het relevante deel van je server.cfg (startvolgorde van de resources).",
-      "Wat je onlangs hebt aangepast of geüpdatet (scripts, framework, database).",
-      "Je Cfx.re-gebruikersnaam of Tebex-transactie-ID, zodat we je aankoop kunnen koppelen."
+      "De naam van het script dat je wilt laten ondersteunen, de maker en de versie.",
+      "Een link naar het script (Tebex, Cfx.re-forum of GitHub) en, als die er is, de documentatie.",
+      "Of het script open source of escrow is, en welke exports of events het aanbiedt (bijvoorbeeld voor geld, items of voertuigen).",
+      "Met welk TroyScripts-script het moet samenwerken en wat er precies moet gebeuren (bijvoorbeeld: betalen via jouw bankscript, items in jouw inventory).",
+      "Je framework en versie (bijvoorbeeld ESX Legacy 1.x).",
+      "Het configbestand van dat script, zodat we zien hoe het bij jou is ingesteld.",
+      "Eventuele foutmeldingen uit de serverconsole of de F8-console als je de koppeling al hebt geprobeerd."
     ],
-    "privacy": "Deel nooit webhook-URL's, tokens, wachtwoorden of databasegegevens. Haal ze uit je bestanden voordat je ze stuurt.",
-    "button": "Open een ticket in Discord",
-    "note": "Tickets worden in volgorde van binnenkomst behandeld."
+    "privacy": "Deel nooit webhook-URL's, tokens, licentiesleutels, wachtwoorden of databasegegevens. Haal ze uit je bestanden voordat je ze stuurt.",
+    "button": "Vraag een koppeling aan in Discord",
+    "note": "Niet elk script kan gekoppeld worden; dat hangt af van de exports en events die het aanbiedt. We laten in het ticket weten wat mogelijk is."
   },
   "en": {
-    "kicker": "SUPPORT",
-    "title": "Need help with {script}?",
-    "intro": "Running into a problem or is something not working as expected? Open a ticket in the TroyScripts Discord and we will gladly take a look. The details below help us help you as quickly as possible.",
+    "kicker": "REQUEST AN INTEGRATION",
+    "title": "Using a script that {script} does not support yet?",
+    "intro": "Do you use an inventory, banking, garage, dealer, phone or other script we do not integrate with yet? Open a ticket in the TroyScripts Discord. We will look into whether and how we can add support. The details below help us assess your request as quickly as possible.",
     "listTitle": "Include this in your ticket",
     "items": [
-      "The script name and version (found in fxmanifest.lua or in your server console at startup).",
-      "Your framework and its version (for example ESX Legacy 1.x) and your FiveM server build (artifact).",
-      "A clear description: what happens, what did you expect and since when does it occur?",
-      "The steps we can follow to reproduce the problem.",
-      "Errors from the server console and the F8 console, as text or a screenshot.",
-      "Your config/config.lua and the relevant part of your server.cfg (resource start order).",
-      "What you recently changed or updated (scripts, framework, database).",
-      "Your Cfx.re username or Tebex transaction ID, so we can link your purchase."
+      "The name of the script you want supported, its author and its version.",
+      "A link to the script (Tebex, Cfx.re forum or GitHub) and its documentation, if available.",
+      "Whether the script is open source or escrowed, and which exports or events it offers (for example for money, items or vehicles).",
+      "Which TroyScripts script it should work with and what exactly should happen (for example: paying through your banking script, items in your inventory).",
+      "Your framework and its version (for example ESX Legacy 1.x).",
+      "The config file of that script, so we can see how it is set up on your server.",
+      "Any errors from the server console or the F8 console if you have already tried connecting them."
     ],
-    "privacy": "Never share webhook URLs, tokens, passwords or database credentials. Remove them from your files before sending.",
-    "button": "Open a ticket in Discord",
-    "note": "Tickets are handled in order of arrival."
+    "privacy": "Never share webhook URLs, tokens, licence keys, passwords or database credentials. Remove them from your files before sending.",
+    "button": "Request an integration on Discord",
+    "note": "Not every script can be integrated; it depends on the exports and events it offers. We will let you know in the ticket what is possible."
   }
 }

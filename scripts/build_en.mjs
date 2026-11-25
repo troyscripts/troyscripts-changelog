@@ -35,7 +35,7 @@ function sidebar(active){
  '<a href="'+h(url('scripts/'+s.id+'/#changelog'))+'">◴ Changelog</a>'+
  '<a href="'+h(url('scripts/'+s.id+'/#installation'))+'">⚙ Installation</a>'+
  (configs.scripts[s.id]?'<a href="'+h(url('scripts/'+s.id+'/#configuration'))+'">🛠 Configuration</a>':'')+
- '<a href="'+h(url('installatie/?script='+s.id))+'">▣ Setup plan</a>'+(s.category!=='Discord-bot'?'<a href="'+h(url('scripts/'+s.id+'/#support'))+'">💬 Support</a>':'')+'</div></details>').join('')+'</div>';
+ '<a href="'+h(url('installatie/?script='+s.id))+'">▣ Setup plan</a>'+(s.category!=='Discord-bot'?'<a href="'+h(url('scripts/'+s.id+'/#support'))+'">🔌 Request integration</a>':'')+'</div></details>').join('')+'</div>';
  }).join('')+
  '<div class="sidebar-foot">TroyScripts documentation and release updates. Always verify files and settings on your own server.</div></aside>';
 }
