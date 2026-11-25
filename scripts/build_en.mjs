@@ -3,6 +3,7 @@ import {join,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {GROUP_ORDER,escapeHtml as h,latestVersion,releasesFor,publishedReleases,siteConfig,absolute} from './core.mjs';
 import {renderConfigSection,renderGeneral} from './configs.mjs';
+import {renderSupport} from './support.mjs';
 
 const root=fileURLToPath(new URL('..',import.meta.url));
 const dist=join(root,'dist');
@@ -34,7 +35,7 @@ function sidebar(active){
  '<a href="'+h(url('scripts/'+s.id+'/#changelog'))+'">◴ Changelog</a>'+
  '<a href="'+h(url('scripts/'+s.id+'/#installation'))+'">⚙ Installation</a>'+
  (configs.scripts[s.id]?'<a href="'+h(url('scripts/'+s.id+'/#configuration'))+'">🛠 Configuration</a>':'')+
- '<a href="'+h(url('installatie/?script='+s.id))+'">▣ Setup plan</a></div></details>').join('')+'</div>';
+ '<a href="'+h(url('installatie/?script='+s.id))+'">▣ Setup plan</a>'+(s.category!=='Discord-bot'?'<a href="'+h(url('scripts/'+s.id+'/#support'))+'">💬 Support</a>':'')+'</div></details>').join('')+'</div>';
  }).join('')+
  '<div class="sidebar-foot">TroyScripts documentation and release updates. Always verify files and settings on your own server.</div></aside>';
 }
@@ -81,7 +82,7 @@ for(const s of catalog){
  '<section id="introduction" class="script-hero intro-section"><div class="big-icon">'+h(s.icon)+'</div><div><span class="section-kicker">'+h(group(s.category))+'</span><h1>'+h(display(s))+'</h1><p>'+h(describe(s))+'</p><div class="script-tags"><span class="version">Current registered version: '+h(latest)+'</span><span>'+history.length+' release notes</span></div></div></section>'+
  (!history.some(r=>r.version===latest)?'<div class="notice"><span>ℹ</span><p>Version '+h(latest)+' is registered, but a verified feature changelog is not available. It may be an administrative release. Previous documented changes appear below.</p></div>':'')+
  '<section id="installation" class="guide-section"><span class="section-kicker">INSTALL OR UPDATE</span><h2>Installation: '+h(display(s))+'</h2><p>'+h(m.summary)+'</p><h3>Requirements</h3>'+bullets(m.requirements)+'<h3>New installation</h3>'+bullets(m.install)+'<h3>Updating an existing installation</h3>'+bullets(m.update)+
- '<div class="guide-action-links"><a class="primary-btn" href="'+h(url('installatie/?script='+s.id))+'">⚙ Create setup plan</a><a class="secondary-btn" href="'+h(url('installatie/?script='+s.id+'&mode=update'))+'">↻ Update plan</a>'+(m.type==='fivem'?'<a class="secondary-btn" href="'+h(url('anticheat/'))+'">🛡 AntiCheat guide</a>':'')+'</div></section>'+renderConfigSection(configs.scripts[s.id],display(s),'en',url('webhooks/'))+
+ '<div class="guide-action-links"><a class="primary-btn" href="'+h(url('installatie/?script='+s.id))+'">⚙ Create setup plan</a><a class="secondary-btn" href="'+h(url('installatie/?script='+s.id+'&mode=update'))+'">↻ Update plan</a>'+(m.type==='fivem'?'<a class="secondary-btn" href="'+h(url('anticheat/'))+'">🛡 AntiCheat guide</a>':'')+'</div></section>'+renderSupport(s,'en',display(s))+renderConfigSection(configs.scripts[s.id],display(s),'en',url('webhooks/'))+
  '<section id="changelog" class="history-header"><div><span class="section-kicker">RELEASE ARCHIVE</span><h2>Changelog</h2><p>English summaries of the published release history for '+h(display(s))+'.</p></div><a class="secondary-btn" href="'+h(enHome)+'">← All projects</a></section>'+
  '<div class="timeline">'+(releaseHtml||'<p class="muted">No release notes have been published yet.</p>')+'</div>';
  write('en/scripts/'+s.id+'/index.html',page({title:display(s)+' · Changelog',description:describe(s),body:content,active:s.id,route:'scripts/'+s.id+'/'}));
