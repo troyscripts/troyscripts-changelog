@@ -3,7 +3,7 @@
     "script": "ts_bridge",
     "version": "1.3.0",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Nieuwe ingame configurator: met /tsconfig stel je aangesloten TroyScripts in via een eigen menu, in het Nederlands of Engels.",
       "De bridge vindt aangesloten scripts zelf en toont per script de status, versie en of er een update is.",
@@ -52,7 +52,7 @@
     "script": "ts_repairpoints",
     "version": "1.2.0",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Als eerste script in te stellen via de ingame configurator van ts_bridge (/tsconfig)."
     ],
