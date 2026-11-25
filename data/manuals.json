@@ -22,17 +22,20 @@
       "Stop afhankelijke scripts vóór je ts_bridge stopt. Vervang de volledige oude map, zeker bij een gewijzigde mappenstructuur.",
       "Neem persoonlijke instellingen en webhooks over in de nieuwe configbestanden; verhoog niet alleen het configversienummer.",
       "Start eerst de bridge en herstart daarna alle scripts die deze gebruiken.",
-      "Vanaf 1.2.3: zet Version = '0.1.3' en ScreenshotResource = 'screencapture' (of 'screenshot-basic') in je eigen config/config.lua."
+      "Vanaf 1.2.3: zet Version = '0.1.3' en ScreenshotResource = 'screencapture' (of 'screenshot-basic') in je eigen config/config.lua.",
+      "Vanaf 1.3.0: neem de sectie TSBridgeConfig.Configurator over, zet Version = '0.2.0' en geef beheerders toegang met add_ace group.admin ts_bridge.config allow."
     ],
     "verify": [
       "Voer ts_bridge_check uit in de serverconsole.",
       "Controleer ingestelde providers, societybetalingen, screenshots/webhooks en afhankelijke resources.",
       "Controleer in de serverconsole dat de versiemeldingen van alle aangesloten scripts via ts_bridge verschijnen, zonder HTTP 404.",
-      "Voer een actie met foto uit en controleer in de serverconsole de regel 'Foto voor … ontvangen: … KB'. Een gele waarschuwing betekent een zwarte clientopname; zie docs/INSTALLATIE.md."
+      "Voer een actie met foto uit en controleer in de serverconsole de regel 'Foto voor … ontvangen: … KB'. Een gele waarschuwing betekent een zwarte clientopname; zie docs/INSTALLATIE.md.",
+      "Open ingame /tsconfig: aangesloten scripts staan in het menu met status en versie."
     ],
     "warnings": [
       "Echte webhook-URL's en tokens horen niet op de openbare website of in GitHub.",
-      "Een bridge-update kan vereisen dat afhankelijke resources worden herstart."
+      "Een bridge-update kan vereisen dat afhankelijke resources worden herstart.",
+      "Instellingen uit het ingame menu staan in de server-KVP van ts_bridge. Maak een back-up via Exporteren in /tsconfig voordat je de serverdata verplaatst."
     ],
     "preserve": [
       "config/config.lua",
@@ -187,10 +190,12 @@
       "OneSync, es_extended, ox_lib en ts_bridge. De standaard ped-modus gebruikt ox_target; marker-modus kan zonder target.",
       "De mechanic- en politierekeningen die je in de configuratie kiest moeten bestaan.",
       "Gebruik een actueel serverartifact met server-side ped- en voertuigfuncties.",
-      "Periodieke versiecontrole (IntervalHours) vereist ts_bridge 1.2.2 of nieuwer."
+      "Periodieke versiecontrole (IntervalHours) vereist ts_bridge 1.2.2 of nieuwer.",
+      "Ingame instellen via /tsconfig vereist ts_bridge 1.3.0 of nieuwer."
     ],
     "install": [
       "Plaats ts_repairpoints onder dezelfde resourcenaam en configureer config/config.lua.",
+      "Config.IngameConfig = true (standaard): stel prijzen, jobs en de monteur daarna ingame in via /tsconfig. Met false gebruik je alleen config.lua.",
       "Kies ped (ox_target) of marker (E) en stel mechanics, dienstcontrole en societyrekeningen in.",
       "Gebruik /reparatiepunt plaatsen of configureer vaste punten. De nieuwe installatie heeft geen actieve voorbeeldpunten.",
       "Er is geen SQL-installatie voor de huidige resource."
@@ -198,13 +203,15 @@
     "update": [
       "Bewaar de volledige data-map, in het bijzonder data/points.json en data/compensation.json als die bestaan.",
       "Neem je eigen vaste locaties, jobnamen, society en dienstinstellingen over in de nieuwe config.",
-      "Vervang de scriptbestanden zonder bestaande reparatie- of schulddossiers weg te gooien."
+      "Vervang de scriptbestanden zonder bestaande reparatie- of schulddossiers weg te gooien.",
+      "Vanaf 1.2.0: werk eerst ts_bridge bij naar 1.3.0, neem Config.IngameConfig = true over en zet Config.Version = '1.2.0'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen."
     ],
     "verify": [
       "Controleer of een punt verdwijnt wanneer een monteur in dienst is.",
       "Test prijsopgave, betaling en opbrengsten op de mechanicrekening.",
       "Test de targetregistratie met /reparatietargetcheck wanneer een ped niet reageert.",
-      "Controleer in de serverconsole de versiemelding via ts_bridge (geen HTTP 404)."
+      "Controleer in de serverconsole de versiemelding via ts_bridge (geen HTTP 404).",
+      "Controleer in /tsconfig dat Reparatiepunten op \"Ingame config\" staat en dat een gewijzigde prijs direct geldt."
     ],
     "warnings": [
       "Bij ped-modus is ox_target nodig; marker-modus is een alternatief.",

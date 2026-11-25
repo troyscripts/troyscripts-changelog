@@ -67,7 +67,7 @@
           "options": [
             {
               "key": "TSBridgeConfig.Version",
-              "default": "'0.1.2'",
+              "default": "'0.2.0'",
               "text": "Configschema. Niet zelf veranderen; alleen bijwerken nadat je de nieuwe velden van een update hebt overgenomen."
             },
             {
@@ -284,6 +284,36 @@
               "key": "TSBridgeConfig.Audit.Enabled",
               "default": "true",
               "text": "Hoofdschakelaar voor de eigen auditlogs van de bridge (betalingen, facturen, fouten). Webhooks van andere scripts blijven werken."
+            }
+          ]
+        },
+        {
+          "title": "Ingame configurator (/tsconfig)",
+          "options": [
+            {
+              "key": "Configurator.Enabled",
+              "default": "true",
+              "text": "false = menu en ingame opslag uit; aangesloten scripts gebruiken dan hun config.lua."
+            },
+            {
+              "key": "Configurator.Command",
+              "default": "'tsconfig'",
+              "text": "Chatcommando om het menu te openen. In de serverconsole toont het een overzicht."
+            },
+            {
+              "key": "Configurator.Ace",
+              "default": "'ts_bridge.config'",
+              "text": "ACE-recht voor het menu, bijvoorbeeld: add_ace group.admin ts_bridge.config allow."
+            },
+            {
+              "key": "Configurator.EsxGroups",
+              "default": "{ admin = true, superadmin = true }",
+              "text": "ESX-groepen die ook toegang hebben; {} = alleen ACE."
+            },
+            {
+              "key": "Configurator.MenuLocale",
+              "default": "'nl'",
+              "text": "Starttaal van het menu: 'nl' of 'en'. Elke beheerder kan in het menu wisselen."
             }
           ]
         }
@@ -776,6 +806,11 @@
         {
           "title": "Reparatie en prijs",
           "options": [
+            {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = instellen via /tsconfig van ts_bridge (1.3.0+); bij de eerste start worden de waarden uit config.lua eenmalig overgenomen. false = alleen config.lua."
+            },
             {
               "key": "Config.Interaction",
               "default": "'ped'",
