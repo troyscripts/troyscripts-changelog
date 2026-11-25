@@ -990,6 +990,11 @@
           "title": "Police (default)",
           "options": [
             {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = configure through /tsconfig of ts_bridge (1.3.1+), including placing issuance points with the mouse; config.lua values are imported once on first start. false = config.lua only."
+            },
+            {
               "key": "Config.Item",
               "default": "'politie_sleutelkaart'",
               "text": "ox_inventory item for the police card."

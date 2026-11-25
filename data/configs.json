@@ -990,6 +990,11 @@
           "title": "Politie (standaard)",
           "options": [
             {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = instellen via /tsconfig van ts_bridge (1.3.1+), inclusief uitgiftepunten plaatsen met de muis; bij de eerste start worden de waarden uit config.lua eenmalig overgenomen. false = alleen config.lua."
+            },
+            {
               "key": "Config.Item",
               "default": "'politie_sleutelkaart'",
               "text": "ox_inventory-item van de politiekaart."
