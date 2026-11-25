@@ -211,5 +211,8 @@
   },
   "ts_repairpoints@1.2.0": {
     "summary": "First script connected to the ts_bridge in-game configurator (/tsconfig). A new Config.IngameConfig switch (default true) imports your current config.lua values once. Prices, payment, jobs, timings, the mechanic and compensation are configurable in-game; fixed points, the custom duty check and webhook settings stay in config.lua. A quote is refused if both damage weights are 0. Config version 1.1.1 → 1.2.0; requires ts_bridge 1.3.0 or newer."
+  },
+  "ts_repairpoints@1.2.1": {
+    "summary": "English is now available as a language. Choose Dutch (default) or English with Config.Locale or in /tsconfig. All texts for players, staff, police, Discord webhooks and the server console are in locales/nl.lua and locales/en.lua and can be customised. Dutch texts are unchanged; command names and the technical F8 diagnostics stay the same. The target label switches language after a restart. Config version 1.2.0 → 1.2.1."
   }
 }

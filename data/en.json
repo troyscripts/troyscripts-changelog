@@ -235,7 +235,7 @@
     },
     "ts_repairpoints": {
       "type": "fivem",
-      "summary": "Vehicle repair locations with a mechanic NPC or marker, damage-based prices and society payments.",
+      "summary": "Vehicle repair locations with a mechanic NPC or marker, damage-based prices and society payments. Dutch or English.",
       "providers": [
         "es_extended",
         "ox_lib",
@@ -255,6 +255,7 @@
       "install": [
         "Install the resource under the exact name ts_repairpoints and configure config/config.lua.",
         "Config.IngameConfig = true (default): configure prices, jobs and the mechanic in-game through /tsconfig afterwards. Set false to use config.lua only.",
+        "Language: Config.Locale = 'nl' (default) or 'en', also through /tsconfig. Texts are in locales/ and can be customised.",
         "Choose NPC (ox_target) or marker (E), and configure mechanic jobs, on-duty checks and society accounts.",
         "Create points with /reparatiepunt plaatsen or configure fixed points. New installs have no active sample points.",
         "The current resource does not require an SQL import."
@@ -263,7 +264,8 @@
         "Back up the complete data directory, especially data/points.json and data/compensation.json, if present.",
         "Transfer custom locations, job names, society settings and duty checks to the new config.",
         "Replace the script files without deleting saved repair data or outstanding compensation records.",
-        "From 1.2.0: update ts_bridge to 1.3.0 first, add Config.IngameConfig = true and set Config.Version = '1.2.0'. Your config.lua values are imported once on first start."
+        "From 1.2.0: update ts_bridge to 1.3.0 first, add Config.IngameConfig = true and set Config.Version = '1.2.0'. Your config.lua values are imported once on first start.",
+        "From 1.2.1: add Config.Locale = 'nl' and set Config.Version = '1.2.1'. Keep your own text changes in locales/ and restore them after the update."
       ],
       "verify": [
         "Check that a repair point becomes unavailable while a mechanic is on duty.",
@@ -281,7 +283,8 @@
         "config/server.lua indien gewijzigd",
         "data/points.json",
         "data/compensation.json",
-        "data/repairs.json indien aanwezig"
+        "data/repairs.json indien aanwezig",
+        "locales/nl.lua and locales/en.lua if customised"
       ]
     },
     "ts_keycard": {

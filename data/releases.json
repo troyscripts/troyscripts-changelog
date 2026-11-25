@@ -1,5 +1,47 @@
 [
   {
+    "script": "ts_repairpoints",
+    "version": "1.2.1",
+    "date": "2026-11-25",
+    "status": "draft",
+    "highlights": [
+      "Nieuw: Engels als taalkeuze. Kies Nederlands (standaard) of Engels met Config.Locale of in /tsconfig."
+    ],
+    "changes": [
+      "Alle teksten voor spelers, staff, politie, Discord-webhooks en de serverconsole zijn vertaald en staan in locales/nl.lua en locales/en.lua. Je mag ze aanpassen.",
+      "De Nederlandse teksten zijn ongewijzigd. De namen van de commando's en de technische F8-diagnose blijven gelijk.",
+      "Na het wisselen van taal toont het target-label de nieuwe taal na een herstart van het script.",
+      "Configversie 1.2.0 → 1.2.1 (nieuw veld Locale)."
+    ],
+    "files": [
+      "locales/locale.lua",
+      "locales/nl.lua",
+      "locales/en.lua",
+      "client/main.lua",
+      "client/peds.lua",
+      "server/main.lua",
+      "server/payment.lua",
+      "server/pricing.lua",
+      "server/compensation.lua",
+      "server/peds.lua",
+      "server/settlements.lua",
+      "server/updates.lua",
+      "server/webhooks.lua",
+      "config/config.lua",
+      "config/schema.json",
+      "fxmanifest.lua",
+      "README.md",
+      "docs/CHANGELOG.md"
+    ],
+    "instructions": [
+      "Download de update via https://portal.cfx.re/assets/granted-assets en bewaar de volledige data-map.",
+      "Neem in je eigen config/config.lua de regel Config.Locale = 'nl' over en zet Config.Version = '1.2.1'.",
+      "Vervang het volledige pakket en herstart ts_repairpoints.",
+      "Engels gebruiken: kies Taal → English in /tsconfig (of zet Config.Locale = 'en') en herstart het script."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_repairpoints v1.2.1; goedgekeurd na test op de testserver op 25 november 2026."
+  },
+  {
     "script": "ts_bridge",
     "version": "1.3.0",
     "date": "2026-11-25",

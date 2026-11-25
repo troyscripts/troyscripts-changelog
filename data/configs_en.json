@@ -800,6 +800,11 @@
           "path": "config/server.lua",
           "side": "server",
           "text": "Custom duty check (DutyMode = 'custom') and webhook settings. The URLs themselves are in ts_bridge."
+        },
+        {
+          "path": "locales/nl.lua, locales/en.lua",
+          "side": "gedeeld",
+          "text": "All texts per language. You may customise them; keep the keys and %s."
         }
       ],
       "groups": [
@@ -810,6 +815,11 @@
               "key": "Config.IngameConfig",
               "default": "true",
               "text": "true = configure through /tsconfig of ts_bridge (1.3.0+); config.lua values are imported once on first start. false = config.lua only."
+            },
+            {
+              "key": "Config.Locale",
+              "default": "'nl'",
+              "text": "Script language: 'nl' (Dutch) or 'en' (English). Texts are in locales/. The target label switches after a restart."
             },
             {
               "key": "Config.Interaction",
