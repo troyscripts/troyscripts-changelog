@@ -3,7 +3,7 @@
     "script": "ts_flatbed",
     "version": "1.0.5",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Instellen via de ingame configurator van ts_bridge (/tsconfig)."
     ],
@@ -35,7 +35,7 @@
     "script": "ts_bridge",
     "version": "1.3.1",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Locaties plaatsen met muis en toetsenbord: in /tsconfig zet je een ped neer op de gewenste plek, zonder er zelf naartoe te lopen of van job te wisselen."
     ],
