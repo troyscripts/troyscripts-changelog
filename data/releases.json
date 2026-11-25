@@ -1,6 +1,37 @@
 [
   {
     "script": "ts_bridge",
+    "version": "1.2.4",
+    "date": "2026-11-25",
+    "status": "draft",
+    "highlights": [
+      "Voertuigqueries blijven werken als de databaseverbinding even wegvalt: de bridge probeert het automatisch nog één keer."
+    ],
+    "changes": [
+      "Mislukt een voertuigquery (bijvoorbeeld de oxmysql-melding \"This socket has been ended by the other party\"), dan probeert de bridge het na 250 ms één keer opnieuw met een nieuwe verbinding.",
+      "Geldt voor VehicleExists, GetVehicleOwner, GetCompanyLabel en VehicleIntegrationReady; dit zijn alleen leesqueries.",
+      "Antwoordt de database niet binnen 10 seconden, dan stopt de aanroep met vehicle_query_timeout in plaats van te blijven hangen.",
+      "Geen wijziging aan exports, events of config; configschema blijft 0.1.3."
+    ],
+    "files": [
+      "server/integrations/vehicles.lua",
+      "server/services/updates.lua",
+      "fxmanifest.lua",
+      "version.json",
+      "README.md",
+      "docs/CHANGELOG.md",
+      "docs/INSTALLATIE.md"
+    ],
+    "instructions": [
+      "Download de officiële update voor je eigen account via https://portal.cfx.re/assets/granted-assets.",
+      "Bewaar je eigen config/config.lua en config/webhook_config.lua; daarin verandert niets.",
+      "Vervang het volledige pakket en start ts_bridge vóór de overige TroyScripts.",
+      "Komt de melding \"This socket has been ended by the other party\" vaak voor, zet dan in je MariaDB/MySQL-config wait_timeout = 28800 en interactive_timeout = 28800 en gebruik de nieuwste oxmysql."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_bridge v1.2.4; goedgekeurd na test op de testserver op 25 november 2026."
+  },
+  {
+    "script": "ts_bridge",
     "version": "1.2.3",
     "date": "2026-11-25",
     "status": "published",
