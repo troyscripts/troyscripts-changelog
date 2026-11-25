@@ -3,7 +3,7 @@
     "script": "ts_repairpoints",
     "version": "1.2.1",
     "date": "2026-11-25",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Nieuw: Engels als taalkeuze. Kies Nederlands (standaard) of Engels met Config.Locale of in /tsconfig."
     ],
