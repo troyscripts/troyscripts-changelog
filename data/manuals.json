@@ -194,7 +194,8 @@
       "De mechanic- en politierekeningen die je in de configuratie kiest moeten bestaan.",
       "Gebruik een actueel serverartifact met server-side ped- en voertuigfuncties.",
       "Periodieke versiecontrole (IntervalHours) vereist ts_bridge 1.2.2 of nieuwer.",
-      "Ingame instellen via /tsconfig vereist ts_bridge 1.3.0 of nieuwer."
+      "Ingame instellen via /tsconfig vereist ts_bridge 1.3.0 of nieuwer.",
+      "Reparatiepunten plaatsen via het tabblad Locaties in /tsconfig vereist ts_bridge 1.3.1 of nieuwer."
     ],
     "install": [
       "Plaats ts_repairpoints onder dezelfde resourcenaam en configureer config/config.lua.",
@@ -209,14 +210,16 @@
       "Neem je eigen vaste locaties, jobnamen, society en dienstinstellingen over in de nieuwe config.",
       "Vervang de scriptbestanden zonder bestaande reparatie- of schulddossiers weg te gooien.",
       "Vanaf 1.2.0: werk eerst ts_bridge bij naar 1.3.0, neem Config.IngameConfig = true over en zet Config.Version = '1.2.0'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen.",
-      "Vanaf 1.2.1: neem Config.Locale = 'nl' over en zet Config.Version = '1.2.1'. Bewaar eigen tekstaanpassingen in locales/ en zet ze terug na de update."
+      "Vanaf 1.2.1: neem Config.Locale = 'nl' over en zet Config.Version = '1.2.1'. Bewaar eigen tekstaanpassingen in locales/ en zet ze terug na de update.",
+      "Vanaf 1.2.2: geen configwijziging. Vervang de volledige map, inclusief config/schema.json; anders verschijnt het tabblad Locaties niet."
     ],
     "verify": [
       "Controleer of een punt verdwijnt wanneer een monteur in dienst is.",
       "Test prijsopgave, betaling en opbrengsten op de mechanicrekening.",
       "Test de targetregistratie met /reparatietargetcheck wanneer een ped niet reageert.",
       "Controleer in de serverconsole de versiemelding via ts_bridge (geen HTTP 404).",
-      "Controleer in /tsconfig dat Reparatiepunten op \"Ingame config\" staat en dat een gewijzigde prijs direct geldt."
+      "Controleer in /tsconfig dat Reparatiepunten op \"Ingame config\" staat en dat een gewijzigde prijs direct geldt.",
+      "Open /tsconfig → Reparatiepunten → Locaties, plaats een nieuw punt met de muis en controleer dat de monteur daar verschijnt."
     ],
     "warnings": [
       "Bij ped-modus is ox_target nodig; marker-modus is een alternatief.",

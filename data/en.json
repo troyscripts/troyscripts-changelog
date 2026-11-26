@@ -253,7 +253,8 @@
         "The configured mechanic and police society accounts must exist.",
         "Use a recent FiveM server artifact supporting server-side NPC and vehicle operations.",
         "Periodic version checks (IntervalHours) require ts_bridge 1.2.2 or newer.",
-        "In-game configuration through /tsconfig requires ts_bridge 1.3.0 or newer."
+        "In-game configuration through /tsconfig requires ts_bridge 1.3.0 or newer.",
+        "Placing repair points through the Locations tab in /tsconfig requires ts_bridge 1.3.1 or newer."
       ],
       "install": [
         "Install the resource under the exact name ts_repairpoints and configure config/config.lua.",
@@ -268,14 +269,16 @@
         "Transfer custom locations, job names, society settings and duty checks to the new config.",
         "Replace the script files without deleting saved repair data or outstanding compensation records.",
         "From 1.2.0: update ts_bridge to 1.3.0 first, add Config.IngameConfig = true and set Config.Version = '1.2.0'. Your config.lua values are imported once on first start.",
-        "From 1.2.1: add Config.Locale = 'nl' and set Config.Version = '1.2.1'. Keep your own text changes in locales/ and restore them after the update."
+        "From 1.2.1: add Config.Locale = 'nl' and set Config.Version = '1.2.1'. Keep your own text changes in locales/ and restore them after the update.",
+        "From 1.2.2: no config changes. Replace the entire folder, including config/schema.json; otherwise the Locations tab does not appear."
       ],
       "verify": [
         "Check that a repair point becomes unavailable while a mechanic is on duty.",
         "Test the quoted repair price, player payment and mechanic society income.",
         "If an NPC target fails, run /reparatietargetcheck.",
         "Check the version message through ts_bridge in the server console (no HTTP 404).",
-        "Check in /tsconfig that Repair points shows \"In-game config\" and that a changed price applies immediately."
+        "Check in /tsconfig that Repair points shows \"In-game config\" and that a changed price applies immediately.",
+        "Open /tsconfig → Repair points → Locations, place a new point with the mouse and check that the mechanic appears there."
       ],
       "warnings": [
         "ox_target is required for NPC mode; marker mode is an alternative.",

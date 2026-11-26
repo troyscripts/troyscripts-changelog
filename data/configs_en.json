@@ -799,7 +799,7 @@
       }
     },
     "ts_repairpoints": {
-      "intro": "Here you set prices, the NPC mechanic, the duty check and what happens when the mechanic is killed. Place repair points in-game with /reparatiepunt.",
+      "intro": "Here you set prices, the NPC mechanic, the duty check and what happens when the mechanic is killed. Place repair points in-game with /reparatiepunt or with the mouse through /tsconfig → Locations (ts_bridge 1.3.1).",
       "files": [
         {
           "path": "config/config.lua",
