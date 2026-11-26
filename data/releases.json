@@ -3,7 +3,7 @@
     "script": "ts_bridge",
     "version": "1.3.2",
     "date": "2026-11-26",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Locaties in /tsconfig zoeken en verwijderen, met kopjes per groep; scripts kunnen nu honderden locaties tonen, zoals postcodes."
     ],
@@ -42,7 +42,7 @@
     "script": "ts_gemertmap",
     "version": "1.2.0",
     "date": "2026-11-26",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Kaart instellen via /tsconfig van ts_bridge, inclusief alle 46 gebiedsnamen.",
       "Postcodes zoeken, verplaatsen, toevoegen en verwijderen in het menu."
