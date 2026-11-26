@@ -1,5 +1,45 @@
 [
   {
+    "script": "ts_antipunch",
+    "version": "1.9.0",
+    "date": "2026-11-26",
+    "status": "draft",
+    "highlights": [
+      "Instellen via de ingame configurator van ts_bridge (/tsconfig); wijzigingen werken direct, zonder herstart.",
+      "Engels als taalkeuze."
+    ],
+    "changes": [
+      "Nieuwe schakelaar Config.IngameConfig (standaard true). Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen.",
+      "Ingame instelbaar: taal, diagnose, richtknop, first person en cameraherstel, alle schiet- en melee-blokkeringen, de manier van afbreken en de versiecontrole.",
+      "Engels via Config.Locale = 'en'.",
+      "De doodstatus wordt 4x per seconde opgevraagd in plaats van elk frame; de knopblokkering blijft elk frame actief.",
+      "De bridgecontrole eist nu daadwerkelijk ts_bridge 1.2.0, zoals het manifest al aangaf.",
+      "Installatie-uitleg herschreven; tegenstrijdige versie-informatie verwijderd.",
+      "Configversie 1.8.3 → 1.8.4. Gameplay en standaardwaarden ongewijzigd."
+    ],
+    "files": [
+      "config/schema.json",
+      "config/config.lua",
+      "locales/en.lua",
+      "locales/nl.lua",
+      "client/main.lua",
+      "shared/config_check.lua",
+      "shared/bridge_check.lua",
+      "fxmanifest.lua",
+      "version.txt",
+      "README.md",
+      "docs/INSTALLATIE.md",
+      "docs/CHANGELOG.md"
+    ],
+    "instructions": [
+      "Download de update via https://portal.cfx.re/assets/granted-assets en bewaar config/config.lua en eigen teksten in locales/.",
+      "Neem in je eigen config/config.lua de regel Config.IngameConfig = true over en zet Config.Version = '1.8.4'.",
+      "Vervang de volledige resourcemap, inclusief config/schema.json, en herstart ts_antipunch na ts_bridge.",
+      "Controleer in /tsconfig → Anti-punch de instellingen (ts_bridge 1.3.0 of nieuwer)."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van ts_antipunch v1.9.0; goedgekeurd na test op de testserver op 26 november 2026."
+  },
+  {
     "script": "ts_repairpoints",
     "version": "1.2.2",
     "date": "2026-11-26",

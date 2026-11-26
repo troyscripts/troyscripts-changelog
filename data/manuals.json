@@ -348,7 +348,7 @@
     ],
     "onesync": false,
     "requirements": [
-      "ts_bridge met compatibele camera- en combat-API; ox_lib via ts_bridge.",
+      "ts_bridge 1.2.0 of nieuwer met compatibele camera- en combat-API; ox_lib via ts_bridge. Ingame instellen via /tsconfig vereist ts_bridge 1.3.0.",
       "Geen eigen ESX-, inventory-, ox_target- of SQL-installatie vereist."
     ],
     "install": [
@@ -358,18 +358,20 @@
     "update": [
       "Maak een back-up van config/config.lua en eventueel eigen vertalingen.",
       "Stop ts_antipunch en vervang de hele oude map; oude rootbestanden mogen niet blijven liggen.",
-      "Neem je aangepaste waarden en de bestaande MeleeCancelMode-instelling over in de nieuwe config."
+      "Neem je aangepaste waarden en de bestaande MeleeCancelMode-instelling over in de nieuwe config.",
+      "Vanaf 1.9.0: neem Config.IngameConfig = true over en zet Config.Version = '1.8.4'. Bij de eerste start worden je waarden uit config.lua eenmalig overgenomen."
     ],
     "verify": [
       "Controleer melee en schieten zonder te richten, herladen en camerawisselingen.",
-      "Test samen met ts_hostage of het camerabeheer na vrijlaten netjes terugkomt."
+      "Test samen met ts_hostage of het camerabeheer na vrijlaten netjes terugkomt.",
+      "Open /tsconfig → Anti-punch, zet First person bij richten uit en controleer dat richten direct in third person gaat."
     ],
     "warnings": [
-      "Huidige documentatie bevat oudere, elkaar tegensprekende configversie-instructies; neem de daadwerkelijke velden uit het nieuwste pakket over en verhoog geen schema blind."
+      "Dit is clientbesturing, geen server-side anticheat."
     ],
     "preserve": [
       "config/config.lua",
-      "locales/nl.lua indien aangepast"
+      "locales/nl.lua en locales/en.lua indien aangepast"
     ]
   },
   "ts_nohelmet": {
