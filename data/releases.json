@@ -1,5 +1,27 @@
 [
   {
+    "script": "tgc_bot",
+    "version": "3.8.7",
+    "date": "2026-11-26",
+    "status": "published",
+    "highlights": [
+      "Rustiger hublog: de centrale hub logt geslaagde Botbericht HTTP-aanvragen niet meer per regel, maar één keer per uur als samenvatting. Dat scheelt ruim 30.000 logregels (± 6 MB) per dag.",
+      "Mislukte, afgebroken en trage aanvragen blijven direct zichtbaar als waarschuwing, met aanvraag-ID."
+    ],
+    "changes": [
+      "De uursamenvatting toont het aantal geslaagde aanvragen per actie en het aantal mislukte; een uur zonder verkeer geeft geen regel.",
+      "Aanvragen met status 400 of hoger of zonder status, en aanvragen van 2 seconden of langer, worden direct als waarschuwing gelogd.",
+      "Nieuwe optionele .env-instelling BROADCAST_HTTP_LOG op de centrale bot: fouten (standaard) of alles om tijdelijk weer elke aanvraag te loggen voor diagnose."
+    ],
+    "files": [],
+    "instructions": [
+      "Werk alleen de centrale bot bij (neem de release over en voer npm ci uit); de ontvangende bots hoeven niet bijgewerkt te worden.",
+      "Geen actie nodig voor de nieuwe instelling: zonder BROADCAST_HTTP_LOG geldt fouten. Zet BROADCAST_HTTP_LOG=alles alleen tijdelijk voor diagnose en herstart de bot.",
+      "Geen databasewijzigingen."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van troy-s_game_community_appV3 v3.8.7; direct gepubliceerd op verzoek van Troy (geen aparte testronde)."
+  },
+  {
     "script": "ts_flatbed",
     "version": "1.0.5",
     "date": "2026-11-25",

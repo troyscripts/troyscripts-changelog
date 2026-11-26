@@ -1,4 +1,7 @@
 {
+  "tgc_bot@3.8.7": {
+    "summary": "Quieter hub log: the central hub no longer logs every successful Botbericht HTTP request, but writes one hourly summary per action instead, saving over 30,000 log lines (about 6 MB) a day. Failed, aborted and slow requests are still logged immediately with their request ID. The new optional BROADCAST_HTTP_LOG setting (fouten or alles) restores full per-request logging for diagnosis. Only the central bot needs the update; no database changes."
+  },
   "ts_parkeerapp@1.1.0": {
     "summary": "Detects fake plates through sky_mechanicjob: when the officer stands at the vehicle, the police check shows the real plate and blocks the parking fine. A new Tow vehicle button removes the fake plate and opens the jg-advancedgarages impound form. config.lua now has config schema 1.1.0 with a console notice for outdated configs; without sky_mechanicjob or jg-advancedgarages the app works as before."
   },
