@@ -83,7 +83,8 @@
         "Start ts_bridge first and then restart all scripts that use it.",
         "From 1.2.3: set Version = '0.1.3' and ScreenshotResource = 'screencapture' (or 'screenshot-basic') in your own config/config.lua.",
         "From 1.3.0: copy the TSBridgeConfig.Configurator section, set Version = '0.2.0' and grant admins access with add_ace group.admin ts_bridge.config allow.",
-        "From 1.3.1: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.1 gestart."
+        "From 1.3.1: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.1 gestart.",
+        "From 1.3.2: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.2 gestart."
       ],
       "verify": [
         "Run ts_bridge_check in the server console.",
@@ -479,7 +480,7 @@
       "onesync": false,
       "requirements": [
         "FiveM map streaming for .ytd/.ydd assets and ox_lib are required.",
-        "There is no mandatory dependency on ESX, SQL, ts_bridge or inventory."
+        "There is no mandatory dependency on ESX, SQL, ts_bridge or inventory. In-game configuration through /tsconfig requires ts_bridge 1.3.0 (managing postcodes: 1.3.2), started before ts_gemertmap."
       ],
       "install": [
         "Install the entire ts_gemertmap folder, including stream/ and data/, and start ox_lib first.",
@@ -489,20 +490,24 @@
       "update": [
         "Back up your map settings and the full old resource.",
         "After backing up, remove the old folder and install the complete package. Transfer settings to config/config.lua.",
-        "Restart the complete FiveM server to refresh streamed map textures and the minimap."
+        "Restart the complete FiveM server to refresh streamed map textures and the minimap.",
+        "From 1.2.0: add Config.IngameConfig = true and set Config.Version = '1.1.0'. Keep data/postcodes_eigen.json if it exists; it holds your postcode changes."
       ],
       "verify": [
         "Test the minimap, pause menu map and /postcode command.",
         "Check /postcode uit and /gemertmapreset after respawning.",
         "Verify radar zoom works with your chosen HUD.",
-        "Check the ts_gemertmap version message in the server console (no HTTP 404)."
+        "Check the ts_gemertmap version message in the server console (no HTTP 404).",
+        "Open /tsconfig → Gemert Map: change an area name and check it updates immediately; move a postcode and test /postcode with that number."
       ],
       "warnings": [
-        "This resource runs independently; ts_bridge is not required.",
-        "Other resources streaming the same minimap files may cause conflicts."
+        "This resource runs independently; ts_bridge is only needed for in-game configuration through /tsconfig.",
+        "Other resources streaming the same minimap files may cause conflicts.",
+        "Names baked into the map image itself cannot be changed in-game."
       ],
       "preserve": [
-        "config/config.lua"
+        "config/config.lua",
+        "data/postcodes_eigen.json"
       ]
     },
     "ts_parkeerapp": {

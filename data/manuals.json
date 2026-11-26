@@ -24,7 +24,8 @@
       "Start eerst de bridge en herstart daarna alle scripts die deze gebruiken.",
       "Vanaf 1.2.3: zet Version = '0.1.3' en ScreenshotResource = 'screencapture' (of 'screenshot-basic') in je eigen config/config.lua.",
       "Vanaf 1.3.0: neem de sectie TSBridgeConfig.Configurator over, zet Version = '0.2.0' en geef beheerders toegang met add_ace group.admin ts_bridge.config allow.",
-      "Vanaf 1.3.1: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.1 gestart toont."
+      "Vanaf 1.3.1: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.1 gestart toont.",
+      "Vanaf 1.3.2: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.2 gestart toont."
     ],
     "verify": [
       "Voer ts_bridge_check uit in de serverconsole.",
@@ -420,7 +421,7 @@
     "onesync": false,
     "requirements": [
       "FiveM-kaartstreaming (.ytd/.ydd) en ox_lib.",
-      "Geen verplichte ESX-, SQL-, ts_bridge- of inventory-dependency."
+      "Geen verplichte ESX-, SQL-, ts_bridge- of inventory-dependency. Ingame instellen via /tsconfig vereist ts_bridge 1.3.0 (postcodes beheren: 1.3.2), gestart vóór ts_gemertmap."
     ],
     "install": [
       "Plaats de volledige map ts_gemertmap inclusief stream/ en data/ en laat ox_lib eerst starten.",
@@ -430,20 +431,24 @@
     "update": [
       "Maak een back-up van je kaartinstellingen en de volledige oude resource.",
       "Verwijder de oude map na de back-up en plaats het complete pakket; neem instellingen over in config/config.lua.",
-      "Herstart de hele server om alle kaarttextures en de minimap te vernieuwen."
+      "Herstart de hele server om alle kaarttextures en de minimap te vernieuwen.",
+      "Vanaf 1.2.0: neem Config.IngameConfig = true over en zet Config.Version = '1.1.0'. Bewaar data/postcodes_eigen.json als die bestaat; daarin staan je postcodewijzigingen."
     ],
     "verify": [
       "Test de minimap en ESC-kaart en het commando /postcode.",
       "Controleer /postcode uit en /gemertmapreset na een respawn.",
       "Controleer radarzoom bij de gekozen HUD.",
-      "Controleer in de serverconsole de versiemelding van ts_gemertmap (geen HTTP 404)."
+      "Controleer in de serverconsole de versiemelding van ts_gemertmap (geen HTTP 404).",
+      "Open /tsconfig → Gemert Map: wijzig een gebiedsnaam en controleer dat die direct verandert; verplaats een postcode en test /postcode met dat nummer."
     ],
     "warnings": [
-      "Deze resource werkt zelfstandig; ts_bridge is niet vereist.",
-      "Conflict met andere minimap-streamers kan de kaartweergave verstoren."
+      "Deze resource werkt zelfstandig; ts_bridge is alleen nodig voor ingame instellen via /tsconfig.",
+      "Conflict met andere minimap-streamers kan de kaartweergave verstoren.",
+      "De namen die in de kaartafbeelding zelf zijn ingebakken, kun je niet ingame aanpassen."
     ],
     "preserve": [
-      "config/config.lua"
+      "config/config.lua",
+      "data/postcodes_eigen.json"
     ]
   },
   "ts_parkeerapp": {

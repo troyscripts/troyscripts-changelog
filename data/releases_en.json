@@ -232,5 +232,11 @@
   },
   "ts_antipunch@1.9.0": {
     "summary": "Configure ts_antipunch in-game through /tsconfig of ts_bridge (1.3.0 or newer); changes apply immediately without a restart. A Config.IngameConfig switch (default true) imports your config.lua values once. Language, diagnostics, aim button, first person and camera restore, all shooting and melee blocks, the cancel method and the version check are configurable. English is now available with Config.Locale = 'en'. The dead state is checked 4 times per second instead of every frame, while control blocking stays active every frame. The bridge check now actually requires ts_bridge 1.2.0. Installation docs rewritten. Config version 1.8.3 → 1.8.4; gameplay and defaults unchanged."
+  },
+  "ts_bridge@1.3.2": {
+    "summary": "Search and remove locations in /tsconfig, grouped under headings. A search field appears from 13 locations; at most 100 rows are shown at once and searching finds the rest. Scripts can offer up to 2000 locations (was 100) and an optional Remove button with confirmation. Go there also works for locations without a height, such as postcodes, by finding the ground. Removing requires the same configurator permissions as saving and is logged. Config schema stays 0.2.0; ts_keycard and ts_repairpoints are unchanged."
+  },
+  "ts_gemertmap@1.2.0": {
+    "summary": "Configure the map in-game through /tsconfig of ts_bridge (1.3.0 or newer, started before this script); without ts_bridge it works as before. A Config.IngameConfig switch (default true) imports your config.lua values once. Startup message, radar zoom, periodic zoom, custom area names on/off, the version check and all 46 area names are configurable; area names and radar zoom apply immediately. The Locations tab (ts_bridge 1.3.2) lists all postcodes with search, Go there, Move with the mouse, Remove and New postcode; /postcode and the exports use the changes immediately. Your postcode changes are stored in data/postcodes_eigen.json and survive updates. Names baked into the map image and Config.Points are not in the menu. Config version 1.0.9 → 1.1.0."
   }
 }

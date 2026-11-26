@@ -1516,12 +1516,27 @@
           "path": "config/config.lua",
           "side": "gedeeld",
           "text": "All settings."
+        },
+        {
+          "path": "config/schema.json",
+          "side": "gedeeld",
+          "text": "Describes the settings for the in-game configurator. Do not edit."
+        },
+        {
+          "path": "data/postcodes_eigen.json",
+          "side": "server",
+          "text": "Created on the first postcode change through /tsconfig. Keep this file when updating."
         }
       ],
       "groups": [
         {
           "title": "Map",
           "options": [
+            {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = configure through /tsconfig of ts_bridge (1.3.0+, started before ts_gemertmap), including area names; manage postcodes in the Locations tab (1.3.2). config.lua values are imported once on first start. false or no ts_bridge = config.lua only."
+            },
             {
               "key": "Config.StartupMessage",
               "default": "'compact'",
