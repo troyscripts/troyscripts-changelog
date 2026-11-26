@@ -3,7 +3,7 @@
     "script": "ts_antipunch",
     "version": "1.9.0",
     "date": "2026-11-26",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Instellen via de ingame configurator van ts_bridge (/tsconfig); wijzigingen werken direct, zonder herstart.",
       "Engels als taalkeuze."
