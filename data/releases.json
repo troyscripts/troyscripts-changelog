@@ -3,7 +3,7 @@
     "script": "ts_repairpoints",
     "version": "1.2.2",
     "date": "2026-11-26",
-    "status": "draft",
+    "status": "published",
     "highlights": [
       "Reparatiepunten plaatsen en verplaatsen met muis en toetsenbord in /tsconfig, zonder er zelf naartoe te lopen."
     ],
