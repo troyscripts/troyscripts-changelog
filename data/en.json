@@ -592,7 +592,8 @@
         "Check console logs, gateway connection and slash commands.",
         "Test tickets, notifications and hub communication in a test Discord server.",
         "Test radio playback after updating FFmpeg or voice dependencies.",
-        "After configuring, test the suggestion box (/suggestie), a reminder (/herinner nieuw wanneer:2m) and creating and cleaning up a temporary voice channel."
+        "After configuring, test the suggestion box (/suggestie), a reminder (/herinner nieuw wanneer:2m) and creating and cleaning up a temporary voice channel.",
+        "Check that the console shows the version checker reporting \"is actueel\" (version list from the site)."
       ],
       "warnings": [
         "This is a standalone Discord bot, not a FiveM resource. Do not add an ensure line to server.cfg.",

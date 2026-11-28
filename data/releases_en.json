@@ -1,4 +1,7 @@
 {
+  "tgc_bot@3.8.8": {
+    "summary": "Version check via the site: the bot now compares its version with the version list on this site (api/versions.json, key tgc_bot) instead of GitHub releases, which always failed because the source repository is private. The console reports whether the bot is up to date and links to the changelog when a newer version is available. config/updates.js now uses Source and ScriptId; GITHUB_REPOSITORY in .env is no longer used. No database changes."
+  },
   "tgc_bot@3.8.7": {
     "summary": "Quieter hub log: the central hub no longer logs every successful Botbericht HTTP request, but writes one hourly summary per action instead, saving over 30,000 log lines (about 6 MB) a day. Failed, aborted and slow requests are still logged immediately with their request ID. The new optional BROADCAST_HTTP_LOG setting (fouten or alles) restores full per-request logging for diagnosis. Only the central bot needs the update; no database changes."
   },

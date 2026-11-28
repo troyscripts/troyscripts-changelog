@@ -1,5 +1,28 @@
 [
   {
+    "script": "tgc_bot",
+    "version": "3.8.8",
+    "date": "2026-11-28",
+    "status": "published",
+    "highlights": [
+      "Versiecontrole via de site: de bot vergelijkt zijn versie nu met de versielijst op deze site (api/versions.json) in plaats van GitHub-releases.",
+      "De melding \"geen openbare Latest-release gevonden\" verdwijnt; de console meldt nu of de bot actueel is en linkt bij een nieuwe versie naar de changelog."
+    ],
+    "changes": [
+      "De versiechecker leest de sleutel tgc_bot uit api/versions.json, bij het opstarten en daarna elke 6 uur.",
+      "config/updates.js gebruikt nu Source en ScriptId in plaats van Repository; GITHUB_REPOSITORY in .env wordt niet meer gebruikt.",
+      "Bij een nieuwere versie toont de console een link naar de botpagina op de site. UPDATE_CHECK_ENABLED=false schakelt de controle nog steeds uit."
+    ],
+    "files": [],
+    "instructions": [
+      "Neem de volledige release over (inclusief config/updates.js) en voer npm ci uit.",
+      "GITHUB_REPOSITORY in .env mag leeg blijven of weg; die heeft geen effect meer.",
+      "Controleer na het opstarten dat de console \"Versiechecker: 3.8.8 is actueel\" meldt.",
+      "Geen databasewijzigingen."
+    ],
+    "sourceNote": "Gebaseerd op docs/CHANGELOG.md van troy-s_game_community_appV3 v3.8.8; gepubliceerd op verzoek van Troy."
+  },
+  {
     "script": "ts_bridge",
     "version": "1.3.2",
     "date": "2026-11-26",

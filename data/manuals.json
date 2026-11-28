@@ -533,7 +533,8 @@
       "Controleer console, gatewayverbinding en slashcommando's.",
       "Test tickets, meldingen en hubcommunicatie met de beschikbare testserver.",
       "Test de radio wanneer FFmpeg of voice-dependencies zijn bijgewerkt.",
-      "Test na het instellen de ideeënbus (/suggestie), een herinnering (/herinner nieuw wanneer:2m) en het aanmaken en opruimen van een tijdelijk spraakkanaal."
+      "Test na het instellen de ideeënbus (/suggestie), een herinnering (/herinner nieuw wanneer:2m) en het aanmaken en opruimen van een tijdelijk spraakkanaal.",
+      "Controleer in de console dat de versiechecker \"is actueel\" meldt (versielijst van de site)."
     ],
     "warnings": [
       "Dit is een afzonderlijke Discord-bot, geen FiveM-resource: voeg geen ensure-regel aan server.cfg toe.",
