@@ -1186,7 +1186,7 @@
       }
     },
     "ts_hostage": {
-      "intro": "Hier stel je de bediening, wapens, camera, gijzeling in voertuigen en de politiemelding in. Teksten staan in locales/nl.lua.",
+      "intro": "Hier stel je de bediening, wapens, camera, gijzeling in voertuigen en de politiemelding in. Alles is ook in te stellen via /tsconfig. Teksten staan in locales/nl.lua en locales/en.lua.",
       "files": [
         {
           "path": "config/config.lua",
@@ -1197,12 +1197,27 @@
           "path": "config/server_config.lua",
           "side": "server",
           "text": "Webhooks en politiemelding."
+        },
+        {
+          "path": "config/schema.json",
+          "side": "gedeeld",
+          "text": "Beschrijft de instellingen voor de ingame configurator. Niet aanpassen."
         }
       ],
       "groups": [
         {
           "title": "Bediening",
           "options": [
+            {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = alles instellen via /tsconfig van ts_bridge (1.3.3+), ook de instellingen uit server_config.lua behalve de webhook-URL's; bij de eerste start worden de waarden eenmalig overgenomen. false = alleen de configbestanden."
+            },
+            {
+              "key": "Config.Locale",
+              "default": "'nl'",
+              "text": "Taal: 'nl' of 'en'. Teksten staan in locales/."
+            },
             {
               "key": "Config.Interaction",
               "default": "'both'",

@@ -25,7 +25,8 @@
       "Vanaf 1.2.3: zet Version = '0.1.3' en ScreenshotResource = 'screencapture' (of 'screenshot-basic') in je eigen config/config.lua.",
       "Vanaf 1.3.0: neem de sectie TSBridgeConfig.Configurator over, zet Version = '0.2.0' en geef beheerders toegang met add_ace group.admin ts_bridge.config allow.",
       "Vanaf 1.3.1: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.1 gestart toont.",
-      "Vanaf 1.3.2: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.2 gestart toont."
+      "Vanaf 1.3.2: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.2 gestart toont.",
+      "Vanaf 1.3.3: geen configwijziging. Vervang de volledige map (verwijder ook een oude .fxap) en controleer dat de console [ts_bridge] 1.3.3 gestart toont."
     ],
     "verify": [
       "Voer ts_bridge_check uit in de serverconsole.",
@@ -310,7 +311,7 @@
     ],
     "onesync": true,
     "requirements": [
-      "OneSync, ox_lib en ts_bridge. ESX is gebruikt voor de beschreven politie-integratie.",
+      "OneSync, ox_lib en ts_bridge (1.3.3 voor ingame instellen via /tsconfig). ESX is gebruikt voor de beschreven politie-integratie.",
       "ox_target is alleen nodig voor targetbediening; screenshot-basic is optioneel voor Discord-foto's."
     ],
     "install": [
@@ -322,11 +323,13 @@
       "Wacht tot er geen actieve gijzelingen zijn, stop ts_hostage en maak een volledige back-up.",
       "Vervang de oude resourcemap en gebruik het nieuwe fxmanifest.lua.",
       "Neem oude config.lua-waarden over in config/config.lua en server_config.lua-waarden in config/server_config.lua.",
-      "Herstart ts_hostage na een bridgeherstart."
+      "Herstart ts_hostage na een bridgeherstart.",
+      "Vanaf 1.3.0: werk ts_bridge bij naar 1.3.3, neem Config.IngameConfig = true over en zet Config.Version = '1.2.0'. Bij de eerste start worden je waarden uit beide configbestanden eenmalig overgenomen."
     ],
     "verify": [
       "Test handen omhoog, gijzelen, loslaten en wapenstatus met twee spelers.",
-      "Controleer cameraherstel, radialmenu, politiemeldingen en optionele foto's."
+      "Controleer cameraherstel, radialmenu, politiemeldingen en optionele foto's.",
+      "Open /tsconfig → Gijzelen, voeg via de zoeklijst een wapen toe, herstart ts_hostage en test gijzelen met dat wapen."
     ],
     "warnings": [
       "Geheime webhookadressen horen alleen in serverbestanden.",

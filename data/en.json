@@ -84,7 +84,8 @@
         "From 1.2.3: set Version = '0.1.3' and ScreenshotResource = 'screencapture' (or 'screenshot-basic') in your own config/config.lua.",
         "From 1.3.0: copy the TSBridgeConfig.Configurator section, set Version = '0.2.0' and grant admins access with add_ace group.admin ts_bridge.config allow.",
         "From 1.3.1: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.1 gestart.",
-        "From 1.3.2: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.2 gestart."
+        "From 1.3.2: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.2 gestart.",
+        "From 1.3.3: no config changes. Replace the entire folder (also remove an old .fxap) and check that the console shows [ts_bridge] 1.3.3 gestart."
       ],
       "verify": [
         "Run ts_bridge_check in the server console.",
@@ -369,7 +370,7 @@
       ],
       "onesync": true,
       "requirements": [
-        "OneSync, ox_lib and ts_bridge are required. ESX is used for the documented police integration.",
+        "OneSync, ox_lib and ts_bridge (1.3.3 for in-game configuration through /tsconfig) are required. ESX is used for the documented police integration.",
         "ox_target is only needed for target interactions; screenshot-basic is optional for Discord photos."
       ],
       "install": [
@@ -381,11 +382,13 @@
         "Wait until there are no active hostage situations. Stop ts_hostage and make a full backup.",
         "Replace the old resource and keep the new fxmanifest.lua.",
         "Move previous config.lua settings into config/config.lua and server_config.lua settings into config/server_config.lua.",
-        "Restart ts_hostage after restarting ts_bridge."
+        "Restart ts_hostage after restarting ts_bridge.",
+        "From 1.3.0: update ts_bridge to 1.3.3, add Config.IngameConfig = true and set Config.Version = '1.2.0'. Your values from both config files are imported once on first start."
       ],
       "verify": [
         "With two players, test hands up, taking a hostage, releasing the player and restoring weapon state.",
-        "Check camera restoration, the radial menu, police alerts and optional screenshots."
+        "Check camera restoration, the radial menu, police alerts and optional screenshots.",
+        "Open /tsconfig → Hostage, add a weapon from the search list, restart ts_hostage and test taking a hostage with that weapon."
       ],
       "warnings": [
         "Keep private webhook URLs in server-only files.",
@@ -394,7 +397,7 @@
       "preserve": [
         "config/config.lua",
         "config/server_config.lua",
-        "locales/ bij eigen vertalingen"
+        "locales/ if you customised texts"
       ]
     },
     "ts_antipunch": {

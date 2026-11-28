@@ -1197,12 +1197,27 @@
           "path": "config/server_config.lua",
           "side": "server",
           "text": "Webhooks and police alert."
+        },
+        {
+          "path": "config/schema.json",
+          "side": "gedeeld",
+          "text": "Describes the settings for the in-game configurator. Do not edit."
         }
       ],
       "groups": [
         {
           "title": "Controls",
           "options": [
+            {
+              "key": "Config.IngameConfig",
+              "default": "true",
+              "text": "true = configure everything through /tsconfig of ts_bridge (1.3.3+), including the server_config.lua settings except the webhook URLs; values are imported once on first start. false = config files only."
+            },
+            {
+              "key": "Config.Locale",
+              "default": "'nl'",
+              "text": "Language: 'nl' or 'en'. Texts are in locales/."
+            },
             {
               "key": "Config.Interaction",
               "default": "'both'",
