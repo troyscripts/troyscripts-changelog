@@ -5,12 +5,14 @@
     "date": "2026-11-28",
     "status": "draft",
     "highlights": [
-      "Wapenlijsten en tabellen in /tsconfig, met een zoeklijst van de wapens die de server kent."
+      "Wapenlijsten, tabellen en afbeeldingen in /tsconfig, met een zoeklijst van de wapens die de server kent."
     ],
     "changes": [
       "Nieuw soort instelling: koppeling (bijv. wapen → type), met per regel een keuzemenu, verwijderknop en een regel om toe te voegen.",
       "Nieuw soort instelling: tabel met vaste kolommen (bijv. stoelparen); rijen toevoegen en verwijderen, elke cel wordt gecontroleerd.",
       "Wapens kiezen uit een zoeklijst met de wapens uit ox_inventory, de database (tabel items) en ESX: typen filtert op spawnnaam en naam. Een eigen spawnnaam typen blijft mogelijk.",
+      "Nieuw soort instelling: afbeelding. Kies een bestand van je computer (wordt verkleind tot 256 px) of plak een https-link; de server controleert type en grootte.",
+      "Tabellen hebben duidelijkere kolomkoppen; de knop om een rij toe te voegen heet Toevoegen.",
       "Scripts met meerdere configtabellen kunnen al hun instellingen in één menu tonen.",
       "Configschema blijft 0.2.0; bestaande scripts werken ongewijzigd."
     ],
